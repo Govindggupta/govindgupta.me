@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <>
-      <div>Govind</div>
+      <div className="h-full w-full flex justify-center">Govind</div>
     </>
   );
 }

@@ -29,7 +29,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} relative min-h-screen bg-black antialiased`}
       >
         <DotBackground/> 
-        <div className="relative z-10">{children}</div>
+        <div className="relative z-10 mx-auto md:max-w-3xl *:[[id]]:scroll-mt-22">{children}</div>
       </body>
     </html>
   );

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import DotBackground from "@/components/DotBackground";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,11 +24,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} relative min-h-screen bg-black antialiased`}
-      >
-        <DotBackground/> 
-        <div className="relative z-10 mx-auto md:max-w-3xl *:[[id]]:scroll-mt-22">{children}</div>
+      <body className={`${geistSans.variable} ${geistMono.variable} relative min-h-screen bg-black antialiased`}>
+        <div className="relative z-10 mx-auto md:max-w-3xl *:[[id]]:scroll-mt-22 px-2 min-h-screen ">
+          {children}
+        </div>
       </body>
     </html>
   );

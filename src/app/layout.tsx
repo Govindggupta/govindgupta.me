@@ -18,6 +18,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Govind Portfolio",
   description: "Created by Govind Gupta",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

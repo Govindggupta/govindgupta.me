@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${cascadiaCode.variable} relative min-h-screen bg-black antialiased`}>
-        <div className="relative z-10 mx-auto md:max-w-3xl *:[[id]]:scroll-mt-22 p-2 min-h-screen ">
+        <div className="relative z-10 mx-auto md:max-w-3xl *:[[id]]:scroll-mt-22 px-2 min-h-screen ">
           {children}
         </div>
       </body>

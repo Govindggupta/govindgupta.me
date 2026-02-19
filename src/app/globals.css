@@ -4,12 +4,14 @@
   --background: #ffffff;
   --foreground: #171717;
   --subtle: #e5e5e5;
+  --edge: color-mix(in oklab, var(--subtle) 70%, var(--background));
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-subtle: var(--subtle);
+  --color-edge: var(--edge);
   /* CHANGE THIS: Replace Geist with Cascadia Code */
   --font-sans: var(--font-cascadia), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-cascadia), ui-monospace, 'Cascadia Code', monospace;
@@ -20,12 +22,22 @@
     --background: #0a0a0a;
     --foreground: #ededed;
     --subtle: #262626;
+    --edge: color-mix(in oklab, var(--subtle) 70%, var(--background));
   }
+}
+
+@utility screen-line-before {
+  @apply relative before:absolute before:top-0 before:left-1/2 before:-z-[1] before:h-px before:w-dvw before:-translate-x-1/2 before:bg-edge;
+}
+
+@utility screen-line-after {
+  @apply relative after:absolute after:bottom-0 after:left-1/2 after:-z-[1] after:h-px after:w-dvw after:-translate-x-1/2 after:bg-edge;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  overflow-x: hidden;
   /* CHANGE THIS: Use the CSS variable instead of Arial */
   font-family: var(--font-cascadia), 'Cascadia Code', monospace;
 }

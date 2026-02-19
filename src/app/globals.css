@@ -4,6 +4,7 @@
   --background: #ffffff;
   --foreground: #171717;
   --subtle: #e5e5e5;
+  --border: #d4d4d4;
   --edge: color-mix(in oklab, var(--subtle) 70%, var(--background));
 }
 
@@ -11,6 +12,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-subtle: var(--subtle);
+  --color-border: var(--border);
   --color-edge: var(--edge);
   /* CHANGE THIS: Replace Geist with Cascadia Code */
   --font-sans: var(--font-cascadia), ui-sans-serif, system-ui, sans-serif;
@@ -22,6 +24,7 @@
     --background: #0a0a0a;
     --foreground: #ededed;
     --subtle: #262626;
+    --border: #2a2a2a;
     --edge: color-mix(in oklab, var(--subtle) 70%, var(--background));
   }
 }
@@ -33,6 +36,35 @@
 @utility screen-line-after {
   @apply relative after:absolute after:bottom-0 after:left-1/2 after:-z-[1] after:h-px after:w-dvw after:-translate-x-1/2 after:bg-edge;
 }
+
+/* src/styles/globals.css */
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 5px;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
 
 body {
   background: var(--background);

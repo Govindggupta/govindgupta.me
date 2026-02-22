@@ -4,11 +4,13 @@ import logoOutlineLight from "@/logos/black_thick_border.svg";
 import logoFilledLight from "@/logos/black_filled.svg";
 import logoOutline from "@/logos/white_thick_border.svg";
 import logoFilled from "@/logos/white_filled.svg";
+import { CursorTarget } from "./IPadCursor";
 
 export default function Navbar() {
   return (
     <nav className="mb-4 screen-line-after screen-line-before p-1">
       <div className="h-18 px-2 bg-white dark:bg-black flex items-center justify-between rounded-md">
+        <CursorTarget as = 'button' className="rounded-full">
         <Link
           href="/"
           className="group relative block h-18 w-18"
@@ -39,7 +41,7 @@ export default function Navbar() {
             priority
           />
         </Link>
-
+</CursorTarget>
         <div className="pr-4">
           <ul className="flex gap-4">
             <li>

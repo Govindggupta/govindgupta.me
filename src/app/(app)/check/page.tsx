@@ -1,8 +1,13 @@
+import { CursorTarget } from "@/components/IPadCursor";
+
 export default function Check() {
   return (
     <div className="space-y-4">
 
-      <h1 className="text-3xl font-semibold tracking-tight screen-line-after screen-line-before p-2">Check Page</h1>
+      <CursorTarget as="button" className="px-8 font-semibold rounded-full text-sm transition-colors">
+        <h1 className="text-3xl font-semibold tracking-tight screen-line-after screen-line-before p-2">Check Page</h1>
+      </CursorTarget>
+
       <p className="text-base leading-7 screen-line-after screen-line-before p-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi, nulla labore error dolores atque quaerat tenetur voluptas deleniti officia cumque asperiores earum, provident nostrum explicabo voluptatibus quia magni itaque, veritatis obcaecati reiciendis in soluta sapiente laborum. Laudantium saepe eligendi commodi facilis, quod, temporibus eos ex ut ipsam deserunt consequatur voluptatem quos provident quo dolore fugiat earum. Laudantium deleniti accusamus minima sint aut, magni fugit nostrum maxime? Corporis officiis soluta dignissimos? Hic dolores ipsum necessitatibus voluptas obcaecati in veniam, at perferendis quos, totam iusto voluptate, autem molestias voluptatibus cum nihil labore eum reiciendis laborum mollitia? Delectus dolorem cumque aperiam numquam, perferendis nam optio distinctio magni natus itaque quaerat dolor ab sapiente odio totam nulla. Nemo odit consequatur unde praesentium ad ea cumque, exercitationem quibusdam?</p>
       <div className="h-[100px] overflow-y-auto border-y border-edge p-2">
         <p>
@@ -78,3 +83,4 @@ export default function Check() {
     </div>
   )
 }
+

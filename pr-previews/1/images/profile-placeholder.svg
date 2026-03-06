@@ -1,0 +1,27 @@
+<svg width="640" height="760" viewBox="0 0 640 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="72" y1="58" x2="572" y2="708" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1A1B20"/>
+      <stop offset="1" stop-color="#0B0B0E"/>
+    </linearGradient>
+    <linearGradient id="card" x1="128" y1="120" x2="520" y2="620" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F59E0B"/>
+      <stop offset="1" stop-color="#F97316"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(438 156) rotate(120.773) scale(233.965 188.762)">
+      <stop stop-color="#FAD39B"/>
+      <stop offset="1" stop-color="#FAD39B" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="20" y="20" width="600" height="720" rx="44" fill="url(#bg)"/>
+  <rect x="20" y="20" width="600" height="720" rx="44" stroke="rgba(245,239,229,0.16)" stroke-width="2"/>
+  <circle cx="470" cy="150" r="170" fill="url(#glow)"/>
+  <path d="M114 102C114 88.7452 124.745 78 138 78H500C513.255 78 524 88.7452 524 102V658C524 671.255 513.255 682 500 682H138C124.745 682 114 671.255 114 658V102Z" fill="rgba(255,255,255,0.04)" stroke="rgba(245,239,229,0.14)" stroke-width="2"/>
+  <path d="M140 118C140 106.954 148.954 98 160 98H480C491.046 98 500 106.954 500 118V544H140V118Z" fill="url(#card)"/>
+  <circle cx="320" cy="262" r="112" fill="#2B190F" fill-opacity="0.2"/>
+  <path d="M320 166C267.144 166 224 209.144 224 262C224 314.856 267.144 358 320 358C372.856 358 416 314.856 416 262C416 209.144 372.856 166 320 166ZM320 382C251.71 382 196 437.71 196 506V544H444V506C444 437.71 388.29 382 320 382Z" fill="#FFF4E4"/>
+  <path d="M140 544H500V622C500 633.046 491.046 642 480 642H160C148.954 642 140 633.046 140 622V544Z" fill="#0F1014"/>
+  <path d="M184 586H334" stroke="#FFF4E4" stroke-opacity="0.86" stroke-width="12" stroke-linecap="round"/>
+  <path d="M184 620H282" stroke="#FFF4E4" stroke-opacity="0.48" stroke-width="12" stroke-linecap="round"/>
+  <text x="460" y="648" fill="#F59E0B" font-family="'Cascadia Code', monospace" font-size="48" font-weight="700" text-anchor="end">GG</text>
+</svg>

@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[9927,["927","static/chunks/927-d4c3fcd2abb817d3.js","219","static/chunks/app/(app)/resume/page-4a6847d87ac8238d.js"],""]
+3:I[2523,[],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"buildId":"6a_8J87CXoeVPvP9HaFyK","rsc":["$","$1","c",{"children":[["$","main",null,{"className":"px-1 pb-10","children":["$","section",null,{"className":"section-shell space-y-6","children":[["$","p",null,{"className":"pill-chip","children":"Resume Route"}],["$","div",null,{"className":"max-w-3xl space-y-4","children":[["$","h1",null,{"className":"text-4xl font-semibold tracking-tight text-foreground","children":"Wire this route to a real resume when you are ready."}],["$","p",null,{"className":"muted-copy","children":"A professional portfolio usually links to a PDF or a concise web resume. Keep this page as the future destination for that document, or redirect it once you add the final file."}]]}],["$","$L2",null,{"href":"/#experience","className":"inline-flex h-11 items-center rounded-full border border-border bg-background px-4 text-xs uppercase tracking-[0.24em] text-foreground transition-colors duration-200 hover:border-foreground hover:text-foreground","children":"Back to experience"}]]}]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
+5:null

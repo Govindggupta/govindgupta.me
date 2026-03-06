@@ -38,3 +38,5 @@ jobs:
         with:
           branch: gh-pages
           folder: ./out
+          clean: false
+          commit-message: Deploy to GitHub Pages : gh-pages

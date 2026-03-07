@@ -1,5 +1,5 @@
 1:"$Sreact.fragment"
 2:I[36345,["/_next/static/chunks/33074d3ff5d0cd2d.js","/_next/static/chunks/c4d90098b4abc498.js"],"OutletBoundary"]
 3:"$Sreact.suspense"
-0:{"buildId":"_JeRAl4sXq9u6j4ciFrKD","rsc":["$","$1","c",{"children":[["$","div",null,{"className":"p-4","children":[["$","h1",null,{"className":"text-2xl font-bold","children":"Resume"}],["$","p",null,{"className":"mt-4","children":"This is where my resume will go. Stay tuned!"}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"OJ5uzR6vYk2teBczlfQNV","rsc":["$","$1","c",{"children":[["$","div",null,{"className":"p-4","children":[["$","h1",null,{"className":"text-2xl font-bold","children":"Resume"}],["$","p",null,{"className":"mt-4","children":"This is where my resume will go. Stay tuned!"}]]}],null,["$","$L2",null,{"children":["$","$3",null,{"name":"Next.MetadataOutlet","children":"$@4"}]}]]}],"loading":null,"isPartial":false}
 4:null

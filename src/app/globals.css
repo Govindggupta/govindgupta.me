@@ -1,43 +1,100 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --subtle: #e5e5e5;
-  --border: #d4d4d4;
-  --edge: color-mix(in oklab, var(--subtle) 70%, var(--background));
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
   --color-subtle: var(--subtle);
   --color-border: var(--border);
   --color-edge: var(--edge);
+  --color-ring: var(--ring);
+  --color-selection: var(--selection);
+  --color-selection-foreground: var(--selection-foreground);
   /* CHANGE THIS: Replace Geist with Cascadia Code */
   --font-sans: var(--font-cascadia), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-cascadia), ui-monospace, 'Cascadia Code', monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --subtle: #262626;
-    --border: #2a2a2a;
-    --edge: color-mix(in oklab, var(--subtle) 70%, var(--background));
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
 @utility screen-line-before {
-  @apply relative before:absolute before:top-0 before:left-1/2 before:-z-[1] before:h-px before:w-dvw before:-translate-x-1/2 before:bg-edge;
+  @apply relative before:absolute before:top-0 before:left-1/2 before:-z-[1] before:h-px before:w-screen before:-translate-x-1/2 before:bg-border;
 }
 
 @utility screen-line-after {
-  @apply relative after:absolute after:bottom-0 after:left-1/2 after:-z-[1] after:h-px after:w-dvw after:-translate-x-1/2 after:bg-edge;
+  @apply relative after:absolute after:bottom-0 after:left-1/2 after:-z-[1] after:h-px after:w-screen after:-translate-x-1/2 after:bg-border;
 }
 
-/* src/styles/globals.css */
+:root {
+  color-scheme: light;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.141 0.005 285.823);
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-foreground: oklch(0.21 0.006 285.885);
+  --muted: oklch(0.967 0.001 286.375);
+  --muted-foreground: oklch(0.552 0.016 285.938);
+  --card: oklch(1 0 0);
+  --border: oklch(0.9 0.004 286.32);
+  --edge: color-mix(in oklab, var(--border) 64%, var(--background));
+  --subtle: color-mix(in oklab, var(--foreground) 4%, transparent);
+  --ring: oklch(0.705 0.015 286.067);
+  --selection: oklch(0.141 0.005 285.823);
+  --selection-foreground: oklch(0.985 0 0);
+}
+
+.dark,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --card: oklch(0.21 0.006 285.885);
+  --border: oklch(0.24 0.006 286.033);
+  --edge: color-mix(in oklab, var(--border) 64%, var(--background));
+  --subtle: color-mix(in oklab, var(--foreground) 4%, transparent);
+  --ring: oklch(0.552 0.016 285.938);
+  --selection: oklch(0.985 0 0);
+  --selection-foreground: oklch(0.141 0.005 285.823);
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    @apply border-border outline-ring/50;
+  }
+
+  ::selection {
+    @apply bg-selection text-selection-foreground;
+  }
+
+  body {
+    @apply bg-background font-sans text-foreground antialiased;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  [id] {
+    @apply scroll-mt-28;
+  }
+}
 
 ::-webkit-scrollbar {
   width: 5px;
@@ -65,11 +122,81 @@
   height: 0 !important;
 }
 
+.theme-image-dark {
+  display: none;
+}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  overflow-x: hidden;
-  /* CHANGE THIS: Use the CSS variable instead of Arial */
-  font-family: var(--font-cascadia), 'Cascadia Code', monospace;
+.theme-image-light {
+  display: block;
+}
+
+.theme-logo-dark {
+  display: none;
+}
+
+.theme-logo-light {
+  display: block;
+}
+
+.theme-toggle-thumb {
+  transform: translate(0, -50%);
+}
+
+.dark .theme-image-dark,
+:root[data-theme="dark"] .theme-image-dark,
+.dark .theme-logo-dark,
+:root[data-theme="dark"] .theme-logo-dark {
+  display: block;
+}
+
+.dark .theme-image-light,
+:root[data-theme="dark"] .theme-image-light,
+.dark .theme-logo-light,
+:root[data-theme="dark"] .theme-logo-light {
+  display: none;
+}
+
+.dark .theme-toggle-thumb,
+:root[data-theme="dark"] .theme-toggle-thumb {
+  transform: translate(14px, -50%);
+}
+
+@keyframes palette-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes palette-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes palette-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes palette-pop-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
 }

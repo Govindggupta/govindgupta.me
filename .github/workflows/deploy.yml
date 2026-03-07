@@ -27,6 +27,9 @@ jobs:
           node-version: 22
           cache: "pnpm"
 
+      - name: Clean previous build
+        run: rm -rf .next out
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 

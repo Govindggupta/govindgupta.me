@@ -34,7 +34,7 @@ export default function SearchButton() {
         <svg
           aria-hidden="true"
           viewBox="0 0 24 24"
-          className="h-[1.375rem] w-[1.375rem]"
+          className="h-5.5 w-5.5"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.8"
@@ -45,14 +45,13 @@ export default function SearchButton() {
           <path d="m16 16 4.5 4.5" />
         </svg>
         <span className="sm:hidden">Search</span>
-        <span className="bg-accent hidden items-center rounded-sm border border-border px-1 py-0.5 text-[10px] tracking-[0.14em] text-foreground sm:inline-flex lg:hidden">
-          Ctrl K
+        <span className="hidden items-center gap-2 sm:inline-flex">
+          {["Ctrl", "K"].map((key) => (
+            <kbd key={key} className={keycapClassName}>
+              {key}
+            </kbd>
+          ))}
         </span>
-        {["Ctrl", "K"].map((key) => (
-          <span key={key} className="hidden lg:inline-flex">
-            <span className={keycapClassName}>{key}</span>
-          </span>
-        ))}
       </button>
 
       <SearchCommandPalette isOpen={isOpen} onClose={closePalette} />

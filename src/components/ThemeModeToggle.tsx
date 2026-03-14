@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 type Theme = "light" | "dark";
 
 const THEME_TOGGLE_SOUND_URL = "/click.mp3";
+const THEME_TOGGLE_SOUND_VOLUME = 0.4;
 
 function resolveTheme(): Theme {
   if (typeof document === "undefined") {
@@ -85,6 +86,7 @@ export default function ThemeModeToggle() {
   useEffect(() => {
     const clickSound = new Audio(THEME_TOGGLE_SOUND_URL);
     clickSound.preload = "auto";
+    clickSound.volume = THEME_TOGGLE_SOUND_VOLUME;
     clickSoundRef.current = clickSound;
 
     return () => {

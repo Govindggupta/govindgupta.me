@@ -5,7 +5,6 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Allow only one concurrent deployment
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -14,37 +13,23 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
           version: 10
-          run_install: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build Next.js app
+      - run: pnpm install --frozen-lockfile
+      - name: Build
         run: pnpm build
         env:
-          # Set base path for the main site (your repo name)
-          PAGES_BASE_PATH: '/govindggutpa.github.io'
-          DEPLOY_TARGET: 'github-pages'
-
-      - name: Deploy to gh-pages branch
+          NEXT_PUBLIC_BASE_PATH: '/govindggutpa.github.io'   # ⬅️ Critical
+      - name: Deploy to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: ./out                 # Next.js output folder
-          branch: gh-pages               # Branch GitHub Pages will use
-          clean: true                     # Clean branch before deploying
-          clean-exclude: pr-preview       # ⚠️ CRITICAL: Preserve PR preview folders
-          # Optional: set to false to avoid force pushes (but may cause merge conflicts)
-          # force: false
+          folder: ./out
+          branch: gh-pages
+          clean: true
+          clean-exclude: pr-preview       # Preserve PR previews

@@ -2,47 +2,31 @@ name: Deploy PR Previews
 
 on:
   pull_request:
-    types:
-      - opened
-      - reopened
-      - synchronize
-      - closed
+    types: [opened, reopened, synchronize, closed]
 
 concurrency: preview-${{ github.ref }}
 
 jobs:
   deploy-preview:
     runs-on: ubuntu-latest
-    # Avoid running on fork PRs (v1 of the action has limited fork support)
     if: github.event.pull_request.head.repo.full_name == github.repository
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
           version: 10
-          run_install: false
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build Next.js app for preview
+      - run: pnpm install --frozen-lockfile
+      - name: Build for preview
         if: github.event.action != 'closed'
         run: pnpm build
         env:
-          # Dynamic base path for this PR preview
-          PAGES_BASE_PATH: '/govindggutpa.github.io/pr-preview/pr-${{ github.event.number }}'
-          DEPLOY_TARGET: 'github-pages'
-
-      - name: Deploy PR Preview
+          # Dynamic base path for this PR
+          NEXT_PUBLIC_BASE_PATH: '/govindggutpa.github.io/pr-preview/pr-${{ github.event.number }}'
+      - name: Deploy preview
         if: github.event.action != 'closed'
         uses: rossjrw/pr-preview-action@v1
         with:
@@ -50,9 +34,7 @@ jobs:
           preview-branch: gh-pages
           umbrella-dir: pr-preview
           action: deploy
-          qr-code: true
-
-      - name: Remove PR Preview
+      - name: Remove preview
         if: github.event.action == 'closed'
         uses: rossjrw/pr-preview-action@v1
         with:

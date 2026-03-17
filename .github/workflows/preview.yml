@@ -50,3 +50,4 @@ jobs:
 
 permissions:
   contents: write
+  issues: write

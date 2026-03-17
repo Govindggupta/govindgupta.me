@@ -156,7 +156,7 @@ export default function Home() {
                 <p className="text-sm leading-7 text-muted-foreground">
                   I prefer products that feel structured and thoughtful rather than overloaded.
                   Clean layouts, usable flows, and code that still makes sense later are the
-                  baseline.
+                  baseline. little change.
                 </p>
                 <p className="text-sm leading-7 text-muted-foreground">
                   This site is intentionally minimal: a compact shell, strong borders, and a
@@ -219,4 +219,3 @@ export default function Home() {
         </div>
       </main>
   );
-}

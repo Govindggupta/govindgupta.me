@@ -1,53 +1,57 @@
-name: Deploy PR Previews
+name: PR Preview
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize, closed]
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
 
-concurrency: preview-${{ github.ref }}
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: preview-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   deploy-preview:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.head.repo.full_name == github.repository
-
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
 
-      - name: Build for preview
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: pnpm
+
+      - name: Install Dependencies
         if: github.event.action != 'closed'
-        run: pnpm build
+        run: pnpm install
+
+      - name: Build
+        if: github.event.action != 'closed'
         env:
-          NEXT_PUBLIC_BASE_PATH: '/pr-preview/pr-${{ github.event.number }}'
+          BASE_PATH: /pr-preview/pr-${{ github.event.number }}
+        run: pnpm build
 
-      - name: Deploy preview
+      - name: Add .nojekyll
         if: github.event.action != 'closed'
+        run: touch ./out/.nojekyll
+
+      - name: Deploy PR Preview 🚀
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: ./out
           preview-branch: gh-pages
           umbrella-dir: pr-preview
-          action: deploy
-
-      - name: Remove preview
-        if: github.event.action == 'closed'
-        uses: rossjrw/pr-preview-action@v1
-        with:
-          source-dir: ./out
-          preview-branch: gh-pages
-          umbrella-dir: pr-preview
-          action: remove
-
-permissions:
-  contents: write
-  issues: write
+          action: auto

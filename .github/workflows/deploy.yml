@@ -1,47 +1,48 @@
-name: Deploy Website
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - main
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-        - uses: actions/checkout@v4
-        - uses: pnpm/action-setup@v4
-          with:
-            version: 9
-        - uses: actions/setup-node@v4
-          with:
-            node-version: 20
-            cache: 'pnpm'
-
-        - name: Install dependencies
-          run: pnpm install --frozen-lockfile
-
-        - name: Build the website
-          run: pnpm build
-
-        - name: Print current time
-          run: date
-
-        # Will use this after this branch becomes main
-        # - name: Deploy to gh-pages branch
-        #   uses: JamesIves/github-pages-deploy-action@v4
-        #   with:
-        #     branch: gh-pages
-        #     folder: ./dist
-        #     clean: false
-
-        - name: Deploy to GitHub Pages
-          uses: peaceiris/actions-gh-pages@v3
-          with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            publish_dir: out
-            publish_branch: gh-pages
-            cname: govindgupta.me
 
 permissions:
   contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: pnpm
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+
+      - name: Add .nojekyll
+        run: touch ./out/.nojekyll
+
+      - name: Add CNAME
+        run: echo "govindgupta.me" > ./out/CNAME
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: out
+          clean: true
+          clean-exclude: pr-preview/
+          force: false

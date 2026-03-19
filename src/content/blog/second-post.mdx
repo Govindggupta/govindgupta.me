@@ -1,0 +1,25 @@
+---
+title: "Shipping a blog with MDX in App Router"
+date: "2025-01-27"
+description: "A practical setup for local MDX content, typed frontmatter, and clean rendering in a minimal Next.js portfolio."
+tags:
+  - Next.js
+  - MDX
+  - TypeScript
+---
+
+For a personal site, I like a blog system that stays close to the codebase.
+
+Local MDX files work well because they keep writing, metadata, and rendering logic in one place. That makes the setup easy to version, easy to refactor, and easy to export statically.
+
+## The useful pieces
+
+- `gray-matter` for frontmatter parsing
+- `next-mdx-remote/rsc` for compiling content in server components
+- a small component map for headings, code blocks, and blockquotes
+
+The component map matters more than people think. Without it, a blog often feels visually disconnected from the rest of the site.
+
+Linking the typography back to the same spacing system as the portfolio keeps the writing section consistent with the homepage, project pages, and contact page.
+
+If you want more control later, you can add custom components for callouts, file trees, or embedded demos without changing the content model.

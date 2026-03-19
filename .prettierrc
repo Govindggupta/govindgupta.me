@@ -5,13 +5,7 @@
   "singleQuote": false,
   "trailingComma": "es5",
   "bracketSpacing": true,
-  "plugins": [
-    "prettier-plugin-tailwindcss"
-  ],
-  "tailwindFunctions": [
-    "clsx",
-    "cn",
-    "cva"
-  ],
-  "tailwindStylesheet": "./src/styles/globals.css"
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindFunctions": ["clsx", "cn", "cva"],
+  "tailwindStylesheet": "./src/app/globals.css"
 }

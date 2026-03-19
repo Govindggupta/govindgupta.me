@@ -1,0 +1,40 @@
+---
+title: "Designing quieter interfaces"
+date: "2025-02-18"
+description: "Why the best product surfaces often remove motion, noise, and layout friction before adding anything new."
+tags:
+  - Design Systems
+  - Frontend
+  - Product
+---
+
+Quiet interfaces are not empty interfaces. They are the result of editing.
+
+When a screen has too many competing signals, the product starts asking users to do layout work in their heads. That cost shows up as hesitation, missed actions, and visual fatigue.
+
+## What I look for first
+
+I start with three checks:
+
+1. Can a user tell what matters in the first five seconds?
+2. Does the spacing suggest a reading order without decorative cues?
+3. Can motion be removed without losing clarity?
+
+If the answer to the third question is no, the screen is probably relying on animation to compensate for weak structure.
+
+> The baseline should already feel calm before motion is introduced.
+
+That is why I like working with a tight type scale, restrained borders, and generous whitespace. Those constraints create direction without forcing attention.
+
+```tsx
+export function SummaryRow({ title, value }: { title: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between border-b border-[#222222]/12 py-3">
+      <span>{title}</span>
+      <span>{value}</span>
+    </div>
+  )
+}
+```
+
+The component above is plain on purpose. The structure is doing the work, not color, gradients, or ornamental chrome.

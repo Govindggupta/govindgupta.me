@@ -1,50 +1,58 @@
-import type { Metadata } from "next";
-import { cascadiaCode } from "./fonts";
-import "./globals.css";
+import type { Metadata } from "next"
+import { Inter, Space_Grotesk } from "next/font/google"
+import type { ReactNode } from "react"
+
+import { Footer } from "@/components/layout/Footer"
+import { Navbar } from "@/components/layout/Navbar"
+import { baseMetadata } from "@/lib/metadata"
+import { cascadiaCode } from "./fonts"
+
+import "./globals.css"
+import { ThemeProvider } from "../../providers/ThemeProvider"
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+})
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
-  title: "Govind Gupta | Developer Portfolio",
-  description:
-    "Portfolio website for Govind Gupta with projects, experience, GitHub activity, and contact details.",
+  ...baseMetadata,
   icons: {
     icon: "/icon.svg",
   },
-};
-
-const themeScript = `
-  (() => {
-    const root = document.documentElement;
-    const storedTheme = window.localStorage.getItem("theme");
-    const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const theme =
-      storedTheme === "light" || storedTheme === "dark"
-        ? storedTheme
-        : systemPrefersDark
-          ? "dark"
-          : "light";
-
-    root.dataset.theme = theme;
-    root.style.colorScheme = theme;
-  })();
-`;
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className="bg-background text-foreground transition-colors duration-300"
+    >
       <body
-        className={`${cascadiaCode.variable} relative min-h-screen bg-background text-foreground antialiased`}
+        className={`${inter.variable} ${spaceGrotesk.variable} ${cascadiaCode.variable} min-h-screen bg-background font-sans text-foreground antialiased transition-colors duration-300`}
       >
-        <div className="relative z-10 mx-auto min-h-screen max-w-6xl px-2 sm:px-4">
-          {children}
-        </div>
+        <ThemeProvider>
+          <div className="flex min-h-screen flex-col bg-background transition-colors duration-300">
+            <Navbar />
+            <main className="mx-auto w-full max-w-[900px] flex-1 pt-[4.5rem]">
+              {children}
+            </main>
+            <Footer />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

@@ -26,14 +26,6 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "**.githubusercontent.com",
       },
-      {
-        protocol: "https",
-        hostname: "cdn.simpleicons.org",
-      },
-      {
-        protocol: "https",
-        hostname: "cdn.jsdelivr.net",
-      },
     ],
   },
 };

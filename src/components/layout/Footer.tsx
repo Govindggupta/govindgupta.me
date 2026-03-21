@@ -19,7 +19,7 @@ export function Footer() {
           <div className="space-y-4">
             <Logo />
             <p className="max-w-[28rem] text-sm leading-6 text-muted">
-              Ready to Colaborate!!
+              Ready to Collaborate!!
             </p>
             <a
               href="mailto:govindgupta@email.com"

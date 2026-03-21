@@ -6,11 +6,14 @@ import {
   GitHubGraphFallback,
   githubSectionLink,
 } from "@/components/sections/GitHubGraph"
+import { Experience } from "@/components/sections/Experience"
 import { FeaturedProjects } from "@/components/sections/FeaturedProjects"
 import { Hero } from "@/components/sections/Hero"
+import { Interests } from "@/components/sections/Interests"
 import { LatestPosts } from "@/components/sections/LatestPosts"
 import { TechStack } from "@/components/sections/TechStack"
 import { SectionReveal } from "@/components/ui/SectionReveal"
+import { experiences } from "@/data/experience"
 import { getAllPosts } from "@/lib/mdx"
 import { buildMetadata } from "@/lib/metadata"
 import { getPinnedRepos } from "@/lib/github"
@@ -76,9 +79,15 @@ export default async function HomePage() {
     <main className="pb-20 sm:pb-24">
       <Hero />
 
-      <SectionReveal className="mx-auto w-full max-w-[900px] px-4 pt-4 pb-10 md:px-6 md:pb-12">
+      <SectionReveal className="mx-auto w-full max-w-[900px] px-4 pt-2 pb-10 md:px-6 md:pb-12">
         <TechStack />
       </SectionReveal>
+
+      {experiences.length > 0 ? (
+        <SectionReveal className="mx-auto w-full max-w-[900px] px-4 py-16 md:px-6">
+          <Experience />
+        </SectionReveal>
+      ) : null}
 
       <SectionReveal className="mx-auto w-full max-w-[900px] px-4 py-16 md:px-6">
         <HomeSectionHeader
@@ -110,6 +119,10 @@ export default async function HomePage() {
         <Suspense fallback={<GitHubGraphFallback />}>
           <GitHubGraph />
         </Suspense>
+      </SectionReveal>
+
+      <SectionReveal className="mx-auto w-full max-w-[900px] px-4 py-16 md:px-6">
+        <Interests />
       </SectionReveal>
     </main>
   )

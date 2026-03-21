@@ -144,11 +144,11 @@ const techStack: TechItem[] = [
   },
   {
     name: "Pinecone",
-    iconDark: "/icons/tech/pinecone.svg",
-    iconLight: "/icons/tech/pinecone.svg",
+    iconDark: "/icons/tech/pinecone-light.svg",
+    iconLight: "/icons/tech/pinecone-dark.svg",
     url: "https://www.pinecone.io",
     category: "ai",
-    singleVariant: true,
+    singleVariant: false,
   },
   {
     name: "Git",

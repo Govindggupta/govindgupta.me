@@ -3,19 +3,125 @@
 import { useEffect, useRef, useState } from "react"
 
 import { motion } from "framer-motion"
-import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 
-const sunRayClasses = [
-  "-translate-x-1/2 -translate-y-[0.95rem]",
-  "translate-x-[0.62rem] -translate-y-[0.62rem] rotate-45",
-  "translate-x-[0.95rem] -translate-y-1/2 rotate-90",
-  "translate-x-[0.62rem] translate-y-[0.62rem] rotate-[135deg]",
-  "-translate-x-1/2 translate-y-[0.95rem] rotate-180",
-  "-translate-x-[0.62rem] translate-y-[0.62rem] rotate-[225deg]",
-  "-translate-x-[0.95rem] -translate-y-1/2 rotate-[270deg]",
-  "-translate-x-[0.62rem] -translate-y-[0.62rem] rotate-[315deg]",
+const sunRays = [
+  { x1: 12, y1: 2, x2: 12, y2: 4.25 },
+  { x1: 17.05, y1: 6.95, x2: 18.65, y2: 5.35 },
+  { x1: 19.75, y1: 12, x2: 17.5, y2: 12 },
+  { x1: 17.05, y1: 17.05, x2: 18.65, y2: 18.65 },
+  { x1: 12, y1: 19.75, x2: 12, y2: 17.5 },
+  { x1: 6.95, y1: 17.05, x2: 5.35, y2: 18.65 },
+  { x1: 4.25, y1: 12, x2: 2, y2: 12 },
+  { x1: 6.95, y1: 6.95, x2: 5.35, y2: 5.35 },
 ] as const
+
+function SunIcon({
+  hovered,
+  active,
+}: {
+  hovered: boolean
+  active: boolean
+}) {
+  return (
+    <motion.svg
+      viewBox="0 0 24 24"
+      width="16"
+      height="16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={false}
+      animate={{
+        rotate: active ? [0, 40, 0] : hovered ? 12 : 0,
+        scale: active ? [0.88, 1.05, 1] : hovered ? 1.04 : 1,
+      }}
+      transition={{
+        duration: active ? 0.95 : 0.22,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="text-neutral-700 dark:text-neutral-200"
+    >
+      <motion.circle
+        cx="12"
+        cy="12"
+        r="4.25"
+        initial={false}
+        animate={{
+          scale: active ? [0.7, 1.08, 1] : 1,
+        }}
+        transition={{
+          duration: active ? 0.7 : 0.2,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        style={{ originX: "12px", originY: "12px" }}
+      />
+
+      {sunRays.map((ray, index) => (
+        <motion.line
+          key={`${ray.x1}-${ray.y1}`}
+          {...ray}
+          initial={false}
+          animate={{
+            opacity: active ? [0, 1, 1] : hovered ? 1 : 0.9,
+            pathLength: active ? [0.15, 1, 1] : 1,
+          }}
+          transition={{
+            duration: active ? 0.34 : 0.2,
+            delay: active ? index * 0.07 : 0,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          style={{ originX: "12px", originY: "12px" }}
+        />
+      ))}
+    </motion.svg>
+  )
+}
+
+function MoonIcon({
+  hovered,
+  active,
+}: {
+  hovered: boolean
+  active: boolean
+}) {
+  return (
+    <motion.svg
+      viewBox="0 0 24 24"
+      width="15"
+      height="15"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={false}
+      animate={{
+        rotate: active ? [0, -16, 14, -10, 6, -3, 0] : hovered ? -10 : 0,
+        scale: active ? [0.9, 1.04, 1] : hovered ? 1.03 : 1,
+      }}
+      transition={{
+        duration: active ? 0.95 : 0.22,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+      className="text-neutral-700 dark:text-neutral-200"
+    >
+      <motion.path
+        d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"
+        initial={false}
+        animate={{
+          pathLength: active ? [0.82, 1, 1] : 1,
+        }}
+        transition={{
+          duration: active ? 0.55 : 0.2,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+      />
+    </motion.svg>
+  )
+}
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
@@ -24,15 +130,22 @@ export function ThemeToggle() {
   const [activeAnimation, setActiveAnimation] = useState<"sun" | "moon" | null>(
     null
   )
+  const audioRef = useRef<HTMLAudioElement | null>(null)
   const resetTimeoutRef = useRef<number | null>(null)
 
   useEffect(() => {
     setMounted(true)
+    audioRef.current = new Audio("/click.mp3")
+    audioRef.current.volume = 0.5
+    audioRef.current.preload = "auto"
 
     return () => {
       if (resetTimeoutRef.current !== null) {
         window.clearTimeout(resetTimeoutRef.current)
       }
+
+      audioRef.current?.pause()
+      audioRef.current = null
     }
   }, [])
 
@@ -41,8 +154,6 @@ export function ThemeToggle() {
   }
 
   const isDark = resolvedTheme === "dark"
-  const showMoon = isDark
-  const showSun = !isDark
 
   const handleToggle = () => {
     const nextTheme = isDark ? "light" : "dark"
@@ -53,6 +164,10 @@ export function ThemeToggle() {
     }
 
     setActiveAnimation(nextAnimation)
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0
+      void audioRef.current.play().catch(() => {})
+    }
     setTheme(nextTheme)
 
     resetTimeoutRef.current = window.setTimeout(() => {
@@ -75,21 +190,12 @@ export function ThemeToggle() {
         className="absolute inset-0 flex items-center justify-center"
         initial={false}
         animate={{
-          opacity: showMoon ? 1 : 0,
-          scale: showMoon ? 1 : 0.85,
-          rotate:
-            activeAnimation === "moon"
-              ? [0, -16, 14, -10, 6, -3, 0]
-              : hovered && showMoon
-                ? -10
-                : 0,
+          opacity: isDark ? 1 : 0,
+          scale: isDark ? 1 : 0.88,
         }}
-        transition={{
-          duration: activeAnimation === "moon" ? 0.95 : 0.2,
-          ease: [0.22, 1, 0.36, 1],
-        }}
+        transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
       >
-        <Moon size={15} strokeWidth={1.8} className="text-neutral-700 dark:text-neutral-200" />
+        <MoonIcon hovered={hovered && isDark} active={activeAnimation === "moon"} />
       </motion.span>
 
       <motion.span
@@ -97,43 +203,12 @@ export function ThemeToggle() {
         className="absolute inset-0 flex items-center justify-center"
         initial={false}
         animate={{
-          opacity: showSun ? 1 : 0,
-          scale: showSun ? 1 : 0.85,
-          rotate: hovered && showSun ? 8 : 0,
+          opacity: isDark ? 0 : 1,
+          scale: isDark ? 0.88 : 1,
         }}
         transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
       >
-        {sunRayClasses.map((rayClass, index) => (
-          <motion.span
-            key={rayClass}
-            className={`absolute left-1/2 top-1/2 h-2 w-px rounded-full bg-neutral-700 dark:bg-neutral-200 ${rayClass}`}
-            initial={false}
-            animate={
-              showSun
-                ? {
-                    opacity: activeAnimation === "sun" ? [0, 1, 1] : hovered ? 1 : 0.75,
-                    scaleY: activeAnimation === "sun" ? [0.2, 1, 1] : hovered ? 1.1 : 1,
-                  }
-                : {
-                    opacity: 0,
-                    scaleY: 0.2,
-                  }
-            }
-            transition={
-              activeAnimation === "sun"
-                ? {
-                    duration: 0.22,
-                    delay: index * 0.08,
-                    ease: [0.22, 1, 0.36, 1],
-                  }
-                : {
-                    duration: 0.18,
-                  }
-            }
-          />
-        ))}
-
-        <Sun size={15} strokeWidth={1.8} className="relative z-10 text-neutral-700 dark:text-neutral-200" />
+        <SunIcon hovered={hovered && !isDark} active={activeAnimation === "sun"} />
       </motion.span>
     </motion.button>
   )

@@ -154,7 +154,12 @@ export function ProfileImageBorder({
 
   return (
     <div
-      className={["relative shrink-0", className].filter(Boolean).join(" ")}
+      className={[
+        "relative shrink-0 text-neutral-900 dark:text-white",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
       style={wrapperStyle}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -189,7 +194,7 @@ export function ProfileImageBorder({
           cy={center}
           r={radius}
           fill="none"
-          stroke="rgba(255,255,255,1)"
+          stroke="currentColor"
           strokeOpacity={0.12}
           strokeWidth="1"
           initial={false}
@@ -202,7 +207,7 @@ export function ProfileImageBorder({
           cy={center}
           r={radius}
           fill="none"
-          stroke="rgba(255,255,255,1)"
+          stroke="currentColor"
           strokeWidth="1.25"
           filter={`url(#${uniqueId}-ring-glow)`}
           initial={false}
@@ -231,10 +236,10 @@ export function ProfileImageBorder({
               y2={segmentEndPoint.y}
               gradientUnits="userSpaceOnUse"
             >
-              <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-              <stop offset="38%" stopColor="rgba(255,255,255,0.03)" />
-              <stop offset="76%" stopColor="rgba(255,255,255,0.2)" />
-              <stop offset="100%" stopColor="rgba(255,255,255,0.88)" />
+              <stop offset="0%" stopColor="currentColor" stopOpacity="0" />
+              <stop offset="38%" stopColor="currentColor" stopOpacity="0.03" />
+              <stop offset="76%" stopColor="currentColor" stopOpacity="0.2" />
+              <stop offset="100%" stopColor="currentColor" stopOpacity="0.88" />
             </linearGradient>
 
             <filter

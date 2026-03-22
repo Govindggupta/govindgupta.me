@@ -24,12 +24,14 @@ function HomeSectionHeader({
   href,
   count,
   external = false,
+  showLink = true,
 }: {
   title: string
   description: string
   href: string
   count?: number
   external?: boolean
+  showLink?: boolean
 }) {
   const content = (
     <div className="mb-8 mt-24 flex items-start justify-between gap-6">
@@ -44,11 +46,17 @@ function HomeSectionHeader({
         </h2>
         <p className="mt-1 text-sm text-muted">{description}</p>
       </div>
-      <span className="mt-2 shrink-0 text-sm text-muted transition-colors hover:text-foreground">
-        {external ? "View on GitHub →" : "View all →"}
-      </span>
+      {showLink ? (
+        <span className="mt-2 shrink-0 text-sm text-muted transition-colors hover:text-foreground">
+          {external ? "View on GitHub →" : "View all →"}
+        </span>
+      ) : null}
     </div>
   )
+
+  if (!showLink) {
+    return content
+  }
 
   if (external) {
     return (
@@ -85,6 +93,13 @@ export default async function HomePage() {
 
       {experiences.length > 0 ? (
         <SectionReveal className="mx-auto w-full max-w-[900px] px-4 py-16 md:px-6">
+          <HomeSectionHeader
+            title="Experience"
+            count={experiences.length}
+            description="Where I've worked."
+            href="/"
+            showLink={false}
+          />
           <Experience />
         </SectionReveal>
       ) : null}
@@ -95,6 +110,7 @@ export default async function HomePage() {
           count={repos.length}
           description="Things I've built."
           href="/projects"
+          showLink={false}
         />
         <FeaturedProjects repos={repos.slice(0, 4)} />
       </SectionReveal>
@@ -105,6 +121,7 @@ export default async function HomePage() {
           count={posts.length}
           description="Thoughts and learnings."
           href="/blog"
+          showLink={false}
         />
         <LatestPosts posts={posts.slice(0, 4)} />
       </SectionReveal>

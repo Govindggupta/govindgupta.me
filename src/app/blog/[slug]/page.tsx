@@ -1,6 +1,7 @@
+import Link from "next/link"
 import { notFound } from "next/navigation"
+import { ArrowLeft } from "lucide-react"
 
-import { BackLink } from "@/components/ui/BackLink"
 import { PageTransition } from "@/components/ui/PageTransition"
 import { ReadingProgress } from "@/components/ui/ReadingProgress"
 import { formatDate, getBlogSlugs, getPostBySlug } from "@/lib/mdx"
@@ -55,14 +56,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <PageTransition className="mx-auto w-full max-w-[900px] px-4 section-space md:px-6">
         <article className="space-y-10">
           <div className="space-y-6">
-            <div className="flex flex-wrap items-center gap-4">
-              <BackLink href="/blog" className="mb-0">
-                Back to blog
-              </BackLink>
-              <BackLink href="/" className="mb-0">
-                Back home
-              </BackLink>
-            </div>
+            <Link
+              href="/blog"
+              className="mb-8 flex items-center gap-1 text-sm text-muted hover:underline"
+            >
+              <ArrowLeft size={14} />
+              <span>Back to blog</span>
+            </Link>
 
             <header className="space-y-4 border-b border-border pb-8">
               <div className="flex flex-wrap items-center gap-3 font-mono text-xs tracking-[0.16em] text-muted uppercase">

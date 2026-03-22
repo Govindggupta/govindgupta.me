@@ -1,3 +1,10 @@
+"use client"
+
+import { useState } from "react"
+
+import { AnimatePresence, motion } from "framer-motion"
+import { ChevronDown, ChevronUp } from "lucide-react"
+
 import { experiences, type Experience as ExperienceItem } from "@/data/experience"
 
 function formatType(type: ExperienceItem["type"]) {
@@ -16,18 +23,18 @@ function formatType(type: ExperienceItem["type"]) {
 }
 
 export function Experience() {
+  const [expanded, setExpanded] = useState(false)
+
   if (experiences.length === 0) {
     return null
   }
 
+  const visibleExperiences = expanded ? experiences : experiences.slice(0, 2)
+
   return (
     <section>
-      <p className="mb-6 text-xs tracking-widest text-muted uppercase">
-        Experience
-      </p>
-
-      <div>
-        {experiences.map((experience, index) => {
+      <AnimatePresence initial={false}>
+        {visibleExperiences.map((experience, index) => {
           const companyContent = experience.url ? (
             <a
               href={experience.url}
@@ -42,10 +49,16 @@ export function Experience() {
           )
 
           return (
-            <div key={`${experience.company}-${experience.role}`}>
-              <div className="flex flex-col gap-1 pb-8">
-                <div className="flex items-start justify-between gap-6">
-                  <div className="min-w-0">
+            <motion.div
+              key={`${experience.company}-${experience.role}`}
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.18 }}
+            >
+              <div className="space-y-3">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0 space-y-0.5">
                     <div className="flex flex-wrap items-center gap-2">
                       <p className="text-sm font-medium text-foreground">
                         {companyContent}
@@ -56,31 +69,34 @@ export function Experience() {
                         </span>
                       ) : null}
                     </div>
-                    <p className="mt-1 text-sm text-muted">
+                    <p className="text-sm text-muted">
                       {experience.role} · {experience.location}
                     </p>
                   </div>
 
-                  <div className="shrink-0 text-right">
+                  <div className="shrink-0 space-y-1 text-right">
                     <p className="text-xs text-muted">{experience.duration}</p>
-                    <span className="mt-1 inline-flex rounded-md border border-border px-2 py-0.5 text-xs text-muted">
+                    <span className="inline-flex rounded-md border border-border px-2 py-0.5 text-xs text-muted">
                       {formatType(experience.type)}
                     </span>
                   </div>
                 </div>
 
                 {experience.description.length > 0 ? (
-                  <ul className="mt-2 list-inside list-disc space-y-1">
+                  <div className="space-y-1.5">
                     {experience.description.slice(0, 3).map((point) => (
-                      <li key={point} className="text-sm text-muted">
-                        {point}
-                      </li>
+                      <p
+                        key={point}
+                        className="text-sm leading-relaxed text-muted"
+                      >
+                        – {point}
+                      </p>
                     ))}
-                  </ul>
+                  </div>
                 ) : null}
 
                 {experience.tech.length > 0 ? (
-                  <div className="mt-2 flex flex-wrap gap-1">
+                  <div className="flex flex-wrap gap-1.5">
                     {experience.tech.map((item) => (
                       <span
                         key={item}
@@ -93,13 +109,24 @@ export function Experience() {
                 ) : null}
               </div>
 
-              {index < experiences.length - 1 ? (
-                <hr className="mt-8 border-border" />
+              {index < visibleExperiences.length - 1 ? (
+                <hr className="my-6 border-border" />
               ) : null}
-            </div>
+            </motion.div>
           )
         })}
-      </div>
+      </AnimatePresence>
+
+      {experiences.length > 2 ? (
+        <button
+          type="button"
+          onClick={() => setExpanded((current) => !current)}
+          className="mt-2 flex w-full items-center justify-center gap-1.5 text-sm text-muted transition-colors duration-150 hover:text-foreground"
+        >
+          {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+          <span>{expanded ? "Show less" : "Show more"}</span>
+        </button>
+      ) : null}
     </section>
   )
 }

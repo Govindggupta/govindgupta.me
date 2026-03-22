@@ -21,9 +21,9 @@ export default function ProfileImage({
   imageSrc = "https://avatars.githubusercontent.com/u/119047426?v=4",
   links = [
     {
-      href: "https://github.com/yourhandle",
+      href: "https://github.com/govindggupta",
       label: "GitHub",
-      value: "yourhandle",
+      value: "govindggupta",
     },
     {
       href: "https://linkedin.com/in/yourhandle",

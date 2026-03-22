@@ -61,7 +61,7 @@ export async function Hero() {
               height={160}
               sizes="(min-width: 768px) 160px, 96px"
               priority
-              className="h-24 w-24 rounded-full object-cover sm:h-28 sm:w-28 md:h-40 md:w-40"
+              className="h-26 w-26 rounded-full object-cover sm:h-30 sm:w-30 md:h-42 md:w-42 border border-border p-1" 
             />
           </div>
 
@@ -110,10 +110,10 @@ export async function Hero() {
 
             <HeroInfoRow icon={<Mail size={14} strokeWidth={1.8} />}>
               <a
-                href="mailto:govindgupta@email.com"
+                href="mailto:contact@govindgupta.me"
                 className="underline decoration-border decoration-[1px] underline-offset-[3px] hover:opacity-70"
               >
-                govindgupta@email.com
+                contact@govindgupta.me
               </a>
             </HeroInfoRow>
 

@@ -72,7 +72,7 @@ export function Footer() {
 
         <div className="flex flex-col gap-3 text-center md:flex-row md:items-center md:justify-between md:text-left">
           <p className="text-xs text-muted">
-            © 2025 Govind Gupta. All rights reserved.
+            © 2026 Govind Gupta. All rights reserved.
           </p>
           <div className="flex justify-center md:justify-end">
             <BackToTop />

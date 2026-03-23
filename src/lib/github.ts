@@ -4,6 +4,8 @@ import type { PinnedRepo } from "@/types"
 
 const GITHUB_GRAPHQL_ENDPOINT = "https://api.github.com/graphql"
 const GITHUB_PUBLIC_CONTRIBUTIONS_ENDPOINT = "https://github.com/users"
+const GITHUB_CONTRIBUTIONS_API_ENDPOINT =
+  "https://github-contributions-api.jogruber.de/v4"
 const GITHUB_USERNAME = "govindggupta"
 const CONTRIBUTION_WEEKS = 52
 const DAYS_PER_WEEK = 7
@@ -56,9 +58,12 @@ const pinnedReposQuery = `
   }
 `
 
+export type GitHubContributionLevel = 0 | 1 | 2 | 3 | 4
+
 export interface GitHubContributionDay {
   date: string
   contributionCount: number
+  contributionLevel: GitHubContributionLevel
 }
 
 export interface GitHubContributionWeek {
@@ -77,17 +82,40 @@ export interface GitHubProfile {
   login: string
 }
 
+interface GitHubGraphQLContributionDay {
+  date: string
+  contributionCount: number
+}
+
+interface GitHubGraphQLContributionWeek {
+  contributionDays: GitHubGraphQLContributionDay[]
+}
+
+interface GitHubGraphQLContributionCalendar {
+  totalContributions: number
+  weeks: GitHubGraphQLContributionWeek[]
+}
+
 interface GitHubGraphQLResponse {
   data?: {
     user: {
       contributionsCollection: {
-        contributionCalendar: GitHubContributionCalendar
+        contributionCalendar: GitHubGraphQLContributionCalendar
       }
     } | null
   }
   errors?: Array<{
     message: string
   }>
+}
+
+interface GitHubContributionsApiResponse {
+  contributions?: Array<{
+    date: string
+    count: number
+    level: GitHubContributionLevel
+  }>
+  error?: string
 }
 
 interface GitHubPinnedRepoNode {
@@ -154,6 +182,52 @@ function buildWeeks(days: GitHubContributionDay[]) {
   }))
 }
 
+function clampContributionLevel(level: number): GitHubContributionLevel {
+  if (level <= 0) {
+    return 0
+  }
+
+  if (level >= 4) {
+    return 4
+  }
+
+  return level as GitHubContributionLevel
+}
+
+function deriveContributionLevel(
+  contributionCount: number,
+  maxContributionCount: number
+): GitHubContributionLevel {
+  if (contributionCount === 0 || maxContributionCount <= 0) {
+    return 0
+  }
+
+  return clampContributionLevel(
+    Math.ceil((contributionCount / maxContributionCount) * 4)
+  )
+}
+
+function withDerivedContributionLevels(
+  days: Array<{
+    date: string
+    contributionCount: number
+  }>
+): GitHubContributionDay[] {
+  const maxContributionCount = days.reduce(
+    (maxCount, day) => Math.max(maxCount, day.contributionCount),
+    0
+  )
+
+  return days.map((day) => ({
+    date: day.date,
+    contributionCount: day.contributionCount,
+    contributionLevel: deriveContributionLevel(
+      day.contributionCount,
+      maxContributionCount
+    ),
+  }))
+}
+
 function parseContributionCount(tooltip: string) {
   if (tooltip.startsWith("No contributions")) {
     return 0
@@ -187,12 +261,66 @@ function parseContributionDays(markup: string) {
         return null
       }
 
+      const levelMatch = match[0].match(/data-level="(?<level>\d+)"/)
+      const contributionLevel = clampContributionLevel(
+        Number(levelMatch?.groups?.level ?? 0)
+      )
+
       return {
         date,
         contributionCount,
+        contributionLevel,
       }
     })
     .filter((day): day is GitHubContributionDay => day !== null)
+}
+
+async function fetchContributionApiCalendar(): Promise<GitHubContributionCalendar | null> {
+  const contributionsUrl = new URL(
+    `${GITHUB_CONTRIBUTIONS_API_ENDPOINT}/${GITHUB_USERNAME}`
+  )
+  contributionsUrl.searchParams.set("y", "last")
+
+  const response = await fetch(contributionsUrl, {
+    headers: {
+      Accept: "application/json",
+      "User-Agent": "govindgupta.me",
+    },
+    next: {
+      revalidate: 3600,
+    },
+  })
+
+  if (!response.ok) {
+    return null
+  }
+
+  const payload = (await response.json()) as GitHubContributionsApiResponse
+
+  if (payload.error || !payload.contributions?.length) {
+    return null
+  }
+
+  const days = payload.contributions
+    .map((day) => ({
+      date: day.date,
+      contributionCount: day.count,
+      contributionLevel: clampContributionLevel(day.level),
+    }))
+    .sort((left, right) => left.date.localeCompare(right.date))
+    .slice(-CONTRIBUTION_DAYS)
+
+  if (days.length === 0) {
+    return null
+  }
+
+  return {
+    totalContributions: days.reduce(
+      (sum, day) => sum + day.contributionCount,
+      0
+    ),
+    weeks: buildWeeks(days),
+  }
 }
 
 async function fetchGraphQLContributionCalendar(
@@ -224,10 +352,15 @@ async function fetchGraphQLContributionCalendar(
 
   const calendar =
     payload.data.user.contributionsCollection.contributionCalendar
+  const days = withDerivedContributionLevels(
+    calendar.weeks
+      .slice(-CONTRIBUTION_WEEKS)
+      .flatMap((week) => week.contributionDays)
+  )
 
   return {
     totalContributions: calendar.totalContributions,
-    weeks: calendar.weeks.slice(-CONTRIBUTION_WEEKS),
+    weeks: buildWeeks(days),
   }
 }
 
@@ -310,6 +443,16 @@ async function fetchPublicContributionCalendar(): Promise<GitHubContributionCale
 }
 
 export async function getGitHubContributionCalendar(): Promise<GitHubContributionCalendar | null> {
+  try {
+    const apiCalendar = await fetchContributionApiCalendar()
+
+    if (apiCalendar) {
+      return apiCalendar
+    }
+  } catch {
+    // Fall through to the GitHub-backed fallbacks when the public API is unavailable.
+  }
+
   const token = process.env.GITHUB_TOKEN
 
   if (token) {

@@ -13,6 +13,7 @@
   --color-heat-1: var(--heat-1);
   --color-heat-2: var(--heat-2);
   --color-heat-3: var(--heat-3);
+  --color-heat-4: var(--heat-4);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-heading:
     var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
@@ -27,10 +28,11 @@
   --foreground-soft: #111111;
   --muted: #888888;
   --border: #e5e5e5;
-  --heat-0: #e5e5e5;
-  --heat-1: #a3a3a3;
-  --heat-2: #525252;
-  --heat-3: #171717;
+  --heat-0: #f5f5f5;
+  --heat-1: #d4d4d8;
+  --heat-2: #a1a1aa;
+  --heat-3: #52525b;
+  --heat-4: #18181b;
   --step--1: 0.8rem;
   --step-0: 1rem;
   --step-1: 1.25rem;
@@ -52,10 +54,11 @@
   --foreground-soft: #f5f5f5;
   --muted: #888888;
   --border: #222222;
-  --heat-0: #262626;
-  --heat-1: #525252;
-  --heat-2: #a3a3a3;
-  --heat-3: #f5f5f5;
+  --heat-0: #111111;
+  --heat-1: #3f3f46;
+  --heat-2: #71717a;
+  --heat-3: #d4d4d8;
+  --heat-4: #fafafa;
   --noise-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 140 140'%3E%3Cg fill='%23fff' fill-opacity='.025'%3E%3Ccircle cx='14' cy='18' r='1'/%3E%3Ccircle cx='38' cy='72' r='1'/%3E%3Ccircle cx='64' cy='24' r='1'/%3E%3Ccircle cx='88' cy='116' r='1'/%3E%3Ccircle cx='118' cy='42' r='1'/%3E%3Ccircle cx='22' cy='108' r='1'/%3E%3Ccircle cx='54' cy='128' r='1'/%3E%3Ccircle cx='102' cy='86' r='1'/%3E%3Ccircle cx='128' cy='16' r='1'/%3E%3Ccircle cx='74' cy='64' r='1'/%3E%3Ccircle cx='8' cy='54' r='1'/%3E%3Ccircle cx='132' cy='98' r='1'/%3E%3C/g%3E%3C/svg%3E");
 }
 

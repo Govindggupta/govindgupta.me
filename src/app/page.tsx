@@ -5,7 +5,7 @@ import {
   GitHubGraph,
   GitHubGraphFallback,
   githubSectionLink,
-} from "@/components/sections/GitHubGraph"
+} from "@/components/sections/githubgraph/GitHubGraph"
 import { Experience } from "@/components/sections/Experience"
 import { FeaturedProjects } from "@/components/sections/FeaturedProjects"
 import { Hero } from "@/components/sections/Hero"

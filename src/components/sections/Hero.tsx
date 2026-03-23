@@ -10,6 +10,7 @@ import {
 import Image from "next/image"
 
 import { ProfileImageBorder } from "@/components/ui/ProfileImageBorder"
+import { VerifiedBadge } from "@/components/ui/VerifiedBadge"
 import { socials } from "@/data/socials"
 import { getGitHubProfile } from "@/lib/github"
 
@@ -72,8 +73,9 @@ export async function Hero() {
           </div>
 
           <div className="min-w-0">
-            <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl md:text-[3.35rem]">
-              {name}
+            <h1 className="flex items-center gap-1.5 text-3xl leading-none font-semibold tracking-tight text-foreground sm:gap-2 sm:text-4xl md:text-[3.35rem]">
+              <span className="block">{name}</span>
+              <VerifiedBadge className="relative top-[0.02em] h-[0.52em] w-[0.52em] self-center md:h-[0.46em] md:w-[0.46em]" />
             </h1>
             <p className="mt-1 text-base text-muted sm:text-lg">
               Full Stack Developer

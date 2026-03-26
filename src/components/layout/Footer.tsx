@@ -2,7 +2,6 @@ import Link from "next/link"
 
 import { socials } from "@/data/socials"
 import { Logo } from "@/components/ui/Logo"
-import { BackToTop } from "@/components/ui/BackToTop"
 
 const navigation = [
   { href: "/", label: "Home" },
@@ -74,9 +73,6 @@ export function Footer() {
           <p className="text-xs text-muted">
             © 2026 Govind Gupta. All rights reserved.
           </p>
-          <div className="flex justify-center md:justify-end">
-            <BackToTop />
-          </div>
         </div>
       </div>
     </footer>

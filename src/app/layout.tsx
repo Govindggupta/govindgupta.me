@@ -4,6 +4,7 @@ import type { ReactNode } from "react"
 
 import { Footer } from "@/components/layout/Footer"
 import { Navbar } from "@/components/layout/Navbar"
+import { BackToTop } from "@/components/ui/BackToTop"
 import { baseMetadata } from "@/lib/metadata"
 import { cascadiaCode } from "./fonts"
 
@@ -50,6 +51,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            <BackToTop />
           </div>
         </ThemeProvider>
       </body>

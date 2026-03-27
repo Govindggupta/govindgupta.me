@@ -1,9 +1,10 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 import { motion } from "framer-motion"
 import { useTheme } from "next-themes"
+import KeyboardKey from "./KeyboardKey"
 
 const sunRays = [
   { x1: 12, y1: 2.25, x2: 12, y2: 4.5 },
@@ -111,10 +112,22 @@ function MoonIcon({ hovered, active }: { hovered: boolean; active: boolean }) {
   )
 }
 
+function isEditableTarget(target: EventTarget | null) {
+  if (!(target instanceof HTMLElement)) {
+    return false
+  }
+
+  return (
+    target.isContentEditable ||
+    Boolean(target.closest("input, textarea, select, [role='textbox']"))
+  )
+}
+
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
   const [hovered, setHovered] = useState(false)
+  const [tooltipDismissed, setTooltipDismissed] = useState(false)
   const [activeAnimation, setActiveAnimation] = useState<"sun" | "moon" | null>(
     null
   )
@@ -137,13 +150,10 @@ export function ThemeToggle() {
     }
   }, [])
 
-  if (!mounted) {
-    return <div aria-hidden="true" className="h-9 w-9" />
-  }
-
   const isDark = resolvedTheme === "dark"
+  const isTooltipVisible = hovered && !tooltipDismissed
 
-  const handleToggle = () => {
+  const handleToggle = useCallback(() => {
     const nextTheme = isDark ? "light" : "dark"
     const nextAnimation = nextTheme === "dark" ? "moon" : "sun"
 
@@ -152,6 +162,7 @@ export function ThemeToggle() {
     }
 
     setActiveAnimation(nextAnimation)
+    setTooltipDismissed(true)
     if (audioRef.current) {
       audioRef.current.currentTime = 0
       void audioRef.current.play().catch(() => {})
@@ -161,6 +172,42 @@ export function ThemeToggle() {
     resetTimeoutRef.current = window.setTimeout(() => {
       setActiveAnimation(null)
     }, 1150)
+  }, [isDark, setTheme])
+
+  useEffect(() => {
+    if (!mounted) {
+      return
+    }
+
+    function handleThemeShortcut(event: KeyboardEvent) {
+      if (
+        event.defaultPrevented ||
+        event.repeat ||
+        event.altKey ||
+        event.ctrlKey ||
+        event.metaKey ||
+        event.shiftKey
+      ) {
+        return
+      }
+
+      if (event.code !== "KeyD" || isEditableTarget(event.target)) {
+        return
+      }
+
+      event.preventDefault()
+      handleToggle()
+    }
+
+    document.addEventListener("keydown", handleThemeShortcut)
+
+    return () => {
+      document.removeEventListener("keydown", handleThemeShortcut)
+    }
+  }, [handleToggle, mounted])
+
+  if (!mounted) {
+    return <div aria-hidden="true" className="h-9 w-9" />
   }
 
   return (
@@ -168,8 +215,14 @@ export function ThemeToggle() {
       type="button"
       aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
       onClick={handleToggle}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
+      onHoverStart={() => {
+        setTooltipDismissed(false)
+        setHovered(true)
+      }}
+      onHoverEnd={() => {
+        setHovered(false)
+        setTooltipDismissed(false)
+      }}
       whileTap={{ scale: 0.96 }}
       className="relative flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-background-alt/80 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.08)] hover:bg-background-alt focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:outline-none dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_2px_10px_rgba(0,0,0,0.32)]"
     >
@@ -204,6 +257,37 @@ export function ThemeToggle() {
           active={activeAnimation === "sun"}
         />
       </motion.span>
+
+      <span
+        className={`pointer-events-none absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 ${
+          tooltipDismissed
+            ? "invisible opacity-0 transition-none"
+            : isTooltipVisible
+              ? "visible opacity-100 transition-opacity duration-150"
+              : "invisible opacity-0 transition-opacity duration-100"
+        }`}
+      >
+        <span
+          className={`relative inline-flex items-center gap-2 whitespace-nowrap rounded-[0.9rem] border px-3 py-2 text-[13px] leading-none font-medium shadow-[0_12px_28px_rgba(15,23,42,0.16)] ${
+            isDark
+              ? "border-black/10 bg-white text-neutral-900"
+              : "border-white/10 bg-neutral-950 text-white shadow-[0_12px_28px_rgba(0,0,0,0.28)]"
+          }`}
+        >
+          <span>Toggle Mode</span>
+          {isDark
+          ? <KeyboardKey tone= "light"size="xs">D</KeyboardKey>
+          : <KeyboardKey tone="dark" size="xs">D</KeyboardKey>
+          }
+          <span
+            className={`absolute left-1/2 bottom-full h-2.5 w-2.5 -translate-x-1/2 translate-y-1 rotate-45 border-l border-t ${
+              isDark
+                ? "border-black/10 bg-white"
+                : "border-white/10 bg-neutral-950"
+            }`}
+          />
+        </span>
+      </span>
     </motion.button>
   )
 }

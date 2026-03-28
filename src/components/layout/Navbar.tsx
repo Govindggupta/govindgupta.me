@@ -48,9 +48,9 @@ export function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`text-sm tracking-[-0.02em] transition-opacity duration-200 hover:opacity-60 ${
+                    className={`text-sm font-medium tracking-[-0.02em] transition-colors duration-200 ease-out hover:text-foreground ${
                       active
-                        ? "font-medium text-foreground underline decoration-current underline-offset-4"
+                        ? "text-foreground"
                         : "text-muted"
                     }`}
                   >
@@ -79,7 +79,7 @@ export function Navbar() {
         {isOpen ? (
           <motion.nav
             id="mobile-navigation"
-            className="fixed right-10 mx-auto mt-2 flex w-full max-w-[150px] flex-col gap-3 rounded-2xl border border-border bg-background/95 px-4 py-4 text-center backdrop-blur-sm md:hidden md:px-6"
+            className="fixed right-10 mx-auto mt-2 flex w-full max-w-[150px] flex-col rounded-2xl border border-border bg-background/95 px-2 py-2 text-center backdrop-blur-sm md:hidden md:px-6"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -92,10 +92,10 @@ export function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`text-sm tracking-[-0.02em] ${
+                  className={`rounded-lg px-3 py-1.5 text-sm tracking-[-0.02em] transition-colors duration-200 ${
                     active
-                      ? "font-medium text-foreground underline decoration-current underline-offset-4"
-                      : "text-muted"
+                      ? "bg-background-alt/80 font-medium text-foreground"
+                      : "text-muted hover:bg-background-alt/50 hover:text-foreground"
                   }`}
                 >
                   {item.label}

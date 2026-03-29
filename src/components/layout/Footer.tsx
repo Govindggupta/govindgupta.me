@@ -12,23 +12,23 @@ const navigation = [
 
 export function Footer() {
   return (
-    <footer className="mt-20 border-t border-border bg-background-alt/70 px-4 py-16 md:px-6 md:py-20">
+    <footer className="mt-16 border-t border-border bg-background-alt/70 px-4 py-16 md:px-6">
       <div className="mx-auto w-full max-w-[900px]">
-        <div className="grid gap-10 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] md:items-start">
+        <div className="grid gap-12 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] md:items-start">
           <div className="space-y-4">
             <Logo />
             <p className="max-w-[28rem] text-sm leading-6 text-muted">
               Ready to Collaborate!!
             </p>
             <a
-              href="mailto:govindgupta@email.com"
+              href="mailto:contact@govindgupta.me"
               className="inline-flex text-sm text-muted hover:text-foreground hover:underline"
             >
               contact@govindgupta.me
             </a>
           </div>
 
-          <div className="grid grid-cols-2 gap-10 md:justify-self-end">
+          <div className="grid grid-cols-2 gap-12 md:justify-self-end">
             <div>
               <p className="mb-3 text-xs tracking-widest text-muted uppercase">
                 Navigate

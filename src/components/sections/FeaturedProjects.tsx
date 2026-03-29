@@ -11,7 +11,7 @@ export function FeaturedProjects({
   const featuredRepos = repos.slice(0, 4)
 
   return (
-    <section>
+    <section className="space-y-6">
       {featuredRepos.length > 0 ? (
         <>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -20,7 +20,7 @@ export function FeaturedProjects({
             ))}
           </div>
 
-          <div className="mt-4 flex justify-center">
+          <div className="flex justify-center">
             <Link
               href="/projects"
               className="text-sm text-muted transition-colors duration-150 hover:text-foreground"

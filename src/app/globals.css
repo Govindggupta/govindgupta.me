@@ -102,7 +102,7 @@
 }
 
 @utility section-space {
-  @apply py-16 sm:py-24;
+  @apply pt-20 pb-0;
 }
 
 @utility section-kicker {

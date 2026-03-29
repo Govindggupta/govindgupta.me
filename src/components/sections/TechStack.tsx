@@ -17,8 +17,8 @@ export function TechStack() {
 
   return (
     <section>
-      <div className="mb-4">
-        <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-[2.4rem]">
+      <div className="mb-6">
+        <h2 className="text-4xl font-bold tracking-tight text-foreground">
           Stack
         </h2>
       </div>

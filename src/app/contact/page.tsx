@@ -21,9 +21,11 @@ export async function generateMetadata() {
 export default function ContactPage() {
   return (
     <PageTransition className="mx-auto w-full max-w-[900px] px-4 section-space md:px-6">
-      <section className="space-y-10">
-        <div className="space-y-3">
-          <BackLink href="/">Back home</BackLink>
+      <section className="space-y-12">
+        <div className="space-y-4">
+          <BackLink href="/" className="mb-0">
+            Back home
+          </BackLink>
           <h1 className="font-heading text-step-4 tracking-[-0.06em] text-foreground">
             Let&apos;s Talk
           </h1>
@@ -48,7 +50,7 @@ export default function ContactPage() {
         </div>
 
         <div className="border-t border-border pt-8">
-          <h2 className="mb-4 text-sm font-medium text-foreground">
+          <h2 className="mb-6 text-sm font-medium text-foreground">
             Or reach me directly
           </h2>
 

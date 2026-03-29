@@ -19,7 +19,7 @@ function GraphShell({ children }: Readonly<{ children: ReactNode }>) {
 export function GitHubGraphFallback() {
   return (
     <GraphShell>
-      <div className="w-full animate-pulse space-y-4">
+      <div className="w-full animate-pulse space-y-6">
         <svg
           viewBox={`0 0 ${GRAPH_WIDTH} ${GRAPH_HEIGHT}`}
           className="block h-auto w-full"

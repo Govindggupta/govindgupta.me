@@ -7,7 +7,7 @@ import { interests } from "@/data/interests"
 export function Interests() {
   return (
     <section>
-      <div className="mb-8 mt-16 flex items-center justify-between gap-4">
+      <div className="mb-6 flex items-center justify-between gap-4">
         <h2 className="text-base font-semibold text-foreground">
           Outside of Work
         </h2>

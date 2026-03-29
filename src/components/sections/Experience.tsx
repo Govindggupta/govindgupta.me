@@ -4,7 +4,7 @@ import { useState } from "react"
 
 import Image from "next/image"
 import { AnimatePresence, motion } from "framer-motion"
-import { ChevronDown, ChevronUp, Code2 } from "lucide-react"
+import { ChevronUp, Code2 } from "lucide-react"
 
 import { experiences, type Experience as ExperienceItem } from "@/data/experience"
 import VerticalBar from "@/components/ui/VerticalBar"
@@ -103,9 +103,9 @@ function ExperienceAccordionItem({
         },
         scale: itemMotionTransition,
       }}
-      className="pt-4 pb-5 first:pt-0 last:pb-0"
+      className="pt-6 pb-6 first:pt-0 last:pb-0"
     >
-      <div className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-2.5 gap-y-2 pb-2 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-x-3.5">
+      <div className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-2.5 gap-y-3 pb-3 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-x-3.5">
         <div className="flex items-center justify-center">
           <ExperienceAvatar experience={experience} />
         </div>
@@ -151,7 +151,7 @@ function ExperienceAccordionItem({
                 {experience.role}
               </p>
 
-              <div className="mt-1 flex flex-wrap items-center gap-1.5 text-muted">
+              <div className="mt-2 flex flex-wrap items-center gap-1.5 text-muted">
                 <span className="text-sm">{experience.location}</span>
                 <VerticalBar />
                 <span className="text-sm">{experience.duration}</span>
@@ -183,15 +183,15 @@ function ExperienceAccordionItem({
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-2.5 pt-3 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-x-3.5">
+            <div className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-2.5 pt-4 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-x-3.5">
               <div />
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {experience.description.slice(0, 3).map((point) => (
-                  <div key={point} className="flex items-start gap-3.5">
-                    <span className="mt-[8px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-foreground/45" />
-                    <p className="text-[15px] leading-relaxed dark:text-[#dfdfdf] text-[#333]">
-                      {point}
-                    </p>
+                  <div
+                    key={point}
+                    className="relative pl-5 text-[15px] leading-relaxed text-foreground/90 before:absolute before:top-[0.62em] before:left-0 before:h-1.5 before:w-1.5 before:rounded-full before:bg-foreground/45 sm:text-base"
+                  >
+                    {point}
                   </div>
                 ))}
               </div>
@@ -201,9 +201,9 @@ function ExperienceAccordionItem({
       </AnimatePresence>
 
       {experience.tech.length > 0 ? (
-        <div className="mt-3 grid grid-cols-[2rem_minmax(0,1fr)] gap-x-2.5 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-x-3.5">
+        <div className="mt-4 grid grid-cols-[2rem_minmax(0,1fr)] gap-x-2.5 sm:grid-cols-[2.5rem_minmax(0,1fr)] sm:gap-x-3.5">
           <div />
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2">
             {experience.tech.map((item) => (
               <span
                 key={item}

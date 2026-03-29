@@ -15,10 +15,12 @@ export async function generateMetadata() {
 
 export default function ResumePage() {
   return (
-    <PageTransition className="mx-auto w-full max-w-none px-2 py-4 md:px-4 md:py-6">
-      <section className="space-y-4">
-        <div className="space-y-2">
-          <BackLink href="/">Back home</BackLink>
+    <PageTransition className="mx-auto w-full max-w-none px-2 section-space md:px-4">
+      <section className="space-y-6">
+        <div className="space-y-4">
+          <BackLink href="/" className="mb-0">
+            Back home
+          </BackLink>
           <h1 className="text-2xl font-bold text-foreground">Resume</h1>
           <p className="text-sm text-muted">View my resume below.</p>
         </div>
@@ -31,7 +33,7 @@ export default function ResumePage() {
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-4">
           <a
             href={resumeFilePath}
             target="_blank"

@@ -144,7 +144,7 @@ export function GitHubContributionGraphClient({
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-6">
       <div
         className="relative isolate z-0 w-full overflow-visible"
         onPointerLeave={hideTooltip}

@@ -5,7 +5,7 @@ import type { BlogPostSummary } from "@/types"
 
 export function LatestPosts({ posts }: { posts: BlogPostSummary[] }) {
   return (
-    <section>
+    <section className="space-y-6">
       {posts.length > 0 ? (
         <>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -14,7 +14,7 @@ export function LatestPosts({ posts }: { posts: BlogPostSummary[] }) {
             ))}
           </div>
 
-          <div className="mt-4 flex justify-center">
+          <div className="flex justify-center">
             <Link
               href="/blog"
               className="text-sm text-muted transition-colors duration-150 hover:text-foreground"

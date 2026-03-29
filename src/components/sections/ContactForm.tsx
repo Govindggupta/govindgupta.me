@@ -83,7 +83,7 @@ export function ContactForm() {
   }
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-12">
       <form onSubmit={handleSubmit} noValidate className="space-y-6">
         <div className="space-y-2">
           <label htmlFor="name" className="text-sm text-foreground-soft">

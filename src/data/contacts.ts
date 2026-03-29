@@ -12,8 +12,8 @@ export interface ContactItem {
 const contacts: ContactItem[] = [
   {
     label: "Email",
-    value: "govindgupta@email.com",
-    href: "mailto:govindgupta@email.com",
+    value: "contact@govindgupta.me",
+    href: "mailto:contact@govindgupta.me",
     iconDark: "/icons/contact/gmail.svg",
     iconLight: "/icons/contact/gmail.svg",
     singleVariant: true,
@@ -45,16 +45,6 @@ const contacts: ContactItem[] = [
     iconLight: "/icons/contact/x-light.svg",
     singleVariant: false,
     newTab: true,
-  },
-  {
-    label: "Phone",
-    value: "+91 XXXXXXXXXX",
-    href: "tel:+91XXXXXXXXXX",
-    iconDark: "",
-    iconLight: "",
-    singleVariant: true,
-    useLucide: true,
-    newTab: false,
   },
 ]
 

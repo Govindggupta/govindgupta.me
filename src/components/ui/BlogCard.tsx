@@ -54,15 +54,15 @@ export function BlogCard({ post }: BlogCardProps) {
             <p className="text-muted">{formatCardDate(post.date)}</p>
           </div>
 
-          <h2 className="mt-2 text-base font-semibold leading-snug text-foreground transition-opacity duration-200 group-hover:opacity-70">
+          <h2 className="mt-3 text-base font-semibold leading-snug text-foreground transition-opacity duration-200 group-hover:opacity-70">
             {post.title}
           </h2>
 
-          <p className="mt-1 line-clamp-2 text-sm text-muted">
+          <p className="mt-2 line-clamp-2 text-sm text-muted">
             {post.description}
           </p>
 
-          <p className="mt-3 text-sm font-medium text-foreground underline decoration-border decoration-[1px] underline-offset-[3px]">
+          <p className="mt-4 text-sm font-medium text-foreground underline decoration-border decoration-[1px] underline-offset-[3px]">
             Read article →
           </p>
         </div>

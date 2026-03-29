@@ -10,7 +10,9 @@ import {
 import Image from "next/image"
 
 import { ProfileImageBorder } from "@/components/ui/ProfileImageBorder"
+import { TextFlip } from "@/components/ui/TextFlip"
 import { VerifiedBadge } from "@/components/ui/VerifiedBadge"
+import { heroFlipSentences } from "@/data/hero"
 import { socials } from "@/data/socials"
 import { getGitHubProfile } from "@/lib/github"
 
@@ -47,12 +49,12 @@ export async function Hero() {
   const name = profile.name ?? "Govind Gupta"
 
   return (
-    <section className="mx-auto w-full max-w-[900px] px-4 pt-16 pb-2 md:px-6 md:pt-18">
+    <section className="mx-auto w-full max-w-[900px] px-4 pt-20 pb-0 md:px-6">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={heroTransition}
-        className="space-y-5"
+        className="space-y-12"
       >
         <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
           <div className="flex shrink-0 items-center justify-start">
@@ -72,19 +74,20 @@ export async function Hero() {
             </ProfileImageBorder>
           </div>
 
-          <div className="min-w-0">
+          <div className="min-w-0 space-y-1">
             <h1 className="flex items-center gap-1.5 text-3xl leading-none font-semibold tracking-tight text-foreground sm:gap-2 sm:text-4xl md:text-[3.35rem]">
               <span className="block">{name}</span>
               <VerifiedBadge className="relative top-[0.02em] h-[0.52em] w-[0.52em] self-center md:h-[0.46em] md:w-[0.46em]" />
             </h1>
-            <p className="mt-1 text-base text-muted sm:text-lg">
-              Full Stack Developer
-            </p>
+            <TextFlip
+              texts={heroFlipSentences}
+              className="block text-base text-muted sm:text-lg"
+            />
           </div>
         </div>
 
-        <div className="grid gap-x-10 gap-y-2 sm:grid-cols-2">
-          <div className="space-y-2">
+        <div className="grid gap-x-10 gap-y-3 sm:grid-cols-2">
+          <div className="space-y-3">
             <HeroInfoRow
               icon={<BriefcaseBusiness size={14} strokeWidth={1.8} />}
             >
@@ -107,7 +110,7 @@ export async function Hero() {
             </HeroInfoRow>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-3">
             <HeroInfoRow
               icon={
                 <span className="h-2 w-2 rounded-full bg-neutral-400 dark:bg-neutral-500" />
@@ -131,7 +134,7 @@ export async function Hero() {
           </div>
         </div>
 
-        <div className="pt-0.5">
+        <div>
           <ul className="flex flex-wrap items-center gap-3">
             {socials.map(({ href, icon: Icon, label }) => (
               <li key={label}>

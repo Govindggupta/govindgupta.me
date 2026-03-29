@@ -18,9 +18,11 @@ export default async function ProjectsPage() {
 
   return (
     <PageTransition className="mx-auto w-full max-w-[900px] px-4 section-space md:px-6">
-      <section className="space-y-10">
-        <div>
-          <BackLink href="/">Back home</BackLink>
+      <section className="space-y-6">
+        <div className="space-y-4">
+          <BackLink href="/" className="mb-0">
+            Back home
+          </BackLink>
           <h1 className="text-2xl font-bold text-foreground">Projects</h1>
           <p className="mt-1 text-sm text-muted">Things I&apos;ve built.</p>
         </div>

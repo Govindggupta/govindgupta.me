@@ -187,11 +187,11 @@ function ExperienceAccordionItem({
               <div />
               <div className="space-y-3">
                 {experience.description.slice(0, 3).map((point) => (
-                  <div key={point} className="flex items-start gap-3.5">
-                    <span className="mt-[8px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-foreground/45" />
-                    <p className="text-[15px] leading-relaxed dark:text-[#dfdfdf] text-[#333]">
-                      {point}
-                    </p>
+                  <div
+                    key={point}
+                    className="relative pl-5 text-[15px] leading-relaxed text-foreground/90 before:absolute before:top-[0.62em] before:left-0 before:h-1.5 before:w-1.5 before:rounded-full before:bg-foreground/45 sm:text-base"
+                  >
+                    {point}
                   </div>
                 ))}
               </div>

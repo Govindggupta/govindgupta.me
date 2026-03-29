@@ -1,8 +1,9 @@
 import * as motion from "framer-motion/client"
 
-import aboutLines from "@/data/about"
+import { Markdown } from "@/components/ui/Markdown"
+import aboutContent from "@/data/about"
 
-export function About() {
+export async function About() {
   return (
     <section className="w-full">
       <motion.div
@@ -19,16 +20,7 @@ export function About() {
           </div>
         </div>
 
-        <ul className="space-y-3">
-          {aboutLines.map((line) => (
-            <li key={line} className="flex items-start gap-3.5">
-              <span className="mt-[0.62em] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-foreground/45" />
-              <p className="text-[15px] leading-relaxed text-foreground/90 sm:text-base">
-                {line}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <Markdown source={aboutContent} />
       </motion.div>
     </section>
   )

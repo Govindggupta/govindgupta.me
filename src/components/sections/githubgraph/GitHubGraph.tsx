@@ -20,25 +20,27 @@ export function GitHubGraphFallback() {
   return (
     <GraphShell>
       <div className="w-full animate-pulse space-y-6">
-        <svg
-          viewBox={`0 0 ${GRAPH_WIDTH} ${GRAPH_HEIGHT}`}
-          className="block h-auto w-full"
-          aria-hidden="true"
-        >
-          {Array.from({ length: 52 }, (_, weekIndex) =>
-            Array.from({ length: 7 }, (_, dayIndex) => (
-              <rect
-                key={`${weekIndex}-${dayIndex}`}
-                x={weekIndex * COLUMN_WIDTH}
-                y={MONTH_LABEL_HEIGHT + dayIndex * ROW_HEIGHT}
-                width={SQUARE_SIZE}
-                height={SQUARE_SIZE}
-                rx="2"
-                fill="var(--background-alt)"
-              />
-            ))
-          )}
-        </svg>
+        <div className="w-full overflow-x-auto pb-2 [scrollbar-width:thin] sm:overflow-visible sm:pb-0">
+          <svg
+            viewBox={`0 0 ${GRAPH_WIDTH} ${GRAPH_HEIGHT}`}
+            className="block h-auto w-168.25 sm:w-full"
+            aria-hidden="true"
+          >
+            {Array.from({ length: 52 }, (_, weekIndex) =>
+              Array.from({ length: 7 }, (_, dayIndex) => (
+                <rect
+                  key={`${weekIndex}-${dayIndex}`}
+                  x={weekIndex * COLUMN_WIDTH}
+                  y={MONTH_LABEL_HEIGHT + dayIndex * ROW_HEIGHT}
+                  width={SQUARE_SIZE}
+                  height={SQUARE_SIZE}
+                  rx="2"
+                  fill="var(--background-alt)"
+                />
+              ))
+            )}
+          </svg>
+        </div>
         <p className="text-sm text-muted">Loading contributions...</p>
       </div>
     </GraphShell>

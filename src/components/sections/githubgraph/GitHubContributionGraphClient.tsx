@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const SQUARE_SIZE = 10
 const SQUARE_GAP = 3
@@ -106,6 +106,34 @@ function getContributionFill(contributionLevel: number) {
   return HEAT_COLORS[contributionLevel] ?? HEAT_COLORS[0]
 }
 
+function getCurrentMonthX(weeks: GitHubContributionWeek[]) {
+  const now = new Date()
+  const currentMonth = now.getUTCMonth()
+  const currentYear = now.getUTCFullYear()
+
+  const currentMonthDayIndices: number[] = []
+
+  weeks.forEach((week, weekIndex) => {
+    week.contributionDays.forEach((day) => {
+      const parsedDate = parseContributionDate(day.date)
+
+      if (
+        parsedDate.getUTCMonth() === currentMonth &&
+        parsedDate.getUTCFullYear() === currentYear
+      ) {
+        currentMonthDayIndices.push(weekIndex)
+      }
+    })
+  })
+
+  if (currentMonthDayIndices.length === 0) {
+    return null
+  }
+
+  const firstVisibleWeekIndex = Math.min(...currentMonthDayIndices)
+  return firstVisibleWeekIndex * COLUMN_WIDTH
+}
+
 export function GitHubContributionGraphClient({
   weeks,
   totalContributions,
@@ -113,6 +141,7 @@ export function GitHubContributionGraphClient({
   weeks: GitHubContributionWeek[]
   totalContributions: number
 }>) {
+  const graphScrollContainerRef = useRef<HTMLDivElement | null>(null)
   const [activeContribution, setActiveContribution] =
     useState<HoveredContribution | null>(null)
   const [isTooltipVisible, setIsTooltipVisible] = useState(false)
@@ -134,6 +163,35 @@ export function GitHubContributionGraphClient({
     return () => window.clearTimeout(timeoutId)
   }, [isTooltipVisible])
 
+  useEffect(() => {
+    const graphScrollContainer = graphScrollContainerRef.current
+
+    if (!graphScrollContainer) {
+      return
+    }
+
+    if (!window.matchMedia("(max-width: 639px)").matches) {
+      return
+    }
+
+    if (graphScrollContainer.scrollWidth <= graphScrollContainer.clientWidth) {
+      return
+    }
+
+    const currentMonthX = getCurrentMonthX(weeks)
+
+    if (currentMonthX === null) {
+      return
+    }
+
+    const desiredScrollLeft = Math.max(
+      0,
+      currentMonthX - graphScrollContainer.clientWidth * 0.35
+    )
+
+    graphScrollContainer.scrollLeft = desiredScrollLeft
+  }, [weeks])
+
   function showTooltip(contribution: HoveredContribution) {
     setActiveContribution(contribution)
     setIsTooltipVisible(true)
@@ -146,14 +204,18 @@ export function GitHubContributionGraphClient({
   return (
     <div className="space-y-6">
       <div
-        className="relative isolate z-0 w-full overflow-visible"
-        onPointerLeave={hideTooltip}
+        ref={graphScrollContainerRef}
+        className="w-full overflow-x-auto overflow-y-visible pb-2 [scrollbar-width:thin] sm:overflow-visible sm:pb-0"
       >
+        <div
+          className="relative isolate z-0 w-168.25 overflow-visible sm:w-full"
+          onPointerLeave={hideTooltip}
+        >
         {activeContribution ? (
           <div
             role="tooltip"
             className={[
-              "pointer-events-none absolute z-50 w-max -translate-x-1/2 translate-y-[-100%] whitespace-nowrap rounded-xl border border-transparent bg-foreground px-3 py-2 text-sm leading-none text-background shadow-[0_10px_30px_rgba(0,0,0,0.18)] transition-opacity duration-100 ease-out dark:shadow-[0_10px_30px_rgba(255,255,255,0.14)]",
+              "pointer-events-none absolute z-50 w-max -translate-x-1/2 -translate-y-full whitespace-nowrap rounded-xl border border-transparent bg-foreground px-3 py-2 text-sm leading-none text-background shadow-[0_10px_30px_rgba(0,0,0,0.18)] transition-opacity duration-100 ease-out dark:shadow-[0_10px_30px_rgba(255,255,255,0.14)]",
               isTooltipVisible ? "opacity-100" : "opacity-0",
             ].join(" ")}
             style={{
@@ -172,69 +234,70 @@ export function GitHubContributionGraphClient({
           </div>
         ) : null}
 
-        <svg
-          viewBox={`0 0 ${GRAPH_WIDTH} ${GRAPH_HEIGHT}`}
-          preserveAspectRatio="xMinYMid meet"
-          className="block h-auto w-full"
-          role="img"
-          aria-label="GitHub contribution graph"
-        >
-          {monthLabels.map((month) => (
-            <text
-              key={`${month.label}-${month.x}`}
-              x={month.x}
-              y={12}
-              fill="var(--muted)"
-              fontFamily="var(--font-cascadia), ui-monospace, monospace"
-              fontSize="10"
-              letterSpacing="0.08em"
-            >
-              {month.label}
-            </text>
-          ))}
+          <svg
+            viewBox={`0 0 ${GRAPH_WIDTH} ${GRAPH_HEIGHT}`}
+            preserveAspectRatio="xMinYMid meet"
+            className="block h-auto w-full"
+            role="img"
+            aria-label="GitHub contribution graph"
+          >
+            {monthLabels.map((month) => (
+              <text
+                key={`${month.label}-${month.x}`}
+                x={month.x}
+                y={12}
+                fill="var(--muted)"
+                fontFamily="var(--font-cascadia), ui-monospace, monospace"
+                fontSize="10"
+                letterSpacing="0.08em"
+              >
+                {month.label}
+              </text>
+            ))}
 
-          {weeks.map((week, weekIndex) =>
-            week.contributionDays.map((day, dayIndex) => {
-              const x = weekIndex * COLUMN_WIDTH
-              const y = MONTH_LABEL_HEIGHT + dayIndex * ROW_HEIGHT
+            {weeks.map((week, weekIndex) =>
+              week.contributionDays.map((day, dayIndex) => {
+                const x = weekIndex * COLUMN_WIDTH
+                const y = MONTH_LABEL_HEIGHT + dayIndex * ROW_HEIGHT
 
-              return (
-                <rect
-                  key={day.date}
-                  x={x}
-                  y={y}
-                  width={SQUARE_SIZE}
-                  height={SQUARE_SIZE}
-                  rx="2"
-                  fill={getContributionFill(day.contributionLevel)}
-                  tabIndex={0}
-                  aria-label={formatContributionTooltip(
-                    day.date,
-                    day.contributionCount
-                  )}
-                  className="cursor-default"
-                  onPointerEnter={() =>
-                    showTooltip({
-                      date: day.date,
-                      contributionCount: day.contributionCount,
-                      leftPercent: ((x + SQUARE_SIZE / 2) / GRAPH_WIDTH) * 100,
-                      topPercent: (y / GRAPH_HEIGHT) * 100,
-                    })
-                  }
-                  onFocus={() =>
-                    showTooltip({
-                      date: day.date,
-                      contributionCount: day.contributionCount,
-                      leftPercent: ((x + SQUARE_SIZE / 2) / GRAPH_WIDTH) * 100,
-                      topPercent: (y / GRAPH_HEIGHT) * 100,
-                    })
-                  }
-                  onBlur={hideTooltip}
-                />
-              )
-            })
-          )}
-        </svg>
+                return (
+                  <rect
+                    key={day.date}
+                    x={x}
+                    y={y}
+                    width={SQUARE_SIZE}
+                    height={SQUARE_SIZE}
+                    rx="2"
+                    fill={getContributionFill(day.contributionLevel)}
+                    tabIndex={0}
+                    aria-label={formatContributionTooltip(
+                      day.date,
+                      day.contributionCount
+                    )}
+                    className="cursor-default"
+                    onPointerEnter={() =>
+                      showTooltip({
+                        date: day.date,
+                        contributionCount: day.contributionCount,
+                        leftPercent: ((x + SQUARE_SIZE / 2) / GRAPH_WIDTH) * 100,
+                        topPercent: (y / GRAPH_HEIGHT) * 100,
+                      })
+                    }
+                    onFocus={() =>
+                      showTooltip({
+                        date: day.date,
+                        contributionCount: day.contributionCount,
+                        leftPercent: ((x + SQUARE_SIZE / 2) / GRAPH_WIDTH) * 100,
+                        topPercent: (y / GRAPH_HEIGHT) * 100,
+                      })
+                    }
+                    onBlur={hideTooltip}
+                  />
+                )
+              })
+            )}
+          </svg>
+        </div>
       </div>
 
       <div className="flex items-center justify-between gap-3 text-[10px] text-muted sm:text-[11px]">
@@ -243,11 +306,11 @@ export function GitHubContributionGraphClient({
         </span>
         <div className="flex items-center gap-1.5 whitespace-nowrap">
           <span>Less</span>
-          <div className="flex items-center gap-[3px]">
+          <div className="flex items-center gap-0.75">
             {HEAT_COLORS.map((color, index) => (
               <span
                 key={`legend-${index}`}
-                className="h-2.5 w-2.5 rounded-[2px]"
+                className="h-2.5 w-2.5 rounded-xs"
                 style={{ backgroundColor: color }}
                 aria-hidden="true"
               />

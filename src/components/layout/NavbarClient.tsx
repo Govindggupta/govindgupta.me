@@ -1,12 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
 
 import { AnimatePresence, motion } from "framer-motion"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
+import Hamburger from "./Hamburger"
 import { Logo } from "@/components/ui/Logo"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
 import VerticalBar from "../ui/VerticalBar"
@@ -33,6 +34,7 @@ type NavbarClientProps = {
 export function NavbarClient({ githubNavItem }: NavbarClientProps) {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  const mobileMenuRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
     setIsOpen(false)
@@ -40,11 +42,11 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3">
-      <nav className="mx-auto w-full max-w-[900px] rounded-2xl border border-border bg-background/80 backdrop-blur-sm">
+      <nav className="mx-auto w-full max-w-225 rounded-2xl border border-border bg-background/80 backdrop-blur-sm">
         <div className="flex h-14 items-center justify-between px-4 md:px-6">
           <Logo />
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3">
             <div className="hidden items-center gap-5 md:flex">
               {navigation.map((item) => {
                 const active = isActivePath(pathname, item.href)
@@ -65,50 +67,63 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
               })}
             </div>
 
-            <button
-              type="button"
-              className="text-sm text-muted transition-opacity duration-200 hover:opacity-60 md:hidden"
-              aria-expanded={isOpen}
-              aria-controls="mobile-navigation"
-              onClick={() => setIsOpen((open) => !open)}
-            >
-              Menu
-            </button>
             {githubNavItem}
             <VerticalBar />
             <ThemeToggle />
+
+            <div className="z-20 md:hidden flex items-center">
+              <Hamburger
+                isOpen={isOpen}
+                onClick={() => setIsOpen((open) => !open)}
+                ariaControls="mobile-navigation"
+              />
+            </div>
           </div>
         </div>
       </nav>
 
       <AnimatePresence>
         {isOpen ? (
-          <motion.nav
-            id="mobile-navigation"
-            className="fixed right-10 mx-auto mt-2 flex w-full max-w-[150px] flex-col rounded-2xl border border-border bg-background/95 px-2 py-2 text-center backdrop-blur-sm md:hidden md:px-6"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.1 }}
-          >
-            {navigation.map((item) => {
-              const active = isActivePath(pathname, item.href)
+          <>
+            <motion.button
+              type="button"
+              aria-label="Close mobile navigation"
+              className="fixed inset-0 z-10 cursor-default md:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.1 }}
+              onClick={() => setIsOpen(false)}
+            />
 
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`rounded-lg px-3 py-1.5 text-sm tracking-[-0.02em] transition-colors duration-200 ${
-                    active
-                      ? "bg-background-alt/80 font-medium text-foreground"
-                      : "text-muted hover:bg-background-alt/50 hover:text-foreground"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              )
-            })}
-          </motion.nav>
+            <motion.nav
+              ref={mobileMenuRef}
+              id="mobile-navigation"
+              className="fixed right-4 z-20 mx-auto mt-2 flex w-full max-w-37.5 flex-col rounded-2xl border border-border bg-background px-2 py-2 text-center backdrop-blur-sm md:hidden md:px-6"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.1 }}
+            >
+              {navigation.map((item) => {
+                const active = isActivePath(pathname, item.href)
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`rounded-lg px-3 py-1.5 text-sm tracking-[-0.02em] transition-colors duration-200 ${
+                      active
+                        ? "bg-background-alt/80 font-medium text-foreground"
+                        : "text-muted hover:bg-background-alt/50 hover:text-foreground"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              })}
+            </motion.nav>
+          </>
         ) : null}
       </AnimatePresence>
     </header>

@@ -150,6 +150,10 @@ export function ThemeToggle() {
 
   const isDark = resolvedTheme === "dark"
   const isTooltipVisible = hovered && !tooltipDismissed
+  const clearTooltip = useCallback(() => {
+    setHovered(false)
+    setTooltipDismissed(false)
+  }, [])
 
   const handleToggle = useCallback(() => {
     const nextTheme = isDark ? "light" : "dark"
@@ -200,6 +204,22 @@ export function ThemeToggle() {
     }
   }, [handleToggle])
 
+  useEffect(() => {
+    function handleVisibilityChange() {
+      if (document.hidden) {
+        clearTooltip()
+      }
+    }
+
+    window.addEventListener("blur", clearTooltip)
+    document.addEventListener("visibilitychange", handleVisibilityChange)
+
+    return () => {
+      window.removeEventListener("blur", clearTooltip)
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
+    }
+  }, [clearTooltip])
+
   return (
     <div className="group relative">
       <motion.button
@@ -210,10 +230,7 @@ export function ThemeToggle() {
           setTooltipDismissed(false)
           setHovered(true)
         }}
-        onHoverEnd={() => {
-          setHovered(false)
-          setTooltipDismissed(false)
-        }}
+        onHoverEnd={clearTooltip}
         whileTap={{ scale: 0.96 }}
         className="relative flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-background-alt/80 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.08)] hover:bg-background-alt focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:outline-none dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_2px_10px_rgba(0,0,0,0.32)]"
       >

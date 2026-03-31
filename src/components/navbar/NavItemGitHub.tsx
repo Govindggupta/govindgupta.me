@@ -7,7 +7,7 @@ import { GitHubStars } from "./GitHubStars"
 const getStargazerCount = unstable_cache(
   async () => {
     try {
-      const token = process.env.GITHUB_API_TOKEN || process.env.GITHUB_TOKEN
+      const token = process.env.STAR_GITHUB_API_TOKEN
       const response = await fetch(
         `https://api.github.com/repos/${SOURCE_CODE_GITHUB_REPO}`,
         {

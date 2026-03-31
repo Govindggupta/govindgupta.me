@@ -26,7 +26,7 @@ export function GitHubStars({ repo, stargazersCount }: GitHubStarsProps) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`${starsFull} GitHub stars`}
-        className="flex h-9 items-center gap-1.5 rounded-xl bg-transparent pr-1.5 pl-2 text-muted transition-all duration-200 ease-out hover:bg-background-alt/80 hover:text-foreground hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.08)] focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:outline-none dark:hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_2px_10px_rgba(0,0,0,0.32)]"
+        className="flex h-8 items-center gap-1.5 rounded-xl bg-transparent px-2 text-muted transition-colors duration-200 ease-out hover:bg-background-alt active:bg-neutral-200 focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:outline-none dark:hover:bg-white/10 dark:active:bg-white/14"
       >
         <GitHubIcon className="h-4 w-4 -translate-y-px text-foreground" />
         <span className="text-sm font-medium tabular-nums">

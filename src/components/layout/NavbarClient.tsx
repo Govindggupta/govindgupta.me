@@ -65,7 +65,7 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
         <div className="flex h-14 items-center justify-between px-4 md:px-6">
           <Logo />
 
-          <div className="flex items-center gap-2 md:gap-3">
+          <div className="flex items-center gap-1 md:gap-3">
             <div className="hidden items-center gap-5 md:flex">
               {navigation.map((item) => {
                 const active = isActivePath(pathname, item.href)
@@ -85,15 +85,21 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
             </div>
 
             {githubNavItem}
-            <VerticalBar />
-            <ThemeToggle />
 
-            <div className="z-20 flex items-center md:hidden">
-              <Hamburger
-                isOpen={isOpen}
-                onClick={() => setIsOpen((open) => !open)}
-                ariaControls="mobile-navigation"
-              />
+            <div className="flex items-center gap-1 md:gap-3">
+              <VerticalBar />
+
+              <div className="flex items-center gap-0.5 md:gap-3">
+                <ThemeToggle />
+
+                <div className="z-100 flex items-center md:hidden">
+                  <Hamburger
+                    isOpen={isOpen}
+                    onClick={() => setIsOpen((open) => !open)}
+                    ariaControls="mobile-navigation"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

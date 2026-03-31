@@ -21,8 +21,8 @@ function SunIcon({ hovered, active }: { hovered: boolean; active: boolean }) {
   return (
     <motion.svg
       viewBox="0 0 24 24"
-      width="16"
-      height="16"
+      width="17"
+      height="17"
       fill="none"
       stroke="currentColor"
       strokeWidth="2.3"
@@ -37,7 +37,7 @@ function SunIcon({ hovered, active }: { hovered: boolean; active: boolean }) {
         duration: active ? 0.95 : 0.22,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="text-neutral-700 dark:text-neutral-200"
+      className="text-black dark:text-white"
     >
       <motion.circle
         cx="12"
@@ -79,8 +79,8 @@ function MoonIcon({ hovered, active }: { hovered: boolean; active: boolean }) {
   return (
     <motion.svg
       viewBox="0 0 24 24"
-      width="15"
-      height="15"
+      width="17"
+      height="17"
       fill="none"
       stroke="currentColor"
       strokeWidth="2.5"
@@ -232,7 +232,11 @@ export function ThemeToggle() {
         }}
         onHoverEnd={clearTooltip}
         whileTap={{ scale: 0.96 }}
-        className="relative flex h-9 w-9 cursor-pointer items-center justify-center rounded-xl bg-background-alt/80 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.08)] hover:bg-background-alt focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:outline-none dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_2px_10px_rgba(0,0,0,0.32)]"
+        className={`relative flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-foreground transition-colors duration-200 ease-out focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:outline-none ${
+          activeAnimation
+            ? "bg-background-alt dark:bg-white/14"
+            : "bg-transparent hover:bg-background-alt active:bg-neutral-200 dark:hover:bg-white/10 dark:active:bg-white/14"
+        }`}
       >
         <motion.span
           aria-hidden="true"

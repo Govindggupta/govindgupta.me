@@ -17,7 +17,7 @@ const sunRays = [
   { x1: 6.7, y1: 6.7, x2: 5.11, y2: 5.11 },
 ] as const
 
-const CLICK_VOLUME = 0.4
+const CLICK_VOLUME = 0.1
 
 function SunIcon({ hovered, active }: { hovered: boolean; active: boolean }) {
   return (

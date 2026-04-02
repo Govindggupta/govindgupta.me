@@ -70,11 +70,11 @@ export function Footer() {
         <hr className="my-8 border-border" />
 
         <div className="flex flex-col gap-3 text-center">
-          <p className="text-xs text-muted flex items-center justify-center">
-            <span className="text-sm mr-1">
-            ©
+          <p className="flex items-center justify-center text-xs text-muted">
+            <span className="cursor-text">
+              <span className="mr-1 text-sm">©</span>
+              2026 Govind Gupta. All rights reserved.
             </span>
-             2026 Govind Gupta. All rights reserved.
           </p>
         </div>
       </div>

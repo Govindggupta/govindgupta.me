@@ -17,20 +17,19 @@ export default async function ProjectsPage() {
   const repos = await getPinnedRepos()
 
   return (
-    <PageTransition className="mx-auto w-full max-w-[900px] px-4 section-space md:px-6">
+    <PageTransition className="mx-auto w-full max-w-225 px-4 section-space md:px-6">
       <section className="space-y-6">
         <div className="space-y-4">
           <BackLink href="/" className="mb-0">
             Back home
           </BackLink>
-          <h1 className="text-2xl font-bold text-foreground">Projects</h1>
-          <p className="mt-1 text-sm text-muted">Things I&apos;ve built.</p>
+          <h1 className="text-3xl font-bold text-foreground">Projects</h1>
         </div>
 
         {repos.length > 0 ? (
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            {repos.map((repo, index) => (
-              <ProjectCard key={repo.name} project={repo} index={index} />
+            {repos.map((repo) => (
+              <ProjectCard key={repo.name} project={repo} />
             ))}
           </div>
         ) : (

@@ -45,16 +45,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
       href={projectHref}
       target="_blank"
       rel="noreferrer"
-      className="group block h-full rounded-2xl border border-border transition-colors duration-150 dark:hover:bg-foreground/5 hover:bg-foreground/3"
+      className="group block h-full rounded-2xl border border-border transition-colors duration-150 dark:hover:bg-foreground/5 hover:bg-foreground/2.5"
       aria-label={`${project.name} project link`}
     >
       <article className="flex h-full flex-col p-4">
-        <div className="flex items-center gap-2">
-          <h2 className="text-lg font-semibold text-foreground">{project.name}</h2>
+        <div className="flex items-center gap-1 ">
+          <h2 className="text-lg font-semibold text-foreground ">{project.name}</h2>
           <ArrowUpRight
             size={17}
             strokeWidth={2}
-            className="shrink-0 text-white opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+            className="shrink-0 text-black dark:text-white opacity-0 transition-opacity duration-150 group-hover:opacity-100 "
           />
         </div>
 
@@ -67,7 +67,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         )}
 
         <div className="mt-4 -mx-4 -mb-4 h-40 overflow-hidden rounded-b-2xl">
-          <div className="h-full w-full origin-bottom-right -rotate-3 translate-x-7 translate-y-3 overflow-hidden rounded-2xl border-t border-border bg-neutral-100 transform-gpu transition-transform duration-150 ease-out group-hover:-rotate-1 dark:bg-neutral-900">
+          <div className="h-full w-full origin-bottom-right -rotate-3 translate-x-7 translate-y-3 overflow-hidden rounded-2xl border border-black/12 border-t border-t-border bg-neutral-100 shadow-[0_4px_10px_rgba(0,0,0,0.18)] transform-gpu transition-transform duration-150 ease-out group-hover:-rotate-1 dark:border-border dark:bg-neutral-900 dark:shadow-none">
             {previewUrl ? (
               <div className="relative h-full w-full bg-neutral-200 dark:bg-neutral-800">
                 <Image

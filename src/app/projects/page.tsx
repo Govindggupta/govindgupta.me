@@ -23,7 +23,7 @@ export default async function ProjectsPage() {
           <BackLink href="/" className="mb-0">
             Back home
           </BackLink>
-          <h1 className="text-3xl font-bold text-foreground">Projects</h1>
+          <h1 className="text-4xl font-bold text-foreground">Projects</h1>
         </div>
 
         {repos.length > 0 ? (

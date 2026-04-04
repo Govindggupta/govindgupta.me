@@ -15,8 +15,8 @@ export function FeaturedProjects({
       {featuredRepos.length > 0 ? (
         <>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            {featuredRepos.map((repo, index) => (
-              <ProjectCard key={repo.name} project={repo} index={index} />
+            {featuredRepos.map((repo) => (
+              <ProjectCard key={repo.name} project={repo} />
             ))}
           </div>
 

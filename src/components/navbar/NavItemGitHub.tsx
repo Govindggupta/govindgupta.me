@@ -8,7 +8,7 @@ async function getStargazerCount() {
     const response = await fetch(
       `https://api.github.com/repos/${SOURCE_CODE_GITHUB_REPO}`,
       {
-        cache: "force-cache",
+        next: { revalidate: 1}  ,
         headers: {
           Accept: "application/vnd.github+json",
           "X-GitHub-Api-Version": "2022-11-28",

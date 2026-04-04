@@ -17,6 +17,7 @@ import { experiences } from "@/data/experience"
 import { getAllPosts } from "@/lib/mdx"
 import { buildMetadata } from "@/lib/metadata"
 import { getPinnedRepos } from "@/lib/github"
+import { Interests } from "@/components/sections/Interests"
 
 function HomeSectionHeader({
   title,
@@ -138,9 +139,9 @@ export default async function HomePage() {
         </Suspense>
       </SectionReveal>
 
-      {/* <SectionReveal className="mx-auto mt-14 w-full max-w-[900px] px-4 md:px-6">
+      <SectionReveal className="mx-auto mt-14 w-full max-w-[900px] px-4 md:px-6">
         <Interests />
-      </SectionReveal> */}
+      </SectionReveal>
     </main>
   )
 }

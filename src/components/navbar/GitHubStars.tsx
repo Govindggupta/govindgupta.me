@@ -1,7 +1,3 @@
-"use client"
-
-import { useEffect, useState } from "react"
-
 import { UTM_PARAMS } from "@/config/site"
 import { GitHubIcon } from "@/components/ui/GitHubIcon"
 import { addQueryParams } from "@/utils/url"
@@ -17,102 +13,14 @@ const compactFormatter = new Intl.NumberFormat("en-US", {
 })
 
 const fullFormatter = new Intl.NumberFormat("en-US")
-const GITHUB_REPO_API_URL = "https://api.github.com/repos"
-const STAR_COUNT_REFRESH_INTERVAL_MS = 5 * 60 * 1000
-
-async function fetchStargazerCount(repo: string, signal?: AbortSignal) {
-  const response = await fetch(`${GITHUB_REPO_API_URL}/${repo}`, {
-    cache: "no-store",
-    signal,
-    headers: {
-      Accept: "application/vnd.github+json",
-      "X-GitHub-Api-Version": "2022-11-28",
-    },
-  })
-
-  if (!response.ok) {
-    return null
-  }
-
-  const payload = (await response.json()) as { stargazers_count?: number }
-  const stargazersCount = Number(payload.stargazers_count)
-
-  return Number.isFinite(stargazersCount) ? stargazersCount : null
-}
 
 export function GitHubStars({ repo, stargazersCount }: GitHubStarsProps) {
-  const [liveStargazersCount, setLiveStargazersCount] =
-    useState<number | null>(stargazersCount)
-
-  useEffect(() => {
-    setLiveStargazersCount(stargazersCount)
-  }, [stargazersCount])
-
-  useEffect(() => {
-    let isDisposed = false
-    let currentController: AbortController | null = null
-
-    const refreshStargazerCount = async () => {
-      currentController?.abort()
-      const controller = new AbortController()
-      currentController = controller
-
-      try {
-        const nextStargazersCount = await fetchStargazerCount(
-          repo,
-          controller.signal
-        )
-
-        if (!isDisposed && typeof nextStargazersCount === "number") {
-          setLiveStargazersCount((currentCount) =>
-            currentCount === nextStargazersCount
-              ? currentCount
-              : nextStargazersCount
-          )
-        }
-      } catch (error) {
-        if (
-          error instanceof DOMException &&
-          error.name === "AbortError"
-        ) {
-          return
-        }
-      }
-    }
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") {
-        void refreshStargazerCount()
-      }
-    }
-
-    void refreshStargazerCount()
-
-    const intervalId = window.setInterval(() => {
-      if (document.visibilityState === "visible") {
-        void refreshStargazerCount()
-      }
-    }, STAR_COUNT_REFRESH_INTERVAL_MS)
-
-    window.addEventListener("focus", handleVisibilityChange)
-    document.addEventListener("visibilitychange", handleVisibilityChange)
-
-    return () => {
-      isDisposed = true
-      currentController?.abort()
-      window.clearInterval(intervalId)
-      window.removeEventListener("focus", handleVisibilityChange)
-      document.removeEventListener("visibilitychange", handleVisibilityChange)
-    }
-  }, [repo])
-
-  const hasStarCount =
-    typeof liveStargazersCount === "number" && liveStargazersCount > 0
+  const hasStarCount = typeof stargazersCount === "number" && stargazersCount > 0
   const starsCompact = hasStarCount
-    ? compactFormatter.format(liveStargazersCount).toLowerCase()
+    ? compactFormatter.format(stargazersCount).toLowerCase()
     : null
   const starsFull = hasStarCount
-    ? fullFormatter.format(liveStargazersCount)
+    ? fullFormatter.format(stargazersCount)
     : null
   const githubRepoUrl = addQueryParams(`https://github.com/${repo}`, UTM_PARAMS)
 

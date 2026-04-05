@@ -24,6 +24,11 @@
   color-scheme: light;
   --background: #ffffff;
   --background-alt: #f5f5f5;
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-muted: color-mix(in oklab, var(--accent) 50%, transparent);
+  --accent-foreground: oklch(0.21 0.006 285.885);
+  --accent-active: color-mix(in oklab, var(--accent) 86%, black 14%);
+  --accent-border: #e1e1e1;
   --foreground: #000000;
   --foreground-soft: #111111;
   --muted: #888888;
@@ -50,6 +55,11 @@
   color-scheme: dark;
   --background: #000000;
   --background-alt: #111111;
+  --accent: lab(8 0.61 -2.13);
+  --accent-muted: color-mix(in oklab, var(--accent) 50%, transparent);
+  --accent-foreground: #ffffff;
+  --accent-active: lab(8 0.61 -2.12);
+  --accent-border: #202225;
   --foreground: #ffffff;
   --foreground-soft: #f5f5f5;
   --muted: #888888;

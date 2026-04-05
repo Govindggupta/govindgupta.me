@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 
 import { ProjectCard } from "@/components/ui/ProjectCard"
 import type { PinnedRepo } from "@/types"
@@ -23,9 +24,14 @@ export function FeaturedProjects({
           <div className="flex justify-center">
             <Link
               href="/projects"
-              className="text-sm text-muted transition-colors duration-150 hover:text-foreground"
+              className="group inline-flex items-center gap-1 text-sm text-muted transition-colors duration-150 hover:text-foreground"
             >
-              View all projects →
+              <span>View all projects</span>
+              <ArrowRight
+                size={14}
+                strokeWidth={1.9}
+                className="shrink-0 translate-y-px transition-transform duration-150 group-hover:translate-x-0.5"
+              />
             </Link>
           </div>
         </>

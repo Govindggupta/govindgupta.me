@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 
 import { BlogCard } from "@/components/ui/BlogCard"
 import type { BlogPostSummary } from "@/types"
@@ -17,9 +18,14 @@ export function LatestPosts({ posts }: { posts: BlogPostSummary[] }) {
           <div className="flex justify-center">
             <Link
               href="/blog"
-              className="text-sm text-muted transition-colors duration-150 hover:text-foreground"
+              className="group inline-flex items-center gap-1 text-sm text-muted transition-colors duration-150 hover:text-foreground"
             >
-              View all posts →
+              <span>View all posts</span>
+              <ArrowRight
+                size={14}
+                strokeWidth={1.9}
+                className="shrink-0 translate-y-px transition-transform duration-150 group-hover:translate-x-0.5"
+              />
             </Link>
           </div>
         </>

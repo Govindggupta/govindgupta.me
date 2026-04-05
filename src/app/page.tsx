@@ -1,5 +1,6 @@
 import { Suspense } from "react"
 import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 
 import {
   GitHubGraph,
@@ -44,8 +45,13 @@ function HomeSectionHeader({
         </h2>
       </div>
       {showLink ? (
-        <span className="shrink-0 self-end text-sm text-muted transition-colors hover:text-foreground">
-          {external ? "View on GitHub →" : "View all →"}
+        <span className="shrink-0 self-end inline-flex items-center gap-1 text-sm text-muted transition-colors group-hover:text-foreground">
+          <span>{external ? "View on GitHub" : "View all"}</span>
+          <ArrowRight
+            size={14}
+            strokeWidth={1.9}
+            className="shrink-0 translate-y-px transition-transform duration-150 group-hover:translate-x-0.5"
+          />
         </span>
       ) : null}
     </div>
@@ -57,14 +63,14 @@ function HomeSectionHeader({
 
   if (external) {
     return (
-      <a href={href} target="_blank" rel="noreferrer" className="block">
+      <a href={href} target="_blank" rel="noreferrer" className="group block">
         {content}
       </a>
     )
   }
 
   return (
-    <Link href={href} className="block">
+    <Link href={href} className="group block">
       {content}
     </Link>
   )

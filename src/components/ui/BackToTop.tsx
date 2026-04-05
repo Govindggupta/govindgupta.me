@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { useTheme } from "next-themes"
+import { ArrowUpRight } from "lucide-react"
 
 const SCROLL_THRESHOLD_MIN = 260
 const SCROLL_THRESHOLD_RATIO = 0.45
@@ -186,33 +187,24 @@ export function BackToTop() {
               onBlur={hideTooltip}
               whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
               style={{ backgroundColor }}
-              className={`relative flex h-10 w-10 items-center justify-center rounded-[14px] text-foreground shadow-[0_18px_40px_-24px_rgba(0,0,0,0.65)] backdrop-blur-md transition-[opacity,box-shadow] duration-200 hover:shadow-[0_22px_50px_-26px_rgba(0,0,0,0.72)] focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/25 ${
+              className={`group relative flex h-10 w-10 items-center justify-center rounded-[14px] text-foreground shadow-[0_18px_40px_-24px_rgba(0,0,0,0.65)] backdrop-blur-md transition-[opacity,box-shadow] duration-200 hover:shadow-[0_22px_50px_-26px_rgba(0,0,0,0.72)] focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/25 ${
                 scrollState.isScrollingUp
                   ? "opacity-100"
                   : "opacity-50 hover:opacity-100"
               }`}
             >
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                fill="none"
-                className="h-6 w-6"
-              >
-                <path
-                  d="M12 18V7"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-                <path
-                  d="m7 12 5-5 5 5"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </motion.button>
+
+                  <ArrowUpRight
+                    size={17}
+                    strokeWidth={2}
+                    className="absolute -rotate-45 text-black transition-all duration-200 ease-out group-hover:-translate-y-5 group-hover:opacity-0 dark:text-white"
+                  />
+                  <ArrowUpRight
+                    size={17}
+                    strokeWidth={2}
+                    className="absolute -rotate-45 translate-y-5 text-black opacity-0 transition-all duration-150 ease-out group-hover:translate-y-0 group-hover:opacity-100 dark:text-white"
+                  />
+                </motion.button>
 
             <span
               className={`pointer-events-none absolute bottom-full left-1/2 mb-3 hidden -translate-x-1/2 transition-opacity duration-150 sm:block ${

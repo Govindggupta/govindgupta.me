@@ -49,13 +49,20 @@ export function ProjectCard({ project }: ProjectCardProps) {
       aria-label={`${project.name} project link`}
     >
       <article className="flex h-full flex-col p-4">
-        <div className="flex items-center gap-1 ">
-          <h2 className="text-lg font-semibold text-foreground ">{project.name}</h2>
-          <ArrowUpRight
-            size={17}
-            strokeWidth={2}
-            className="shrink-0 text-black dark:text-white opacity-0 transition-opacity duration-150 group-hover:opacity-100 "
-          />
+        <div className="flex items-center gap-1 justify-between">
+          <h2 className="text-lg font-semibold text-foreground">{project.name}</h2>
+          <span className="relative inline-flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-border text-black dark:text-white">
+            <ArrowUpRight
+              size={17}
+              strokeWidth={2}
+              className="absolute transition-all duration-200 ease-out group-hover:translate-x-5 group-hover:-translate-y-5 group-hover:opacity-0 "
+            />
+            <ArrowUpRight
+              size={17}
+              strokeWidth={2}
+              className="absolute -translate-x-5 translate-y-5 opacity-0 transition-all duration-200 ease-out group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100"
+            />
+          </span>
         </div>
 
         {project.description ? (
@@ -67,7 +74,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         )}
 
         <div className="mt-4 -mx-4 -mb-4 h-40 overflow-hidden rounded-b-2xl">
-          <div className="h-full w-full origin-bottom-right -rotate-3 translate-x-7 translate-y-3 overflow-hidden rounded-2xl border border-black/12 border-t border-t-border bg-neutral-100 shadow-[0_4px_10px_rgba(0,0,0,0.18)] transform-gpu transition-transform duration-150 ease-out group-hover:-rotate-1 dark:border-border dark:bg-neutral-900 dark:shadow-none">
+          <div className="h-full w-full origin-bottom-right -rotate-5 translate-x-7 translate-y-1 overflow-hidden rounded-2xl border border-black/12 border-t border-t-border bg-neutral-100 shadow-[0_4px_10px_rgba(0,0,0,0.18)] transform-gpu transition-transform duration-150 ease-out group-hover:-rotate-1 dark:border-border dark:bg-neutral-900 dark:shadow-none">
             {previewUrl ? (
               <div className="relative h-full w-full bg-neutral-200 dark:bg-neutral-800">
                 <Image

@@ -75,8 +75,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </span>
         </div>
 
-        <div className="-mx-4 mt-4 -mb-4 h-40 overflow-hidden rounded-b-2xl px-2">
-          <div className="h-full w-full origin-bottom translate-x-0 translate-y-3 scale-x-95 transform-gpu overflow-hidden rounded-2xl border border-t border-black/12 border-t-border bg-neutral-100 shadow-[0_4px_10px_rgba(0,0,0,0.18)] transition-transform duration-200 ease-out group-hover:translate-y-0 group-hover:scale-x-100 dark:border-border dark:bg-neutral-900 dark:shadow-none">
+        <div className="-mx-4 mt-4 -mb-4 flex h-40 items-end overflow-hidden rounded-b-2xl px-2">
+          <div className="w-full aspect-video origin-bottom translate-x-0 translate-y-19 scale-x-95 transform-gpu overflow-hidden rounded-2xl border border-t border-black/12 border-t-border bg-neutral-100 shadow-[0_4px_10px_rgba(0,0,0,0.18)] transition-transform duration-200 ease-out group-hover:translate-y-17 group-hover:scale-x-100 dark:border-border dark:bg-neutral-900 dark:shadow-none">
             {previewUrl ? (
               <div className="relative h-full w-full bg-neutral-200 dark:bg-neutral-800">
                 <Image

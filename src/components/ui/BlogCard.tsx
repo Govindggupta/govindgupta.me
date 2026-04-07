@@ -49,12 +49,12 @@ export function BlogCard({ post }: BlogCardProps) {
           )}
         </div>
 
-        <div className="flex min-h-0 flex-col justify-between p-5">
-          <h2 className="line-clamp-2 text-lg leading-snug font-semibold text-foreground transition-opacity duration-200 group-hover:opacity-70">
+        <div className="grid min-h-0 content-center gap-3 p-4 sm:p-5">
+          <h2 className="line-clamp-2 text-lg leading-tight font-semibold text-foreground transition-opacity duration-200 group-hover:opacity-70">
             {post.title}
           </h2>
 
-          <div className="mt-4 flex items-center justify-between gap-3">
+          <div className="flex items-center justify-between gap-3">
             <p className="text-sm text-muted">{formatCardDate(post.date)}</p>
 
             <p className="shrink-0 text-sm font-medium text-muted underline decoration-border decoration-1 underline-offset-[3px]">

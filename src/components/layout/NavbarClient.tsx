@@ -121,7 +121,7 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
 
             <motion.nav
               id="mobile-navigation"
-              className="fixed right-4 z-20 mx-auto mt-2 flex w-full max-w-37.5 flex-col rounded-2xl border border-border bg-background px-2 py-2 text-center shadow-[0_16px_34px_-14px_rgba(0,0,0,0.26)] ring-1 ring-black/6 backdrop-blur-sm md:hidden md:px-6 dark:border-(--accent-border) dark:bg-(--accent) dark:ring-0 dark:shadow-none"
+              className="fixed right-4 z-20 mx-auto mt-2 flex w-48 max-w-50 flex-col rounded-2xl border border-border bg-background px-2 py-2 text-center shadow-[0_16px_34px_-14px_rgba(0,0,0,0.26)] ring-1 ring-black/6 backdrop-blur-sm md:hidden md:px-6 dark:bg-(--accent) dark:ring-0 dark:shadow-none"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -134,7 +134,7 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`rounded-lg px-3 py-1.5 text-sm tracking-[-0.02em] transition-colors duration-200 ${
+                    className={`rounded-lg px-3 py-2 text-md tracking-[-0.02em] transition-colors duration-200 ${
                       active
                         ? "bg-(--accent) font-medium text-foreground dark:bg-white/10 dark:text-(--accent-foreground)"
                         : "text-muted hover:bg-(--accent-muted) hover:text-foreground"

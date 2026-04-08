@@ -14,6 +14,7 @@ import { compileMDX } from "next-mdx-remote/rsc"
 import remarkGfm from "remark-gfm"
 
 import type { BlogPost, BlogPostFrontmatter, BlogPostSummary } from "@/types"
+import { estimateReadTime } from "@/lib/read-time"
 
 const BLOG_DIRECTORY = path.join(process.cwd(), "src", "content", "blog")
 
@@ -145,11 +146,13 @@ export async function getAllPosts(): Promise<BlogPostSummary[]> {
   const slugs = await getBlogSlugs()
   const posts = await Promise.all(
     slugs.map(async (slug) => {
-      const { frontmatter } = await readPostSource(slug)
+      const { content, frontmatter } = await readPostSource(slug)
+      const readTime = estimateReadTime(content)
 
       return {
         slug,
         ...frontmatter,
+        ...readTime,
       }
     })
   )
@@ -163,6 +166,7 @@ export async function getAllPosts(): Promise<BlogPostSummary[]> {
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
     const { content, frontmatter } = await readPostSource(slug)
+    const readTime = estimateReadTime(content)
     const { content: compiledContent } = await compileMDX({
       source: content,
       components: mdxComponents,
@@ -177,6 +181,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       slug,
       content: compiledContent,
       ...frontmatter,
+      ...readTime,
     }
   } catch (error) {
     if (error instanceof Error && "code" in error && error.code === "ENOENT") {

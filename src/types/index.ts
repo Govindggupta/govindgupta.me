@@ -36,6 +36,8 @@ export interface BlogPostFrontmatter {
 
 export interface BlogPostSummary extends BlogPostFrontmatter {
   slug: string
+  readTimeMinutes: number
+  readTimeText: string
 }
 
 export interface BlogPost extends BlogPostSummary {

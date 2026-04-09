@@ -1,5 +1,7 @@
-import { Github, Linkedin, Twitter } from "lucide-react"
+import { Github, Linkedin } from "lucide-react"
 
+import { DiscordIcon } from "@/components/ui/icons/DiscordIcon"
+import { XIcon } from "@/components/ui/icons/XIcon"
 import type { SocialLink } from "@/types"
 
 export const socials: SocialLink[] = [
@@ -16,6 +18,11 @@ export const socials: SocialLink[] = [
   {
     label: "X",
     href: "https://x.com/3g_g0vind",
-    icon: Twitter,
+    icon: XIcon,
+  },
+  {
+    label: "Discord",
+    href: "https://discord.com/users/govind_5649",
+    icon: DiscordIcon,
   },
 ]

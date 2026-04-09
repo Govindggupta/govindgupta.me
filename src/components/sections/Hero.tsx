@@ -2,10 +2,11 @@ import type { ReactNode } from "react"
 import * as motion from "framer-motion/client"
 import {
   BriefcaseBusiness,
+  Clock3,
   Globe,
   Mail,
+  Mars,
   MapPin,
-  User,
 } from "lucide-react"
 import Image from "next/image"
 
@@ -16,6 +17,9 @@ import { heroFlipSentences } from "@/data/hero"
 import { socials } from "@/data/socials"
 import { getGitHubProfile } from "@/lib/github"
 
+import { HeroEmailLink } from "./HeroEmailLink"
+import { HeroLocalTime } from "./HeroLocalTime"
+
 const heroTransition = {
   duration: 0.35,
   ease: "easeOut" as const,
@@ -23,8 +27,15 @@ const heroTransition = {
 
 function InfoIconShell({ children }: { children: ReactNode }) {
   return (
-    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-background-alt/80 text-muted shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_1px_2px_rgba(0,0,0,0.08)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_1px_2px_rgba(0,0,0,0.35)]">
-      {children}
+    <span
+      className={[
+        "flex h-8 w-8 shrink-0 items-center justify-center rounded-[0.8rem] border leading-none",
+        "border-(--accent-border) bg-black/3 text-muted dark:bg-(--accent)",
+      ].join(" ")}
+    >
+      <span className="flex items-center justify-center leading-none [&_svg]:block">
+        {children}
+      </span>
     </span>
   )
 }
@@ -37,10 +48,12 @@ function HeroInfoRow({
   children: ReactNode
 }) {
   return (
-    <div className="flex min-w-0 items-center gap-3">
+    <li className="flex min-w-0 items-center gap-2.5">
       <InfoIconShell>{icon}</InfoIconShell>
-      <div className="min-w-0 text-sm text-foreground">{children}</div>
-    </div>
+      <div className="flex min-w-0 items-center text-sm text-foreground sm:text-[0.95rem]">
+        {children}
+      </div>
+    </li>
   )
 }
 
@@ -49,7 +62,7 @@ export async function Hero() {
   const name = profile.name ?? "Govind Gupta"
 
   return (
-    <section className="mx-auto w-full max-w-[900px] px-4 pt-20 pb-0 md:px-6">
+    <section className="mx-auto w-full max-w-225 px-4 pt-20 pb-0 md:px-6">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -69,7 +82,7 @@ export async function Hero() {
                 height={168}
                 sizes="(min-width: 768px) 168px, (min-width: 640px) 120px, 104px"
                 priority
-                className="h-full w-full rounded-full object-cover border border-border p-1"
+                className="h-full w-full rounded-full border border-border object-cover p-1"
               />
             </ProfileImageBorder>
           </div>
@@ -86,52 +99,49 @@ export async function Hero() {
           </div>
         </div>
 
-        <div className="grid gap-x-10 gap-y-3 sm:grid-cols-2">
-          <div className="space-y-3">
-            <HeroInfoRow
-              icon={<BriefcaseBusiness size={14} strokeWidth={1.8} />}
-            >
-              Full Stack Developer
-            </HeroInfoRow>
-
-            <HeroInfoRow icon={<MapPin size={14} strokeWidth={1.8} />}>
-              Surat, Gujarat, India
-            </HeroInfoRow>
-
-            <HeroInfoRow icon={<Globe size={14} strokeWidth={1.8} />}>
-              <a
-                href="https://govindgupta.me"
-                target="_blank"
-                rel="noreferrer"
-                className="underline decoration-border decoration-[1px] underline-offset-[3px] hover:opacity-70"
-              >
-                govindgupta.me
-              </a>
-            </HeroInfoRow>
-          </div>
-
-          <div className="space-y-3">
+        <div className="space-y-4">
+          <ul>
             <HeroInfoRow
               icon={
-                <span className="h-2 w-2 rounded-full bg-neutral-400 dark:bg-neutral-500" />
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.14)]" />
               }
             >
               Open to work
             </HeroInfoRow>
+          </ul>
 
-            <HeroInfoRow icon={<Mail size={14} strokeWidth={1.8} />}>
+          <ul className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 sm:gap-x-6">
+            <HeroInfoRow icon={<BriefcaseBusiness size={19} strokeWidth={2} />}>
+              Full Stack Developer
+            </HeroInfoRow>
+
+            <HeroInfoRow icon={<Mail size={19} strokeWidth={2} />}>
+              <HeroEmailLink email="contact@govindgupta.me" />
+            </HeroInfoRow>
+
+            <HeroInfoRow icon={<MapPin size={19} strokeWidth={2} />}>
+              Surat, Gujarat, India
+            </HeroInfoRow>
+
+            <HeroInfoRow icon={<Clock3 size={19} strokeWidth={2} />}>
+              <HeroLocalTime />
+            </HeroInfoRow>
+
+            <HeroInfoRow icon={<Globe size={19} strokeWidth={2} />}>
               <a
-                href="mailto:contact@govindgupta.me"
-                className="underline decoration-border decoration-[1px] underline-offset-[3px] hover:opacity-70"
+                href="https://govindgupta.me"
+                target="_blank"
+                rel="noreferrer"
+                className="block w-fit border-b border-transparent transition-colors duration-150 hover:border-current"
               >
-                contact@govindgupta.me
+                govindgupta.me
               </a>
             </HeroInfoRow>
 
-            <HeroInfoRow icon={<User size={14} strokeWidth={1.8} />}>
-              he/him
+            <HeroInfoRow icon={<Mars size={19} strokeWidth={2} />}>
+              <span className="cursor-text">he/him</span>
             </HeroInfoRow>
-          </div>
+          </ul>
         </div>
 
         <div>
@@ -143,9 +153,9 @@ export async function Hero() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-background-alt/85 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_1px_2px_rgba(0,0,0,0.08)] transition-colors duration-200 hover:bg-background-alt dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_1px_2px_rgba(0,0,0,0.28)]"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-background-alt/85 text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_1px_2px_rgba(0,0,0,0.08)] transition-colors duration-150 hover:bg-background-alt dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_1px_2px_rgba(0,0,0,0.28)]"
                 >
-                  <Icon size={17} strokeWidth={1.8} />
+                  <Icon size={25} strokeWidth={2} />
                 </a>
               </li>
             ))}

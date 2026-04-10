@@ -56,10 +56,12 @@ export function BlogCard({ post }: BlogCardProps) {
             {post.title}
           </h2>
           <div className="flex items-center justify-between gap-3 ">
-            <p className="text-sm text-muted">{formatCardDate(post.date)}</p>
+            <p className="text-sm text-muted">
+              {formatCardDate(post.date)}
+            </p>
             <p className="shrink-0 text-sm font-medium text-muted underline decoration-border decoration-1 underline-offset-[3px]">
               <span className="inline-flex items-center gap-1">
-                Read article
+              {post.readTimeText}
                 <ArrowRight
                   size={14}
                   strokeWidth={1.9}

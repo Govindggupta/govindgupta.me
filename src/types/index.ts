@@ -1,10 +1,15 @@
-import type { LucideIcon } from "lucide-react"
 import type { ReactNode } from "react"
+
+type SocialIconComponent = (props: {
+  size?: number
+  strokeWidth?: number
+  className?: string
+}) => ReactNode
 
 export interface SocialLink {
   label: string
   href: string
-  icon: LucideIcon
+  icon: SocialIconComponent
 }
 
 export interface Project {
@@ -36,6 +41,8 @@ export interface BlogPostFrontmatter {
 
 export interface BlogPostSummary extends BlogPostFrontmatter {
   slug: string
+  readTimeMinutes: number
+  readTimeText: string
 }
 
 export interface BlogPost extends BlogPostSummary {

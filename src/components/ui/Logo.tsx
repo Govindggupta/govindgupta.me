@@ -15,7 +15,7 @@ export function Logo() {
       className="group inline-flex shrink-0 items-center"
       aria-label="Go to home"
     >
-      <span className="relative block aspect-[15/16] h-[3.25rem] overflow-hidden rounded-sm">
+      <span className="relative block aspect-15/16 h-13 overflow-hidden rounded-sm">
         <Image
           src={logoHoverLight}
           alt=""

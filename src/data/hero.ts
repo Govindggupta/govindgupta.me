@@ -1,5 +1,5 @@
 export const heroFlipSentences = [
   "Full Stack Developer",
-  "Bon Vivant :)",
+  "Curious Builder!",
   "Open Source Contributor",
 ] as const

@@ -43,7 +43,7 @@ export function TechStack() {
                   alt={item.name}
                   width={40}
                   height={40}
-                  className="h-8 w-8 object-contain transition-transform duration-150 group-hover:scale-98 sm:h-9 sm:w-9 md:h-10 md:w-10"
+                  className="h-8 w-8 object-contain transition-transform duration-150 group-hover:scale-100 sm:h-9 sm:w-9 md:h-10 md:w-10"
                 />
               ) : (
                 <span

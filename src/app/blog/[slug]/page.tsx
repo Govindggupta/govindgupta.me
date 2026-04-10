@@ -68,6 +68,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="flex flex-wrap items-center gap-3 font-mono text-xs tracking-[0.16em] text-muted uppercase">
                 <time dateTime={post.date}>{formatDate(post.date)}</time>
                 <span>·</span>
+                <span>{post.readTimeText}</span>
+                <span>·</span>
                 <span>{post.tags.join(" / ")}</span>
               </div>
 

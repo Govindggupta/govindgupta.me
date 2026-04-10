@@ -21,7 +21,10 @@ function getSocialIconSize(label: string) {
 
 export function HeroSocialLinks() {
   return (
-    <div>
+    <div className="space-y-2.5 pt-4">
+      <p className="text-sm font-medium tracking-[0.02em] text-muted">
+        Find me on
+      </p>
       <ul className="flex flex-wrap items-center gap-4">
         {socials.map(({ href, icon: Icon, label }) => (
           <li key={label}>

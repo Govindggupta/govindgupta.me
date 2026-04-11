@@ -7,9 +7,9 @@ import { Navbar } from "@/components/layout/Navbar"
 import { BackToTop } from "@/components/ui/BackToTop"
 import { baseMetadata } from "@/lib/metadata"
 import { cascadiaCode } from "./fonts"
-
 import "./globals.css"
 import { ThemeProvider } from "../../providers/ThemeProvider"
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -44,6 +44,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} ${cascadiaCode.variable} min-h-screen bg-background font-sans text-foreground antialiased`}
       >
+        <Analytics />
         <ThemeProvider>
           <div className="flex min-h-screen flex-col bg-background">
             <Navbar />

@@ -199,6 +199,14 @@ const techStack: TechItem[] = [
     singleVariant: true,
   },
   {
+    name: "Claude", 
+    iconDark: "/icons/tech/claude.svg",
+    iconLight: "/icons/tech/claude.svg",
+    url: "https://claude.ai",
+    category: "ai",
+    singleVariant: true, 
+  },
+  {
     name: "ChatGPT",
     iconDark: "/icons/tech/chatgpt-light.svg",
     iconLight: "/icons/tech/chatgpt-dark.svg",
@@ -207,12 +215,12 @@ const techStack: TechItem[] = [
     singleVariant: false,
   },
   {
-    name: "Claude", 
-    iconDark: "/icons/tech/claude.svg",
-    iconLight: "/icons/tech/claude.svg",
-    url: "https://claude.ai",
+    name: "Cursor", 
+    iconDark: "/icons/tech/cursor-light.svg",
+    iconLight: "/icons/tech/cursor-dark.svg",
+    url: "https://www.cursor.com",
     category: "ai",
-    singleVariant: true, 
+    singleVariant: false,
   }
 ]
 

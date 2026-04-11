@@ -11,6 +11,7 @@
     "format": "prettier --check ."
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "framer-motion": "^12.23.24",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.511.0",

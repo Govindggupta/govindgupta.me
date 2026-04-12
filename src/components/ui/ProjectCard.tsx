@@ -28,7 +28,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       href={projectHref}
       target="_blank"
       rel="noreferrer"
-      className="group block self-start overflow-hidden rounded-2xl border border-border bg-[var(--color-background-primary)] transition-colors duration-150 hover:bg-foreground/5 dark:hover:bg-foreground/10"
+      className="group block self-start overflow-hidden rounded-2xl border border-border bg-[var(--color-background-primary)] transition-colors duration-150 hover:bg-foreground/3 dark:hover:bg-foreground/3"
       aria-label={`${project.name} project link`}
     >
       <article className="flex min-h-0 flex-col">

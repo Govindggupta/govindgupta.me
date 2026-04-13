@@ -37,7 +37,7 @@ export function BlogCard({ post }: BlogCardProps) {
               alt={post.title}
               fill
               sizes="(max-width: 768px) 100vw, 900px"
-              className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.01]"
+              className="object-cover object-top transition-transform duration-300"
               onError={() => setHasImageError(true)}
             />
           ) : (

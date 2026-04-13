@@ -28,9 +28,15 @@ export default async function ProjectsPage() {
 
         {repos.length > 0 ? (
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            {repos.map((repo) => (
-              <ProjectCard key={repo.name} project={repo} />
-            ))}
+            {repos
+              .sort((a, b) => {
+                const aHasUrl = a.homepageUrl ? 1 : 0
+                const bHasUrl = b.homepageUrl ? 1 : 0
+                return bHasUrl - aHasUrl
+              })
+              .map((repo) => (
+                <ProjectCard key={repo.name} project={repo} />
+              ))}
           </div>
         ) : (
           <p className="text-sm text-muted">No pinned repositories found.</p>

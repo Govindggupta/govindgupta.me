@@ -4,11 +4,7 @@ import { ArrowRight } from "lucide-react"
 import { ProjectCard } from "@/components/ui/ProjectCard"
 import type { PinnedRepo } from "@/types"
 
-export function FeaturedProjects({
-  repos,
-}: {
-  repos: PinnedRepo[]
-}) {
+export function FeaturedProjects({ repos }: { repos: PinnedRepo[] }) {
   const featuredRepos = repos.slice(0, 4)
 
   return (
@@ -16,9 +12,15 @@ export function FeaturedProjects({
       {featuredRepos.length > 0 ? (
         <>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-            {featuredRepos.map((repo) => (
-              <ProjectCard key={repo.name} project={repo} />
-            ))}
+            {featuredRepos
+              .sort((a, b) => {
+                const aHasUrl = a.homepageUrl ? 1 : 0
+                const bHasUrl = b.homepageUrl ? 1 : 0
+                return bHasUrl - aHasUrl
+              })
+              .map((repo) => (
+                <ProjectCard key={repo.name} project={repo} />
+              ))}
           </div>
 
           <div className="flex justify-center">

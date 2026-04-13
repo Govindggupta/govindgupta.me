@@ -53,7 +53,8 @@
 
 .dark {
   color-scheme: dark;
-  --background: #000000;
+  --background: #0b0b0d;
+  /* --background: oklch(0.141 0.005 285.823); */
   --background-alt: #111111;
   --accent: lab(8 0.61 -2.13);
   --accent-muted: color-mix(in oklab, var(--accent) 50%, transparent);

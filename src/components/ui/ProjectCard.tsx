@@ -56,7 +56,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </span>
         </div>
 
-        <div className="relative mx-2 aspect-1200/630 overflow-hidden rounded-xl border border-border bg-neutral-200 dark:bg-neutral-800 -rotate-3 translate-y-0 translate-x-2 origin-top-right group-hover:rotate-0 transition-transform duration-150">
+        <div className="relative mx-2 aspect-1200/630 overflow-hidden rounded-xl border border-border bg-neutral-200 dark:bg-neutral-800 -rotate-3 translate-y-0 translate-x-2 origin-top-right group-hover:rotate-0 transition-transform duration-150 shadow-zinc-900 shadow-lg">
           {previewUrl ? (
             <Image
               src={previewUrl}

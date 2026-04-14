@@ -17,7 +17,7 @@ import { SectionReveal } from "@/components/ui/SectionReveal"
 import { experiences } from "@/data/experience"
 import { getAllPosts } from "@/lib/mdx"
 import { buildMetadata } from "@/lib/metadata"
-import { getPinnedRepos } from "@/lib/github"
+import { getAllProjects } from "@/lib/projects"
 
 function HomeSectionHeader({
   title,
@@ -45,7 +45,7 @@ function HomeSectionHeader({
         </h2>
       </div>
       {showLink ? (
-        <span className="shrink-0 self-end inline-flex items-center gap-1 text-sm text-muted transition-colors group-hover:text-foreground">
+        <span className="inline-flex shrink-0 items-center gap-1 self-end text-sm text-muted transition-colors group-hover:text-foreground">
           <span>{external ? "View on GitHub" : "View all"}</span>
           <ArrowRight
             size={14}
@@ -84,7 +84,7 @@ export async function generateMetadata() {
 }
 
 export default async function HomePage() {
-  const [repos, posts] = await Promise.all([getPinnedRepos(), getAllPosts()])
+  const [projects, posts] = await Promise.all([getAllProjects(), getAllPosts()])
 
   return (
     <main className="pb-24">
@@ -102,11 +102,7 @@ export default async function HomePage() {
 
       {experiences.length > 0 ? (
         <SectionReveal className="mx-auto mt-24 w-full max-w-[900px] px-4 md:px-6">
-          <HomeSectionHeader
-            title="Experience"
-            href="/"
-            showLink={false}
-          />
+          <HomeSectionHeader title="Experience" href="/" showLink={false} />
           <Experience />
         </SectionReveal>
       ) : null}
@@ -116,11 +112,11 @@ export default async function HomePage() {
       >
         <HomeSectionHeader
           title="Projects"
-          count={repos.length}
+          count={projects.length}
           href="/projects"
           showLink={false}
         />
-        <FeaturedProjects repos={repos.slice(0, 4)} />
+        <FeaturedProjects projects={projects.slice(0, 4)} />
       </SectionReveal>
 
       <SectionReveal className="mx-auto mt-24 w-full max-w-[900px] px-4 md:px-6">
@@ -134,11 +130,7 @@ export default async function HomePage() {
       </SectionReveal>
 
       <SectionReveal className="mx-auto mt-24 w-full max-w-[900px] px-4 md:px-6">
-        <HomeSectionHeader
-          title="GitHub"
-          href={githubSectionLink}
-          external
-        />
+        <HomeSectionHeader title="GitHub" href={githubSectionLink} external />
         <Suspense fallback={<GitHubGraphFallback />}>
           <GitHubGraph />
         </Suspense>

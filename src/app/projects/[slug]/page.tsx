@@ -153,14 +153,14 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         <div className="prose-story">{project.content}</div>
 
         <footer className="flex items-center justify-between gap-4">
-          <BackLink href="/projects" className="mb-0">
+          <BackLink href="/projects" className="!mb-0 shrink-0 whitespace-nowrap">
             Back to projects
           </BackLink>
           <a
             href={project.github}
             target="_blank"
             rel="noreferrer"
-            className="text-sm text-muted transition-colors duration-150 hover:text-foreground"
+            className="inline-flex shrink-0 items-center whitespace-nowrap text-sm text-muted transition-colors duration-150 hover:text-foreground"
           >
             View on GitHub -&gt;
           </a>

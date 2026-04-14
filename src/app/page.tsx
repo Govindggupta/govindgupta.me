@@ -92,23 +92,23 @@ export default async function HomePage() {
         <Hero />
       </div>
 
-      <SectionReveal className="mx-auto mt-24 w-full max-w-[900px] px-4 md:px-6">
+      <SectionReveal className="mx-auto mt-24 w-full max-w-225 px-4 md:px-6">
         <About />
       </SectionReveal>
 
-      <SectionReveal className="mx-auto mt-24 w-full max-w-[900px] px-4 md:px-6">
+      <SectionReveal className="mx-auto mt-24 w-full max-w-225 px-4 md:px-6">
         <TechStack />
       </SectionReveal>
 
       {experiences.length > 0 ? (
-        <SectionReveal className="mx-auto mt-24 w-full max-w-[900px] px-4 md:px-6">
+        <SectionReveal className="mx-auto mt-24 w-full max-w-225 px-4 md:px-6">
           <HomeSectionHeader title="Experience" href="/" showLink={false} />
           <Experience />
         </SectionReveal>
       ) : null}
 
       <SectionReveal
-        className={`mx-auto mt-24 w-full max-w-[900px] px-4 md:px-6`}
+        className={`mx-auto mt-24 w-full max-w-225 px-4 md:px-6`}
       >
         <HomeSectionHeader
           title="Projects"
@@ -119,7 +119,7 @@ export default async function HomePage() {
         <FeaturedProjects projects={projects.slice(0, 4)} />
       </SectionReveal>
 
-      <SectionReveal className="mx-auto mt-24 w-full max-w-[900px] px-4 md:px-6">
+      <SectionReveal className="mx-auto mt-24 w-full max-w-225 px-4 md:px-6">
         <HomeSectionHeader
           title="Blog"
           count={posts.length}
@@ -129,14 +129,14 @@ export default async function HomePage() {
         <LatestPosts posts={posts.slice(0, 4)} />
       </SectionReveal>
 
-      <SectionReveal className="mx-auto mt-24 w-full max-w-[900px] px-4 md:px-6">
+      <SectionReveal className="mx-auto mt-24 w-full max-w-225 px-4 md:px-6">
         <HomeSectionHeader title="GitHub" href={githubSectionLink} external />
         <Suspense fallback={<GitHubGraphFallback />}>
           <GitHubGraph />
         </Suspense>
       </SectionReveal>
 
-      {/* <SectionReveal className="mx-auto mt-14 w-full max-w-[900px] px-4 md:px-6">
+      {/* <SectionReveal className="mx-auto mt-14 w-full max-w-225 px-4 md:px-6">
         <Interests />
       </SectionReveal> */}
     </main>

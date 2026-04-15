@@ -60,9 +60,9 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
   }, [isOpen])
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3">
+    <header className="fixed inset-x-0 top-0 z-50 px-2 pt-3">
       <nav className="mx-auto w-full max-w-225 rounded-2xl border border-border bg-background/80 backdrop-blur-sm">
-        <div className="flex h-14 items-center justify-between px-2 md:px-4">
+        <div className="flex h-14 items-center justify-between px-3 md:px-4">
           <Logo />
 
           <div className="flex items-center gap-1 md:gap-3">

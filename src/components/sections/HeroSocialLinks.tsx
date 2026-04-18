@@ -1,4 +1,7 @@
+"use client"
+
 import { socials } from "@/data/socials"
+import { useUmami } from "@/hooks/use-umami"
 
 function getSocialHoverBgClass(label: string) {
   switch (label) {
@@ -35,6 +38,8 @@ function getSocialIconSize(label: string) {
 }
 
 export function HeroSocialLinks() {
+  const { trackEvent } = useUmami()
+
   return (
     <div className="space-y-2.5 pt-4">
       <p className="text-sm font-medium tracking-[0.02em] text-muted">
@@ -48,6 +53,13 @@ export function HeroSocialLinks() {
               target="_blank"
               rel="noreferrer"
               aria-label={label}
+              onClick={() => {
+                trackEvent("social_button_click", {
+                  platform: label,
+                  href,
+                  location: "hero",
+                })
+              }}
               className={`group relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-border bg-(--accent) text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_1px_2px_rgba(0,0,0,0.08)] transition-colors duration-150 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_1px_2px_rgba(0,0,0,0.28)] ${getSocialHoverTextClass(label)}`}
             >
               <span

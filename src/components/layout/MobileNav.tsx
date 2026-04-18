@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react"
 
 import { AnimatePresence, motion } from "framer-motion"
 import Link from "next/link"
+import { useUmami } from "@/hooks/use-umami"
 
 export type MobileNavItem = {
   href: string
@@ -32,6 +33,7 @@ export function MobileNav({
   onClose,
 }: MobileNavProps) {
   const openSoundRef = useRef<HTMLAudioElement | null>(null)
+  const { trackEvent } = useUmami()
 
   useEffect(() => {
     const openSound = new Audio("/sound/nav-click.mp3")
@@ -49,6 +51,10 @@ export function MobileNav({
       return
     }
 
+    trackEvent("mobile_nav_open", {
+      path: pathname,
+    })
+
     const openSound = openSoundRef.current
     if (!openSound) {
       return
@@ -58,7 +64,7 @@ export function MobileNav({
     void openSound.play().catch(() => {
       // Ignore browser playback policy errors.
     })
-  }, [isOpen])
+  }, [isOpen, pathname, trackEvent])
 
   return (
     <AnimatePresence>

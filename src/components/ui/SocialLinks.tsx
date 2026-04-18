@@ -1,5 +1,8 @@
+"use client"
+
 import type { SocialLink } from "@/types"
 import { socials } from "@/data/socials"
+import { useUmami } from "@/hooks/use-umami"
 
 interface SocialLinksProps {
   className?: string
@@ -10,6 +13,8 @@ export function SocialLinks({
   className = "",
   links = socials,
 }: SocialLinksProps) {
+  const { trackEvent } = useUmami()
+
   return (
     <ul className={`flex items-center gap-3 ${className}`.trim()}>
       {links.map(({ href, icon: Icon, label }) => (
@@ -19,6 +24,13 @@ export function SocialLinks({
             target="_blank"
             rel="noreferrer"
             aria-label={label}
+            onClick={() => {
+              trackEvent("social_button_click", {
+                platform: label,
+                href,
+                location: "social_links",
+              })
+            }}
             className="flex h-11 w-11 items-center justify-center border border-border bg-background text-foreground transition-colors duration-300 hover:bg-background-alt hover:opacity-60"
           >
             <Icon size={18} strokeWidth={1.8} />

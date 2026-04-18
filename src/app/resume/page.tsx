@@ -1,3 +1,4 @@
+import { ResumePageViewTracker } from "@/components/analytics/ResumePageViewTracker"
 import { BackLink } from "@/components/ui/BackLink"
 import { PageTransition } from "@/components/ui/PageTransition"
 import { buildMetadata } from "@/lib/metadata"
@@ -17,6 +18,7 @@ export default function ResumePage() {
   return (
     <PageTransition className="mx-auto w-full max-w-none px-4 page-top-spacing md:px-6">
       <section className="space-y-6">
+        <ResumePageViewTracker />
         <div className="space-y-4">
           <BackLink href="/" className="mb-0">
             Back home

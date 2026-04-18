@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect } from "react"
 
 import { AnimatePresence, motion } from "framer-motion"
 import Link from "next/link"
@@ -32,19 +32,7 @@ export function MobileNav({
   navigation,
   onClose,
 }: MobileNavProps) {
-  const openSoundRef = useRef<HTMLAudioElement | null>(null)
   const { trackEvent } = useUmami()
-
-  useEffect(() => {
-    const openSound = new Audio("/sound/nav-click.mp3")
-    openSound.preload = "auto"
-    openSoundRef.current = openSound
-
-    return () => {
-      openSound.pause()
-      openSoundRef.current = null
-    }
-  }, [])
 
   useEffect(() => {
     if (!isOpen) {
@@ -53,16 +41,6 @@ export function MobileNav({
 
     trackEvent("mobile_nav_open", {
       path: pathname,
-    })
-
-    const openSound = openSoundRef.current
-    if (!openSound) {
-      return
-    }
-
-    openSound.currentTime = 0
-    void openSound.play().catch(() => {
-      // Ignore browser playback policy errors.
     })
   }, [isOpen, pathname, trackEvent])
 
@@ -83,7 +61,7 @@ export function MobileNav({
 
           <motion.nav
             id="mobile-navigation"
-            className="fixed right-2 z-20 mx-auto mt-2 flex w-48 max-w-50 flex-col rounded-2xl border border-border dark:border-zinc-700/50 bg-background px-2 py-2 text-center shadow-[0_16px_34px_-14px_rgba(0,0,0,0.26)] ring-1 ring-black/6 backdrop-blur-sm md:hidden md:px-6 dark:bg-(--accent) dark:ring-0 dark:shadow-none"
+            className="fixed right-4 z-20 mx-auto mt-2 flex w-48 max-w-50 flex-col rounded-2xl border border-border dark:border-zinc-700/50 bg-background px-2 py-2 text-center shadow-[0_16px_34px_-14px_rgba(0,0,0,0.26)] ring-1 ring-black/6 backdrop-blur-sm md:hidden md:px-6 dark:bg-(--accent) dark:ring-0 dark:shadow-none"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}

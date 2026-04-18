@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import type { ReactNode } from "react"
 
 import Link from "next/link"
@@ -34,6 +34,18 @@ type NavbarClientProps = {
 export function NavbarClient({ githubNavItem }: NavbarClientProps) {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  const menuSoundRef = useRef<HTMLAudioElement | null>(null)
+
+  useEffect(() => {
+    const menuSound = new Audio("/sound/nav-click.mp3")
+    menuSound.preload = "auto"
+    menuSoundRef.current = menuSound
+
+    return () => {
+      menuSound.pause()
+      menuSoundRef.current = null
+    }
+  }, [])
 
   useEffect(() => {
     setIsOpen(false)
@@ -59,8 +71,26 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
     }
   }, [isOpen])
 
+  function handleHamburgerClick() {
+    setIsOpen((open) => {
+      const nextOpen = !open
+
+      if (nextOpen) {
+        const menuSound = menuSoundRef.current
+        if (menuSound) {
+          menuSound.currentTime = 0
+          void menuSound.play().catch(() => {
+            // Ignore browser playback policy errors.
+          })
+        }
+      }
+
+      return nextOpen
+    })
+  }
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-2 pt-2">
+    <header className="fixed inset-x-0 top-0 z-50 px-2 pt-3">
       <nav className="mx-auto w-full max-w-225 rounded-2xl border border-border bg-background/80 backdrop-blur-sm">
         <div className="flex h-14 items-center justify-between px-3 md:px-4">
           <Logo />
@@ -95,7 +125,7 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
                 <div className="z-100 flex items-center md:hidden">
                   <Hamburger
                     isOpen={isOpen}
-                    onClick={() => setIsOpen((open) => !open)}
+                    onClick={handleHamburgerClick}
                     ariaControls="mobile-navigation"
                   />
                 </div>

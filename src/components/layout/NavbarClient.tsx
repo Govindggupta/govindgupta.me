@@ -119,7 +119,7 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
             <div className="flex items-center gap-1 md:gap-3">
               <VerticalBar />
 
-              <div className="flex items-center gap-0.5 md:gap-3">
+              <div className="flex items-center">
                 <ThemeToggle />
 
                 <div className="z-100 flex items-center md:hidden">

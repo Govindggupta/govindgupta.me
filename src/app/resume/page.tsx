@@ -1,12 +1,8 @@
 import { ResumePageViewTracker } from "@/components/analytics/ResumePageViewTracker"
 import { BackLink } from "@/components/ui/BackLink"
 import { PageTransition } from "@/components/ui/PageTransition"
+import { resumeConfig } from "@/config/resume"
 import { buildMetadata } from "@/lib/metadata"
-
-const resumeDriveViewPath =
-  "https://drive.google.com/file/d/10XYDOzjXXbmYI8bkalxsNdqEvpEDpsFF/view?usp=sharing"
-const resumeDrivePreviewPath =
-  "https://drive.google.com/file/d/10XYDOzjXXbmYI8bkalxsNdqEvpEDpsFF/preview"
 
 export async function generateMetadata() {
   return buildMetadata({
@@ -32,7 +28,7 @@ export default function ResumePage() {
         <div className="overflow-hidden rounded-xl border border-border bg-card">
           <iframe
             title="Resume PDF"
-            src={resumeDrivePreviewPath}
+            src={resumeConfig.previewUrl}
             className="h-150 sm:h-250 lg:h-300 w-full"
           />
         </div>

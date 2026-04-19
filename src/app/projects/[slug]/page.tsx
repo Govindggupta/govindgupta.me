@@ -8,7 +8,7 @@ import { PageTransition } from "@/components/ui/PageTransition"
 import {
   getProjectBySlug,
   getProjectSlugs,
-  type ProjectStatus,
+  // type ProjectStatus,
 } from "@/lib/projects"
 
 interface ProjectPageProps {
@@ -19,18 +19,18 @@ interface ProjectPageProps {
 
 export const dynamicParams = false
 
-function formatStatus(status: ProjectStatus) {
-  switch (status) {
-    case "in-progress":
-      return "In Progress"
-    case "completed":
-      return "Completed"
-    case "archived":
-      return "Archived"
-    default:
-      return status
-  }
-}
+  // function formatStatus(status: ProjectStatus) {
+  //   switch (status) {
+  //     case "in-progress":
+  //       return "In Progress"
+  //     case "completed":
+  //       return "Completed"
+  //     case "archived":
+  //       return "Archived"
+  //     default:
+  //       return status
+  //   }
+  // }
 
 export async function generateStaticParams() {
   const slugs = await getProjectSlugs()

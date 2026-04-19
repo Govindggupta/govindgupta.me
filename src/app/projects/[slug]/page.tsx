@@ -8,7 +8,7 @@ import { PageTransition } from "@/components/ui/PageTransition"
 import {
   getProjectBySlug,
   getProjectSlugs,
-  type ProjectStatus,
+  // type ProjectStatus,
 } from "@/lib/projects"
 
 interface ProjectPageProps {

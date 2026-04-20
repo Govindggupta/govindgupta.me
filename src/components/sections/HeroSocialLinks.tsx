@@ -60,7 +60,7 @@ export function HeroSocialLinks() {
                   location: "hero",
                 })
               }}
-              className={`group relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-border bg-(--accent) text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_1px_2px_rgba(0,0,0,0.08)] transition-colors duration-150 dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_1px_2px_rgba(0,0,0,0.28)] ${getSocialHoverTextClass(label)}`}
+              className={`group relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-muted/20 bg-black/2 dark:bg-white/8 text-foreground transition-colors duration-150 ${getSocialHoverTextClass(label)}`}
             >
               <span
                 aria-hidden="true"

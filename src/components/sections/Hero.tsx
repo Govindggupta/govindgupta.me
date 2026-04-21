@@ -27,15 +27,16 @@ const heroTransition = {
 
 function InfoIconShell({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-grid h-8 w-8 shrink-0 place-items-center rounded-[0.7rem] border border-foreground/10 p-px align-middle">
+    <span className="flex shrink-0 justify-center items-center rounded-[0.7rem] border border-foreground/10 p-px">
       <span
         className={[
-          "grid h-full w-full place-items-center rounded-[0.6rem] border leading-0",
+          "flex h-7 w-7 items-center justify-center rounded-[0.6rem] border leading-none",
           "border-muted/30 bg-black/3 text-muted dark:bg-white/10",
-          "*:block [&_svg]:h-4.5 [&_svg]:w-4.5",
         ].join(" ")}
       >
-        {children}
+        <span className="inline-flex h-4.5 w-4.5 items-center justify-center leading-none text-[0px] [&>svg]:block [&>svg]:h-4.5 [&>svg]:w-4.5">
+          {children}
+        </span>
       </span>
     </span>
   )

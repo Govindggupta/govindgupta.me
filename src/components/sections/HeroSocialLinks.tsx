@@ -60,7 +60,7 @@ export function HeroSocialLinks() {
                   location: "hero",
                 })
               }}
-              className={`group relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-muted/20 bg-black/2 dark:bg-white/8 text-foreground transition-colors duration-150 ${getSocialHoverTextClass(label)}`}
+              className={`group relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl border border-muted/20 bg-black/3 dark:bg-white/8 text-foreground transition-colors duration-150 ${getSocialHoverTextClass(label)}`}
             >
               <span
                 aria-hidden="true"

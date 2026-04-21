@@ -27,7 +27,6 @@ const heroTransition = {
 
 function InfoIconShell({ children }: { children: ReactNode }) {
   return (
-    <span className="flex shrink-0 justify-center items-center rounded-[0.7rem] border border-foreground/10 p-px">
       <span
         className={[
           "flex h-7 w-7 items-center justify-center rounded-[0.6rem] border leading-none",
@@ -38,7 +37,6 @@ function InfoIconShell({ children }: { children: ReactNode }) {
           {children}
         </span>
       </span>
-    </span>
   )
 }
 

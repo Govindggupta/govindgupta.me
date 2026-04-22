@@ -36,7 +36,7 @@ function HeroInfoRow({
   return (
     <li className="flex min-w-0 items-center gap-2.5">
       <IntroItemIcon className="h-7 w-7 rounded-[0.6rem] border-muted/30 bg-black/3 text-muted dark:bg-white/10">
-        <span className="inline-flex h-4.5 w-4.5 items-center justify-center leading-none text-[0px] [&>svg]:block [&>svg]:h-4.5 [&>svg]:w-4.5">
+        <span className="inline-flex h-5 w-5 items-center justify-center leading-none text-[0px] [&>svg]:block [&>svg]:h-5 [&>svg]:w-5">
           {icon}
         </span>
       </IntroItemIcon>

@@ -22,7 +22,7 @@ export function IntroItemIcon({
     <div
       className={cn(
         "flex size-6 shrink-0 items-center justify-center rounded-lg border border-muted-foreground/15 bg-muted ring-1 ring-foreground/10 ring-offset-1 ring-offset-background",
-        "[&_svg]:pointer-events-none [&_svg]:text-muted-foreground [&_svg:not([class*='size-'])]:size-4",
+        "[&_svg]:pointer-events-none [&_svg]:text-muted-foreground [&_svg:not([class*='size-'])]:size-4.5",
         className,
       )}
       {...props}

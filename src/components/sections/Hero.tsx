@@ -10,6 +10,7 @@ import {
 } from "lucide-react"
 import Image from "next/image"
 
+import { IntroItemIcon } from "@/components/ui/IntroItem"
 import { ProfileImageBorder } from "@/components/ui/ProfileImageBorder"
 import { TextFlip } from "@/components/ui/TextFlip"
 import { VerifiedBadge } from "@/components/ui/VerifiedBadge"
@@ -25,21 +26,6 @@ const heroTransition = {
   ease: "easeOut" as const,
 }
 
-function InfoIconShell({ children }: { children: ReactNode }) {
-  return (
-      <span
-        className={[
-          "flex h-7 w-7 items-center justify-center rounded-[0.6rem] border leading-none",
-          "border-muted/30 bg-black/3 text-muted dark:bg-white/10",
-        ].join(" ")}
-      >
-        <span className="inline-flex h-4.5 w-4.5 items-center justify-center leading-none text-[0px] [&>svg]:block [&>svg]:h-4.5 [&>svg]:w-4.5">
-          {children}
-        </span>
-      </span>
-  )
-}
-
 function HeroInfoRow({
   icon,
   children,
@@ -49,7 +35,11 @@ function HeroInfoRow({
 }) {
   return (
     <li className="flex min-w-0 items-center gap-2.5">
-      <InfoIconShell>{icon}</InfoIconShell>
+      <IntroItemIcon className="h-7 w-7 rounded-[0.6rem] border-muted/30 bg-black/3 text-muted ring-0 ring-transparent ring-offset-0 dark:bg-white/10">
+        <span className="inline-flex h-4.5 w-4.5 items-center justify-center leading-none text-[0px] [&>svg]:block [&>svg]:h-4.5 [&>svg]:w-4.5">
+          {icon}
+        </span>
+      </IntroItemIcon>
       <div className="flex min-w-0 items-center text-sm text-foreground sm:text-[0.95rem]">
         {children}
       </div>
@@ -111,23 +101,23 @@ export async function Hero() {
           </ul>
 
           <ul className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2 sm:gap-x-6">
-            <HeroInfoRow icon={<BriefcaseBusiness strokeWidth={2} />}>
+            <HeroInfoRow icon={<BriefcaseBusiness size={18} strokeWidth={2} />}>
               Full Stack Developer
             </HeroInfoRow>
 
-            <HeroInfoRow icon={<Mail size={19} strokeWidth={2} />}>
+            <HeroInfoRow icon={<Mail size={18} strokeWidth={2} />}>
               <HeroEmailLink email="contact@govindgupta.me" />
             </HeroInfoRow>
 
-            <HeroInfoRow icon={<MapPin strokeWidth={2} />}>
+            <HeroInfoRow icon={<MapPin size={18} strokeWidth={2} />}>
               Surat, Gujarat, India
             </HeroInfoRow>
 
-            <HeroInfoRow icon={<Clock3 strokeWidth={2} />}>
+            <HeroInfoRow icon={<Clock3 size={18} strokeWidth={2} />}>
               <HeroLocalTime />
             </HeroInfoRow>
 
-            <HeroInfoRow icon={<Globe  strokeWidth={2} />}>
+            <HeroInfoRow icon={<Globe size={18} strokeWidth={2} />}>
               <a
                 href="https://govindgupta.me"
                 target="_blank"
@@ -138,7 +128,7 @@ export async function Hero() {
               </a>
             </HeroInfoRow>
 
-            <HeroInfoRow icon={<Mars strokeWidth={2} />}>
+            <HeroInfoRow icon={<Mars size={18} strokeWidth={2} />}>
               <span className="cursor-text">he/him</span>
             </HeroInfoRow>
           </ul>

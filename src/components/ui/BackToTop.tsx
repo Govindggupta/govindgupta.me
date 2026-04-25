@@ -1,16 +1,15 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { useTheme } from "next-themes"
 import { ArrowUpRight } from "lucide-react"
-
 import { Tooltip } from "./Tooltip"
 
 const SCROLL_THRESHOLD_MIN = 260
 const SCROLL_THRESHOLD_RATIO = 0.45
 const SCROLL_DIRECTION_DELTA = 6
+const TOOLTIP_DELAY_MS = 1000
 
 type ScrollState = {
   isScrollingUp: boolean
@@ -20,6 +19,7 @@ type ScrollState = {
 export function BackToTop() {
   const shouldReduceMotion = useReducedMotion()
   const { resolvedTheme } = useTheme()
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [scrollState, setScrollState] = useState<ScrollState>({
     isScrollingUp: true,
@@ -28,6 +28,7 @@ export function BackToTop() {
   const frameRef = useRef<number | null>(null)
   const lastScrollYRef = useRef(0)
   const scrollStateRef = useRef(scrollState)
+  const tooltipTimeoutRef = useRef<number | null>(null)
 
   useEffect(() => {
     scrollStateRef.current = scrollState
@@ -35,6 +36,14 @@ export function BackToTop() {
 
   useEffect(() => {
     setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      if (tooltipTimeoutRef.current !== null) {
+        window.clearTimeout(tooltipTimeoutRef.current)
+      }
+    }
   }, [])
 
   useEffect(() => {
@@ -91,7 +100,50 @@ export function BackToTop() {
     }
   }, [])
 
+  useEffect(() => {
+    if (scrollState.isVisible) {
+      return
+    }
+
+    if (tooltipTimeoutRef.current !== null) {
+      window.clearTimeout(tooltipTimeoutRef.current)
+      tooltipTimeoutRef.current = null
+    }
+
+    setIsTooltipVisible(false)
+  }, [scrollState.isVisible])
+
+  function clearTooltipTimer() {
+    if (tooltipTimeoutRef.current === null) {
+      return
+    }
+
+    window.clearTimeout(tooltipTimeoutRef.current)
+    tooltipTimeoutRef.current = null
+  }
+
+  function showTooltipWithDelay() {
+    clearTooltipTimer()
+
+    tooltipTimeoutRef.current = window.setTimeout(() => {
+      setIsTooltipVisible(true)
+      tooltipTimeoutRef.current = null
+    }, TOOLTIP_DELAY_MS)
+  }
+
+  function showTooltipImmediately() {
+    clearTooltipTimer()
+    setIsTooltipVisible(true)
+  }
+
+  function hideTooltip() {
+    clearTooltipTimer()
+    setIsTooltipVisible(false)
+  }
+
   function handleClick() {
+    hideTooltip()
+
     window.scrollTo({
       top: 0,
       behavior: shouldReduceMotion ? "auto" : "smooth",
@@ -127,16 +179,20 @@ export function BackToTop() {
                   ease: [0.16, 1, 0.3, 1],
                 }
           }
-          className="fixed sm:bottom-8 sm:right-8 bottom-2 right-2 z-50"
+          className="fixed right-2 bottom-2 z-50 sm:right-8 sm:bottom-8"
         >
           <div className="relative">
             <motion.button
               type="button"
               aria-label="Back to top"
               onClick={handleClick}
+              onMouseEnter={showTooltipWithDelay}
+              onMouseLeave={hideTooltip}
+              onFocus={showTooltipImmediately}
+              onBlur={hideTooltip}
               whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
               style={{ backgroundColor }}
-              className={`group relative flex h-10 w-10 items-center justify-center rounded-[14px] text-foreground shadow-[0_18px_40px_-24px_rgba(0,0,0,0.65)] backdrop-blur-md transition-[opacity,box-shadow] duration-200 hover:shadow-[0_22px_50px_-26px_rgba(0,0,0,0.72)] focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/25 ${
+              className={`group relative flex h-10 w-10 items-center justify-center rounded-[14px] text-foreground shadow-[0_18px_40px_-24px_rgba(0,0,0,0.65)] backdrop-blur-md transition-[opacity,box-shadow] duration-200 hover:shadow-[0_22px_50px_-26px_rgba(0,0,0,0.72)] focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-foreground/25 focus-visible:outline-none ${
                 scrollState.isScrollingUp
                   ? "opacity-100"
                   : "opacity-50 hover:opacity-100"
@@ -150,13 +206,18 @@ export function BackToTop() {
               <ArrowUpRight
                 size={17}
                 strokeWidth={2}
-                className="absolute -rotate-45 translate-y-5 text-black opacity-0 transition-all duration-150 ease-out group-hover:translate-y-0 group-hover:opacity-100 dark:text-white"
+                className="absolute translate-y-5 -rotate-45 text-black opacity-0 transition-all duration-150 ease-out group-hover:translate-y-0 group-hover:opacity-100 dark:text-white"
               />
-
-              <Tooltip className="mb-3 hidden opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100 sm:block">
-                Back to top
-              </Tooltip>
             </motion.button>
+
+            <Tooltip
+              className={`mb-3 hidden transition-opacity duration-150 sm:block ${
+                isTooltipVisible ? "visible opacity-100" : "invisible opacity-0"
+              }`}
+              contentClassName="px-3 py-1.5 text-xs"
+            >
+              Back to top
+            </Tooltip>
           </div>
         </motion.div>
       ) : null}

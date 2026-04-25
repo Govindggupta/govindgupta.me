@@ -5,8 +5,25 @@ A minimal developer portfolio to showcase my professional work, selected project
 
 > Check out the live site: [govindgupta.me](https://govindgupta.me)
 
-[![Govind Gupta portfolio in dark mode](./.github/assets/screenshot-desktop-dark.png#gh-dark-mode-only)](https://govindgupta.me#gh-dark-mode-only)
-[![Govind Gupta portfolio in light mode](./.github/assets/screenshot-desktop-light.png#gh-light-mode-only)](https://govindgupta.me#gh-light-mode-only)
+<p align="center">
+  <a href="https://govindgupta.me">
+    <picture>
+      <source
+        media="(prefers-color-scheme: dark)"
+        srcset="./.github/assets/screenshot-desktop-dark.png"
+      />
+      <source
+        media="(prefers-color-scheme: light)"
+        srcset="./.github/assets/screenshot-desktop-light.png"
+      />
+      <img
+        alt="Screenshot of govindgupta.me"
+        src="./.github/assets/screenshot-desktop-light.png"
+        style="display:block;max-width:100%;height:auto;padding:1px;background:transparent;border:1px solid rgba(127,127,127,0.15);"
+      />
+    </picture>
+  </a>
+</p>
 
 
 <!-- ## Star History

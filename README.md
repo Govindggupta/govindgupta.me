@@ -1,4 +1,4 @@
-# [govindgupta.me](https://govindgupta.me) 
+# [govindgupta.me](https://govindgupta.me) <!-- &middot; ![GitHub Repo Views](https://gitviews.com/repo/govindggupta/govindgupta.me.svg?style=flat&label-color=%23555&color=%23f59e0b) -->
 
 A minimal developer portfolio to showcase my professional work, selected projects, and writing.
 

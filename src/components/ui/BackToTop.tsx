@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { useTheme } from "next-themes"
 import { ArrowUpRight } from "lucide-react"
+import { Tooltip } from "./Tooltip"
 
 const SCROLL_THRESHOLD_MIN = 260
 const SCROLL_THRESHOLD_RATIO = 0.45
@@ -131,6 +131,11 @@ export function BackToTop() {
     }, TOOLTIP_DELAY_MS)
   }
 
+  function showTooltipImmediately() {
+    clearTooltipTimer()
+    setIsTooltipVisible(true)
+  }
+
   function hideTooltip() {
     clearTooltipTimer()
     setIsTooltipVisible(false)
@@ -174,7 +179,7 @@ export function BackToTop() {
                   ease: [0.16, 1, 0.3, 1],
                 }
           }
-          className="fixed sm:bottom-8 sm:right-8 bottom-2 right-2 z-50"
+          className="fixed right-2 bottom-2 z-50 sm:right-8 sm:bottom-8"
         >
           <div className="relative">
             <motion.button
@@ -183,39 +188,36 @@ export function BackToTop() {
               onClick={handleClick}
               onMouseEnter={showTooltipWithDelay}
               onMouseLeave={hideTooltip}
-              onFocus={() => setIsTooltipVisible(true)}
+              onFocus={showTooltipImmediately}
               onBlur={hideTooltip}
               whileTap={shouldReduceMotion ? undefined : { scale: 0.96 }}
               style={{ backgroundColor }}
-              className={`group relative flex h-10 w-10 items-center justify-center rounded-[14px] text-foreground shadow-[0_18px_40px_-24px_rgba(0,0,0,0.65)] backdrop-blur-md transition-[opacity,box-shadow] duration-200 hover:shadow-[0_22px_50px_-26px_rgba(0,0,0,0.72)] focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/25 ${
+              className={`group relative flex h-10 w-10 items-center justify-center rounded-[14px] text-foreground shadow-[0_18px_40px_-24px_rgba(0,0,0,0.65)] backdrop-blur-md transition-[opacity,box-shadow] duration-200 hover:shadow-[0_22px_50px_-26px_rgba(0,0,0,0.72)] focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-foreground/25 focus-visible:outline-none ${
                 scrollState.isScrollingUp
                   ? "opacity-100"
                   : "opacity-50 hover:opacity-100"
               }`}
             >
+              <ArrowUpRight
+                size={17}
+                strokeWidth={2}
+                className="absolute -rotate-45 text-black transition-all duration-200 ease-out group-hover:-translate-y-5 group-hover:opacity-0 dark:text-white"
+              />
+              <ArrowUpRight
+                size={17}
+                strokeWidth={2}
+                className="absolute translate-y-5 -rotate-45 text-black opacity-0 transition-all duration-150 ease-out group-hover:translate-y-0 group-hover:opacity-100 dark:text-white"
+              />
+            </motion.button>
 
-                  <ArrowUpRight
-                    size={17}
-                    strokeWidth={2}
-                    className="absolute -rotate-45 text-black transition-all duration-200 ease-out group-hover:-translate-y-5 group-hover:opacity-0 dark:text-white"
-                  />
-                  <ArrowUpRight
-                    size={17}
-                    strokeWidth={2}
-                    className="absolute -rotate-45 translate-y-5 text-black opacity-0 transition-all duration-150 ease-out group-hover:translate-y-0 group-hover:opacity-100 dark:text-white"
-                  />
-                </motion.button>
-
-            <span
-              className={`pointer-events-none absolute bottom-full left-1/2 mb-3 hidden -translate-x-1/2 transition-opacity duration-150 sm:block ${
-                isTooltipVisible ? "opacity-100" : "opacity-0"
+            <Tooltip
+              className={`mb-3 hidden transition-opacity duration-150 sm:block ${
+                isTooltipVisible ? "visible opacity-100" : "invisible opacity-0"
               }`}
+              contentClassName="px-3 py-1.5 text-xs"
             >
-              <span className="relative block whitespace-nowrap rounded-xl bg-neutral-900 px-3 py-1.5 text-xs font-medium text-white shadow-lg dark:bg-white dark:text-neutral-900">
-                Back to top
-                <span className="absolute top-full left-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1 rotate-45 bg-neutral-900 dark:bg-white" />
-              </span>
-            </span>
+              Back to top
+            </Tooltip>
           </div>
         </motion.div>
       ) : null}

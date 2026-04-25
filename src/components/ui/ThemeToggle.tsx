@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
 import { useTheme } from "next-themes"
 import KeyboardKey from "./KeyboardKey"
+import { Tooltip } from "./Tooltip"
 
 const sunRays = [
   { x1: 12, y1: 2.25, x2: 12, y2: 3.75 },
@@ -277,27 +278,25 @@ export function ThemeToggle() {
         </motion.span>
       </motion.button>
 
-      <div
-        role="tooltip"
-        className={`pointer-events-none absolute top-full left-1/2 z-20 mt-2 -translate-x-1/2 whitespace-nowrap ${
+      <Tooltip
+        side="bottom"
+        className={`${
           tooltipDismissed
             ? "invisible opacity-0 transition-none"
             : isTooltipVisible
               ? "visible opacity-100 transition-opacity duration-150"
               : "invisible opacity-0 transition-opacity duration-100"
         }`}
+        contentClassName="gap-2 px-3 py-2"
       >
-        <span className="relative inline-flex items-center gap-2 whitespace-nowrap rounded-[0.9rem] border border-white/10 bg-neutral-950 px-3 py-2 text-[13px] leading-none font-medium text-white dark:border-black/10 dark:bg-white dark:text-neutral-900">
-          <span>Toggle Mode</span>
-          <span className="dark:hidden">
-            <KeyboardKey tone="dark" size="xs">D</KeyboardKey>
-          </span>
-          <span className="hidden dark:inline-flex">
-            <KeyboardKey tone="light" size="xs">D</KeyboardKey>
-          </span>
-          <span className="absolute left-1/2 bottom-full h-2.5 w-2.5 -translate-x-1/2 translate-y-1 rotate-45 border-l border-t border-white/10 bg-neutral-950 dark:border-black/10 dark:bg-white" />
+        <span>Toggle Mode</span>
+        <span className="dark:hidden">
+          <KeyboardKey tone="dark" size="xs">D</KeyboardKey>
         </span>
-      </div>
+        <span className="hidden dark:inline-flex">
+          <KeyboardKey tone="light" size="xs">D</KeyboardKey>
+        </span>
+      </Tooltip>
     </div>
   )
 }

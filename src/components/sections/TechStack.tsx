@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import Image from "next/image"
 import { useTheme } from "next-themes"
 
+import { Tooltip } from "@/components/ui/Tooltip"
 import techStack from "@/data/techstack"
 
 export function TechStack() {
@@ -52,12 +53,9 @@ export function TechStack() {
                 />
               )}
 
-              <span className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 opacity-0 transition-opacity duration-150 group-hover:opacity-100">
-                <span className="relative block whitespace-nowrap rounded-xl bg-neutral-900 px-3 py-1.5 text-xs font-medium text-white dark:bg-white dark:text-neutral-900">
-                  {item.name}
-                  <span className="absolute left-1/2 top-full h-2.5 w-2.5 -translate-x-1/2 -translate-y-1 rotate-45 bg-neutral-900 dark:bg-white" />
-                </span>
-              </span>
+              <Tooltip className="opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100">
+                {item.name}
+              </Tooltip>
             </a>
           )
         })}

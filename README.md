@@ -1,3 +1,10 @@
+# [govindgupta.me](https://govindgupta.me) 
+
+A minimal developer portfolio to showcase my professional work, selected projects, and writing.
+
+
+> Check out the live site: [govindgupta.me](https://govindgupta.me)
+
 [![Govind Gupta portfolio in dark mode](./.github/assets/screenshot-desktop-dark.png#gh-dark-mode-only)](https://govindgupta.me#gh-dark-mode-only)
 [![Govind Gupta portfolio in light mode](./.github/assets/screenshot-desktop-light.png#gh-light-mode-only)](https://govindgupta.me#gh-light-mode-only)
 

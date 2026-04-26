@@ -27,7 +27,20 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   ...baseMetadata,
   icons: {
-    icon: "/icon.svg",
+    icon: [
+      {
+        url: "/favicons/favicon-light.svg",
+        type: "image/svg+xml",
+        sizes: "any",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/favicons/favicon-dark.svg",
+        type: "image/svg+xml",
+        sizes: "any",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
   },
 }
 

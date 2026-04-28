@@ -22,25 +22,14 @@ A minimal developer portfolio to showcase my professional work, selected project
 
 ## Tech Stack
 
-| Category | Technology |
-|----------|------------|
-| Framework | Next.js 15 |
-| Language | TypeScript |
-| Styling | Tailwind CSS 4 |
-| Animations | Framer Motion |
-| Blog | MDX + next-mdx-remote |
-| Icons | Lucide React |
-| Themes | next-themes |
-| Deployment | Vercel |
-
-**Dependencies:**
-- @vercel/analytics — Vercel Analytics
-- clsx — Conditional classes
-- gray-matter — Parse frontmatter
-- react — React 19
-- react-dom — React DOM 19
-- remark-gfm — GitHub Flavored Markdown
-- tailwind-merge — Tailwind class merging
+- Next.js
+- TypeScript
+- Tailwind CSS 
+- Framer Motion
+- MDX
+- next-mdx-remote
+- next-themes
+- Lucide React
 
 ## Getting Started
 

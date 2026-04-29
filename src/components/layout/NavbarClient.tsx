@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import type { ReactNode } from "react"
 
 import Link from "next/link"
@@ -11,6 +11,29 @@ import { MobileNav } from "./MobileNav"
 import { Logo } from "@/components/ui/Logo"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
 import VerticalBar from "../ui/VerticalBar"
+
+const NAV_CLICK_SOUND_SRC = "/sound/nav-click.wav"
+
+let navAudioContext: AudioContext | null = null
+let navClickBuffer: AudioBuffer | null = null
+
+async function initNavAudioBuffer() {
+  if (navClickBuffer) return
+
+  navAudioContext = new AudioContext()
+  const response = await fetch(NAV_CLICK_SOUND_SRC)
+  const arrayBuffer = await response.arrayBuffer()
+  navClickBuffer = await navAudioContext.decodeAudioData(arrayBuffer)
+}
+
+function playNavClickSound() {
+  if (!navAudioContext || !navClickBuffer) return
+
+  const source = navAudioContext.createBufferSource()
+  source.buffer = navClickBuffer
+  source.connect(navAudioContext.destination)
+  source.start(0)
+}
 
 const navigation = [
   { href: "/", label: "Home" },
@@ -34,17 +57,9 @@ type NavbarClientProps = {
 export function NavbarClient({ githubNavItem }: NavbarClientProps) {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
-  const menuSoundRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
-    const menuSound = new Audio("/sound/nav-click.mp3")
-    menuSound.preload = "auto"
-    menuSoundRef.current = menuSound
-
-    return () => {
-      menuSound.pause()
-      menuSoundRef.current = null
-    }
+    initNavAudioBuffer()
   }, [])
 
   useEffect(() => {
@@ -76,13 +91,7 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
       const nextOpen = !open
 
       if (nextOpen) {
-        const menuSound = menuSoundRef.current
-        if (menuSound) {
-          menuSound.currentTime = 0
-          void menuSound.play().catch(() => {
-            // Ignore browser playback policy errors.
-          })
-        }
+        playNavClickSound()
       }
 
       return nextOpen

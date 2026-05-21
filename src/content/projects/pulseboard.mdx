@@ -1,0 +1,22 @@
+---
+title: "Pulse Board"
+description: "Live poll maker and polling solftware"
+date: "2026-05-21"
+status: "completed"
+github: "https://github.com/govindggupta/pulseboard"
+live: "https://pulseboard.govindgupta.me"
+tech: ["React", "PostgreSQL", "Drizzle", "Docker", "Redis", "Socket.io"]
+image: "https://api.microlink.io?url=https%3A%2F%2Fpulseboard.govindgupta.me&screenshot=true&meta=false&embed=screenshot.url"
+---
+
+## Overview
+
+PulseBoard is a live polling platform designed for real-time audience engagement. Whether it is a classroom quiz, a conference Q&A, or a team retrospective, PulseBoard lets anyone create a poll and watch results update as votes come in. I wanted to build something that felt immediate and collaborative, where the feedback loop between creating a poll and seeing the outcome was measured in seconds rather than page reloads.
+
+## How it works technically
+
+The frontend is built with React and communicates with the server through Socket.io for bidirectional, low-latency updates. When a user creates a poll, it is stored in PostgreSQL via Drizzle ORM, and the current state is cached in Redis to keep reads fast under load. Redis also acts as a pub-sub layer to broadcast vote events to connected clients without hitting the database on every tick. The entire stack is containerized with Docker, which made deployment and local development consistent across environments.
+
+## What I learned
+
+This project pushed me to think deeply about real-time state synchronization. Keeping poll results accurate across dozens of concurrent connections while avoiding unnecessary database writes required careful design around Redis pub-sub and socket event ordering. I also gained a better appreciation for how infrastructure choices cascade into product experience. Using Redis was not just an optimization, it changed how I thought about the data flow entirely. PulseBoard reinforced that real-time features are as much about architecture as they are about UI.

@@ -110,32 +110,13 @@ function getContributionFill(contributionLevel: number) {
 const DIGIT_STRIP = Array.from({ length: 30 }, (_, i) => i % 10)
 const ITEM_HEIGHT = 14
 
-function DigitWheel({ digit: targetDigit, direction = 0 }: { digit: number; direction?: 0 | 1 | -1 }) {
+function DigitWheel({ digit: targetDigit }: { digit: number; direction?: 0 | 1 | -1 }) {
+  // Fixed: Directly set the Y position based on target digit (with 10 extra digits for padding)
   const y = useMotionValue(-(10 + targetDigit) * ITEM_HEIGHT)
 
   useEffect(() => {
-    const currentY = y.get()
-    const currentIndex = Math.round(currentY / -ITEM_HEIGHT)
-    const currentDigit = ((currentIndex % 10) + 10) % 10
-
-    if (currentDigit === targetDigit) return
-
-    let diff: number
-    if (direction === 1) {
-      diff = targetDigit - currentDigit
-      if (diff <= 0) diff += 10
-    } else if (direction === -1) {
-      diff = targetDigit - currentDigit
-      if (diff >= 0) diff -= 10
-    } else {
-      diff = targetDigit - currentDigit
-      if (diff > 5) diff -= 10
-      if (diff < -5) diff += 10
-    }
-
-    const targetIndex = currentIndex + diff
-    const targetY = -targetIndex * ITEM_HEIGHT
-
+    // Animate directly to the target Y position
+    const targetY = -(10 + targetDigit) * ITEM_HEIGHT
     const controls = animate(y, targetY, {
       type: "spring",
       stiffness: 170,
@@ -143,7 +124,7 @@ function DigitWheel({ digit: targetDigit, direction = 0 }: { digit: number; dire
       mass: 0.5,
     })
     return () => controls.stop()
-  }, [targetDigit, direction, y])
+  }, [targetDigit, y])
 
   return (
     <span className="relative inline-block overflow-hidden text-center" style={{ width: "1ch", height: ITEM_HEIGHT }}>
@@ -231,6 +212,7 @@ export function GitHubContributionGraphClient({
   const [isTooltipVisible, setIsTooltipVisible] = useState(false)
   const lastContributionRef = useRef<HoveredContribution | null>(null)
   const prevActiveRef = useRef<HoveredContribution | null>(null)
+  const tooltipTimeoutRef = useRef<number | null>(null)
 
   let direction: 0 | 1 | -1 = 0
   if (activeContribution && prevActiveRef.current && activeContribution.date !== prevActiveRef.current.date) {
@@ -245,17 +227,14 @@ export function GitHubContributionGraphClient({
     totalContributions
   )
 
+  // Clean up timeout on unmount
   useEffect(() => {
-    if (isTooltipVisible) {
-      return
+    return () => {
+      if (tooltipTimeoutRef.current) {
+        clearTimeout(tooltipTimeoutRef.current)
+      }
     }
-
-    const timeoutId = window.setTimeout(() => {
-      setActiveContribution(null)
-    }, 100)
-
-    return () => window.clearTimeout(timeoutId)
-  }, [isTooltipVisible])
+  }, [])
 
   useEffect(() => {
     const graphScrollContainer = graphScrollContainerRef.current
@@ -289,13 +268,28 @@ export function GitHubContributionGraphClient({
   const displayContribution = activeContribution ?? lastContributionRef.current
 
   function showTooltip(contribution: HoveredContribution) {
+    // Clear any pending timeout that would hide the tooltip
+    if (tooltipTimeoutRef.current) {
+      clearTimeout(tooltipTimeoutRef.current)
+      tooltipTimeoutRef.current = null
+    }
     lastContributionRef.current = contribution
     setActiveContribution(contribution)
     setIsTooltipVisible(true)
   }
 
   function hideTooltip() {
+    // Clear any existing timeout
+    if (tooltipTimeoutRef.current) {
+      clearTimeout(tooltipTimeoutRef.current)
+      tooltipTimeoutRef.current = null
+    }
     setIsTooltipVisible(false)
+    // Schedule clearing the active contribution after fade out
+    tooltipTimeoutRef.current = window.setTimeout(() => {
+      setActiveContribution(null)
+      tooltipTimeoutRef.current = null
+    }, 100)
   }
 
   return (

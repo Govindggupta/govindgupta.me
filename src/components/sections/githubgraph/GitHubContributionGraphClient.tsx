@@ -1,5 +1,6 @@
 "use client"
 
+import { animate, motion, useMotionValue } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 
 const SQUARE_SIZE = 10
@@ -106,6 +107,70 @@ function getContributionFill(contributionLevel: number) {
   return HEAT_COLORS[contributionLevel] ?? HEAT_COLORS[0]
 }
 
+const DIGIT_STRIP = Array.from({ length: 30 }, (_, i) => i % 10)
+const ITEM_HEIGHT = 14
+
+function DigitWheel({ digit: targetDigit }: { digit: number; direction?: 0 | 1 | -1 }) {
+  // Fixed: Directly set the Y position based on target digit (with 10 extra digits for padding)
+  const y = useMotionValue(-(10 + targetDigit) * ITEM_HEIGHT)
+
+  useEffect(() => {
+    // Animate directly to the target Y position
+    const targetY = -(10 + targetDigit) * ITEM_HEIGHT
+    const controls = animate(y, targetY, {
+      type: "spring",
+      stiffness: 170,
+      damping: 22,
+      mass: 0.5,
+    })
+    return () => controls.stop()
+  }, [targetDigit, y])
+
+  return (
+    <span className="relative inline-block overflow-hidden text-center" style={{ width: "1ch", height: ITEM_HEIGHT }}>
+      <motion.span
+        className="absolute inset-x-0 flex flex-col items-center"
+        style={{ y, willChange: "transform" }}
+      >
+        {DIGIT_STRIP.map((d, i) => (
+          <span key={i} style={{ lineHeight: `${ITEM_HEIGHT}px`, height: ITEM_HEIGHT }}>
+            {d}
+          </span>
+        ))}
+      </motion.span>
+    </span>
+  )
+}
+
+function AnimatedCounter({ value, minDigits = 1, direction = 0 }: { value: number; minDigits?: number; direction?: 0 | 1 | -1 }) {
+  const str = String(value).padStart(minDigits, "0")
+
+  return (
+    <span className="inline-flex leading-none tabular-nums" aria-hidden="true">
+      {str.split("").map((char, i) => (
+        <DigitWheel key={str.length - 1 - i} digit={Number(char)} direction={direction} />
+      ))}
+    </span>
+  )
+}
+
+function AnimatedDate({ date }: { date: string }) {
+  const d = parseContributionDate(date)
+  const day = d.getUTCDate()
+  const month = d.getUTCMonth() + 1
+  const year = d.getUTCFullYear()
+
+  return (
+    <span className="inline-flex leading-none tabular-nums">
+      <AnimatedCounter value={day} minDigits={2} />
+      <span>.</span>
+      <AnimatedCounter value={month} minDigits={2} />
+      <span>.</span>
+      <AnimatedCounter value={year} minDigits={4} />
+    </span>
+  )
+}
+
 function getCurrentMonthX(weeks: GitHubContributionWeek[]) {
   const now = new Date()
   const currentMonth = now.getUTCMonth()
@@ -145,23 +210,31 @@ export function GitHubContributionGraphClient({
   const [activeContribution, setActiveContribution] =
     useState<HoveredContribution | null>(null)
   const [isTooltipVisible, setIsTooltipVisible] = useState(false)
+  const lastContributionRef = useRef<HoveredContribution | null>(null)
+  const prevActiveRef = useRef<HoveredContribution | null>(null)
+  const tooltipTimeoutRef = useRef<number | null>(null)
+
+  let direction: 0 | 1 | -1 = 0
+  if (activeContribution && prevActiveRef.current && activeContribution.date !== prevActiveRef.current.date) {
+    direction = activeContribution.contributionCount > prevActiveRef.current.contributionCount ? 1 : -1
+  }
+  if (activeContribution) {
+    prevActiveRef.current = activeContribution
+  }
 
   const monthLabels = getMonthLabels(weeks)
   const formattedTotalContributions = new Intl.NumberFormat("en-US").format(
     totalContributions
   )
 
+  // Clean up timeout on unmount
   useEffect(() => {
-    if (isTooltipVisible) {
-      return
+    return () => {
+      if (tooltipTimeoutRef.current) {
+        clearTimeout(tooltipTimeoutRef.current)
+      }
     }
-
-    const timeoutId = window.setTimeout(() => {
-      setActiveContribution(null)
-    }, 100)
-
-    return () => window.clearTimeout(timeoutId)
-  }, [isTooltipVisible])
+  }, [])
 
   useEffect(() => {
     const graphScrollContainer = graphScrollContainerRef.current
@@ -192,13 +265,31 @@ export function GitHubContributionGraphClient({
     graphScrollContainer.scrollLeft = desiredScrollLeft
   }, [weeks])
 
+  const displayContribution = activeContribution ?? lastContributionRef.current
+
   function showTooltip(contribution: HoveredContribution) {
+    // Clear any pending timeout that would hide the tooltip
+    if (tooltipTimeoutRef.current) {
+      clearTimeout(tooltipTimeoutRef.current)
+      tooltipTimeoutRef.current = null
+    }
+    lastContributionRef.current = contribution
     setActiveContribution(contribution)
     setIsTooltipVisible(true)
   }
 
   function hideTooltip() {
+    // Clear any existing timeout
+    if (tooltipTimeoutRef.current) {
+      clearTimeout(tooltipTimeoutRef.current)
+      tooltipTimeoutRef.current = null
+    }
     setIsTooltipVisible(false)
+    // Schedule clearing the active contribution after fade out
+    tooltipTimeoutRef.current = window.setTimeout(() => {
+      setActiveContribution(null)
+      tooltipTimeoutRef.current = null
+    }, 100)
   }
 
   return (
@@ -211,7 +302,6 @@ export function GitHubContributionGraphClient({
           className="relative isolate z-0 w-168.25 overflow-visible sm:w-full"
           onPointerLeave={hideTooltip}
         >
-        {activeContribution ? (
           <div
             role="tooltip"
             className={[
@@ -219,20 +309,25 @@ export function GitHubContributionGraphClient({
               isTooltipVisible ? "opacity-100" : "opacity-0",
             ].join(" ")}
             style={{
-              left: `${activeContribution.leftPercent}%`,
-              top: `calc(${activeContribution.topPercent}% - 10px)`,
+              left: `${displayContribution?.leftPercent ?? 50}%`,
+              top: `calc(${displayContribution?.topPercent ?? 50}% - 10px)`,
             }}
           >
             <span
               aria-hidden="true"
               className="absolute bottom-0 left-1/2 h-3 w-3 -translate-x-1/2 translate-y-1/2 rotate-45 bg-foreground"
             />
-            {formatContributionTooltip(
-              activeContribution.date,
-              activeContribution.contributionCount
-            )}
+            {displayContribution ? (
+              <>
+                <AnimatedCounter value={displayContribution.contributionCount} direction={direction} />
+                <span>
+                  {" "}contribution
+                  {displayContribution.contributionCount === 1 ? "" : "s"} on{" "}
+                </span>
+                <AnimatedDate date={displayContribution.date} />
+              </>
+            ) : null}
           </div>
-        ) : null}
 
           <svg
             viewBox={`0 0 ${GRAPH_WIDTH} ${GRAPH_HEIGHT}`}

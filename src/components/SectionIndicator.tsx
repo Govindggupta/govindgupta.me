@@ -32,7 +32,8 @@ export function SectionIndicator() {
     const observer = new IntersectionObserver((entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) {
-          setActiveSection(entry.target.id)
+          const id = entry.target.id
+          setActiveSection(id)
           break
         }
       }
@@ -62,11 +63,13 @@ export function SectionIndicator() {
     }, 150)
   }
 
+
   const handleSectionClick = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
-    }
+    // pushState updates the URL without a page jump or native hash scroll.
+    // Dispatching hashchange lets use-hash-navigation handle the smooth scroll
+    // and NavbarClient update its active state — single source of truth.
+    window.history.pushState(null, "", `#${sectionId}`)
+    window.dispatchEvent(new HashChangeEvent("hashchange"))
   }
 
   return (

@@ -14,10 +14,12 @@ import { Hero } from "@/components/sections/Hero"
 import { LatestPosts } from "@/components/sections/LatestPosts"
 import { TechStack } from "@/components/sections/TechStack"
 import { SectionReveal } from "@/components/ui/SectionReveal"
+import { HomePageWrapper } from "@/components/HomePageWrapper"
 import { experiences } from "@/data/experience"
 import { getAllPosts } from "@/lib/mdx"
 import { buildMetadata } from "@/lib/metadata"
 import { getAllProjects } from "@/lib/projects"
+import { HOME_SECTIONS } from "@/lib/home-sections"
 
 function HomeSectionHeader({
   title,
@@ -87,58 +89,70 @@ export default async function HomePage() {
   const [projects, posts] = await Promise.all([getAllProjects(), getAllPosts()])
 
   return (
-    <main className="pb-24">
-      <div className="pt-20 [&>section]:pt-0 [&>section]:pb-0 [&>section]:md:pt-0">
+    <HomePageWrapper>
+      <main className="pb-24">
+      <div id={HOME_SECTIONS.HERO} className="pt-20 scroll-mt-22 [&>section]:pt-0 [&>section]:pb-0 [&>section]:md:pt-0">
         <Hero />
       </div>
 
-      <SectionReveal className="mx-auto mt-24 w-full max-w-225 px-4 md:px-6">
-        <About />
-      </SectionReveal>
+      <section id={HOME_SECTIONS.ABOUT} className="mx-auto mt-24 scroll-mt-22 w-full max-w-225 px-4 md:px-6">
+        <SectionReveal>
+          <About />
+        </SectionReveal>
+      </section>
 
-      <SectionReveal className="mx-auto mt-24 w-full max-w-225 px-4 md:px-6">
-        <TechStack />
-      </SectionReveal>
+      <section id={HOME_SECTIONS.TECH_STACK} className="mx-auto mt-24 scroll-mt-22 w-full max-w-225 px-4 md:px-6">
+        <SectionReveal>
+          <TechStack />
+        </SectionReveal>
+      </section>
 
       {experiences.length > 0 ? (
-        <SectionReveal className="mx-auto mt-24 w-full max-w-225 px-4 md:px-6">
-          <HomeSectionHeader title="Experience" href="/" showLink={false} />
-          <Experience />
-        </SectionReveal>
+        <section id={HOME_SECTIONS.EXPERIENCE} className="mx-auto mt-24 scroll-mt-22 w-full max-w-225 px-4 md:px-6">
+          <SectionReveal>
+            <HomeSectionHeader title="Experience" href="/" showLink={false} />
+            <Experience />
+          </SectionReveal>
+        </section>
       ) : null}
 
-      <SectionReveal
-        className={`mx-auto mt-24 w-full max-w-225 px-4 md:px-6`}
-      >
-        <HomeSectionHeader
-          title="Projects"
-          count={projects.length}
-          href="/projects"
-          showLink={false}
-        />
-        <FeaturedProjects projects={projects.slice(0, 4)} />
-      </SectionReveal>
+      <section id={HOME_SECTIONS.PROJECTS} className="mx-auto mt-24 scroll-mt-22 w-full max-w-225 px-4 md:px-6">
+        <SectionReveal>
+          <HomeSectionHeader
+            title="Projects"
+            count={projects.length}
+            href="/projects"
+            showLink={false}
+          />
+          <FeaturedProjects projects={projects.slice(0, 4)} />
+        </SectionReveal>
+      </section>
 
-      <SectionReveal className="mx-auto mt-24 w-full max-w-225 px-4 md:px-6">
-        <HomeSectionHeader
-          title="Blog"
-          count={posts.length}
-          href="/blog"
-          showLink={false}
-        />
-        <LatestPosts posts={posts.slice(0, 4)} />
-      </SectionReveal>
+      <section id={HOME_SECTIONS.BLOG} className="mx-auto mt-24 scroll-mt-22 w-full max-w-225 px-4 md:px-6">
+        <SectionReveal>
+          <HomeSectionHeader
+            title="Blog"
+            count={posts.length}
+            href="/blog"
+            showLink={false}
+          />
+          <LatestPosts posts={posts.slice(0, 4)} />
+        </SectionReveal>
+      </section>
 
-      <SectionReveal className="mx-auto mt-24 w-full max-w-225 px-4 md:px-6">
-        <HomeSectionHeader title="GitHub" href={githubSectionLink} external />
-        <Suspense fallback={<GitHubGraphFallback />}>
-          <GitHubGraph />
-        </Suspense>
-      </SectionReveal>
+      <section id={HOME_SECTIONS.GITHUB} className="mx-auto mt-24 scroll-mt-22 w-full max-w-225 px-4 md:px-6">
+        <SectionReveal>
+          <HomeSectionHeader title="GitHub" href={githubSectionLink} external />
+          <Suspense fallback={<GitHubGraphFallback />}>
+            <GitHubGraph />
+          </Suspense>
+        </SectionReveal>
+      </section>
 
       {/* <SectionReveal className="mx-auto mt-14 w-full max-w-225 px-4 md:px-6">
         <Interests />
       </SectionReveal> */}
-    </main>
+      </main>
+    </HomePageWrapper>
   )
 }

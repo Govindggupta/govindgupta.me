@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 import { AnimatePresence, motion } from "framer-motion"
 import Link from "next/link"
@@ -11,9 +11,9 @@ export type MobileNavItem = {
   label: string
 }
 
-function isActivePath(pathname: string, href: string) {
+function isActivePath(pathname: string, href: string, currentHash: string = "") {
   if (href === "/") {
-    return pathname === href
+    return pathname === href && !currentHash
   }
 
   return pathname === href || pathname.startsWith(`${href}/`)
@@ -33,6 +33,7 @@ export function MobileNav({
   onClose,
 }: MobileNavProps) {
   const { trackEvent } = useUmami()
+  const [currentHash, setCurrentHash] = useState("")
 
   useEffect(() => {
     if (!isOpen) {
@@ -43,6 +44,19 @@ export function MobileNav({
       path: pathname,
     })
   }, [isOpen, pathname, trackEvent])
+
+  useEffect(() => {
+    // Track hash changes
+    const handleHashChange = () => {
+      setCurrentHash(window.location.hash.slice(1))
+    }
+
+    // Set initial hash
+    setCurrentHash(window.location.hash.slice(1))
+
+    window.addEventListener("hashchange", handleHashChange)
+    return () => window.removeEventListener("hashchange", handleHashChange)
+  }, [])
 
   return (
     <AnimatePresence>
@@ -68,12 +82,13 @@ export function MobileNav({
             transition={{ duration: 0.1 }}
           >
             {navigation.map((item) => {
-              const active = isActivePath(pathname, item.href)
+              const active = isActivePath(pathname, item.href, currentHash)
 
               return (
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={onClose}
                   className={`rounded-lg px-3 py-2 text-md tracking-[-0.02em] transition-colors duration-200 ${
                     active
                       ? "bg-(--accent) font-medium text-foreground dark:bg-zinc-700/50 dark:text-(--accent-foreground)"

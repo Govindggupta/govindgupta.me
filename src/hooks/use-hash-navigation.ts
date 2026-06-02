@@ -28,11 +28,12 @@ export function useHashNavigation() {
     }, 0)
   }, [pathname])
 
-  // Handle hash changes when user clicks on anchor links
   useEffect(() => {
-    const handleHashChange = () => {
-      if (pathname !== "/") return
+    // Only handle hash navigation on the home page
+    if (pathname !== "/") return
 
+    // Handle hash changes when user clicks on anchor links
+    const handleHashChange = () => {
       const hash = window.location.hash.slice(1)
 
       if (hash) {

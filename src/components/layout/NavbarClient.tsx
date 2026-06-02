@@ -67,7 +67,7 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
   }, [])
 
   useEffect(() => {
-    // Track hash changes
+    // Track hash changes and reset when navigating away from home
     const handleHashChange = () => {
       setCurrentHash(window.location.hash.slice(1))
     }
@@ -77,10 +77,13 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
 
     window.addEventListener("hashchange", handleHashChange)
     return () => window.removeEventListener("hashchange", handleHashChange)
-  }, [])
+  }, [pathname])
 
   useEffect(() => {
-    setIsOpen(false)
+    // Reset currentHash when leaving homepage
+    if (pathname !== "/") {
+      setCurrentHash("")
+    }
   }, [pathname])
 
   useEffect(() => {

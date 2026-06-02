@@ -46,7 +46,16 @@ export function MobileNav({
   }, [isOpen, pathname, trackEvent])
 
   useEffect(() => {
-    // Track hash changes
+    // Reset currentHash when leaving homepage
+    if (pathname !== "/") {
+      setCurrentHash("")
+    }
+  }, [pathname])
+
+  useEffect(() => {
+    // Only track hash changes on the home page
+    if (pathname !== "/") return
+
     const handleHashChange = () => {
       setCurrentHash(window.location.hash.slice(1))
     }
@@ -56,7 +65,7 @@ export function MobileNav({
 
     window.addEventListener("hashchange", handleHashChange)
     return () => window.removeEventListener("hashchange", handleHashChange)
-  }, [])
+  }, [pathname])
 
   return (
     <AnimatePresence>

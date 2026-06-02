@@ -11,6 +11,7 @@ import { MobileNav } from "./MobileNav"
 import { Logo } from "@/components/ui/Logo"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
 import VerticalBar from "../ui/VerticalBar"
+import { useHashNavigation } from "@/hooks/use-hash-navigation"
 
 const NAV_CLICK_SOUND_SRC = "/sound/nav-click.wav"
 
@@ -42,9 +43,9 @@ const navigation = [
   { href: "/resume", label: "Resume" },
 ]
 
-function isActivePath(pathname: string, href: string) {
+function isActivePath(pathname: string, href: string, currentHash: string = "") {
   if (href === "/") {
-    return pathname === href
+    return pathname === href && !currentHash
   }
 
   return pathname === href || pathname.startsWith(`${href}/`)
@@ -57,13 +58,32 @@ type NavbarClientProps = {
 export function NavbarClient({ githubNavItem }: NavbarClientProps) {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  const [currentHash, setCurrentHash] = useState("")
+
+  useHashNavigation()
 
   useEffect(() => {
     initNavAudioBuffer()
   }, [])
 
   useEffect(() => {
-    setIsOpen(false)
+    // Track hash changes and reset when navigating away from home
+    const handleHashChange = () => {
+      setCurrentHash(window.location.hash.slice(1))
+    }
+
+    // Set initial hash
+    setCurrentHash(window.location.hash.slice(1))
+
+    window.addEventListener("hashchange", handleHashChange)
+    return () => window.removeEventListener("hashchange", handleHashChange)
+  }, [pathname])
+
+  useEffect(() => {
+    // Reset currentHash when leaving homepage
+    if (pathname !== "/") {
+      setCurrentHash("")
+    }
   }, [pathname])
 
   useEffect(() => {
@@ -107,12 +127,15 @@ export function NavbarClient({ githubNavItem }: NavbarClientProps) {
           <div className="flex items-center gap-1 md:gap-3">
             <div className="hidden items-center gap-5 md:flex">
               {navigation.map((item) => {
-                const active = isActivePath(pathname, item.href)
+                const active = isActivePath(pathname, item.href, currentHash)
 
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={() => {
+                      playNavClickSound()
+                    }}
                     className={`text-sm font-medium tracking-[-0.02em] transition-colors duration-200 ease-out hover:text-foreground ${
                       active ? "text-foreground" : "text-muted"
                     }`}

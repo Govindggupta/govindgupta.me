@@ -18,6 +18,8 @@ export function SectionIndicator() {
   const [activeSection, setActiveSection] = useState<string>(HOME_SECTIONS.HERO)
   const [isHovered, setIsHovered] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const isMouseInsideRef = useRef(false)
+  const leaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     // Track which section is currently in view
@@ -47,20 +49,32 @@ export function SectionIndicator() {
     return () => observer.disconnect()
   }, [])
 
+  const handleMouseEnter = () => {
+    isMouseInsideRef.current = true
+    if (leaveTimerRef.current) clearTimeout(leaveTimerRef.current)
+    setIsHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    isMouseInsideRef.current = false
+    leaveTimerRef.current = setTimeout(() => {
+      if (!isMouseInsideRef.current) setIsHovered(false)
+    }, 150)
+  }
+
   const handleSectionClick = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
     }
-    setIsHovered(false)
   }
 
   return (
     <div
       ref={containerRef}
       className="fixed right-6 top-1/2 z-40 -translate-y-1/2 hidden lg:block"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <div className="flex flex-col gap-2.5">
         {SECTIONS.map(({ id }) => (

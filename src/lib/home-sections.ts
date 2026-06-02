@@ -1,5 +1,5 @@
 export const HOME_SECTIONS = {
-  HERO: "Hello",
+  HERO: "hello",
   ABOUT: "about",
   TECH_STACK: "stack",
   EXPERIENCE: "experience",

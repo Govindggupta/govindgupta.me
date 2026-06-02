@@ -8,7 +8,7 @@ const SECTIONS = [
   { id: HOME_SECTIONS.HERO, label: "Hero" },
   { id: HOME_SECTIONS.ABOUT, label: "About" },
   { id: HOME_SECTIONS.TECH_STACK, label: "Tech Stack" },
-//   { id: HOME_SECTIONS.EXPERIENCE, label: "Experience" },
+  //   { id: HOME_SECTIONS.EXPERIENCE, label: "Experience" },
   { id: HOME_SECTIONS.PROJECTS, label: "Projects" },
   { id: HOME_SECTIONS.BLOG, label: "Blog" },
   { id: HOME_SECTIONS.GITHUB, label: "GitHub" },
@@ -58,7 +58,7 @@ export function SectionIndicator() {
   return (
     <div
       ref={containerRef}
-      className="fixed right-6 top-1/2 z-40 -translate-y-1/2"
+      className="fixed right-6 top-1/2 z-40 -translate-y-1/2 hidden lg:block"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -67,11 +67,10 @@ export function SectionIndicator() {
           <button
             key={id}
             onClick={() => handleSectionClick(id)}
-            className={`w-6 h-0.5 rounded-full transition-all duration-300 ${
-              activeSection === id
+            className={`w-6 h-0.5 rounded-full transition-all duration-300 ${activeSection === id
                 ? "bg-foreground"
                 : "bg-muted hover:bg-foreground/60"
-            }`}
+              }`}
             title={SECTIONS.find((s) => s.id === id)?.label}
             aria-label={`Go to ${SECTIONS.find((s) => s.id === id)?.label}`}
           />
@@ -93,11 +92,10 @@ export function SectionIndicator() {
                 <button
                   key={id}
                   onClick={() => handleSectionClick(id)}
-                  className={`rounded-lg px-3 py-2 text-md tracking-[-0.02em] transition-colors duration-200 ${
-                    activeSection === id
+                  className={`rounded-lg px-3 py-2 text-md tracking-[-0.02em] transition-colors duration-200 ${activeSection === id
                       ? "bg-(--accent) font-medium text-foreground dark:bg-zinc-700/50 dark:text-(--accent-foreground)"
                       : "text-muted hover:bg-(--accent-muted) hover:text-foreground"
-                  }`}
+                    }`}
                 >
                   {label}
                 </button>

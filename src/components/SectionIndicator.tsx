@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { HOME_SECTIONS } from "@/lib/home-sections"
 
 const SECTIONS = [
-  { id: HOME_SECTIONS.HERO, label: "Hero" },
+  { id: HOME_SECTIONS.HERO, label: "Hello" },
   { id: HOME_SECTIONS.ABOUT, label: "About" },
   { id: HOME_SECTIONS.TECH_STACK, label: "Tech Stack" },
   //   { id: HOME_SECTIONS.EXPERIENCE, label: "Experience" },

@@ -3,7 +3,6 @@ import { Inter, Space_Grotesk } from "next/font/google"
 import type { ReactNode } from "react"
 
 import { UmamiAnalytics } from "@/components/analytics/UmamiAnalytics"
-import { SectionIndicator } from "@/components/SectionIndicator"
 import { Footer } from "@/components/layout/Footer"
 import { Navbar } from "@/components/layout/Navbar"
 import { BackToTop } from "@/components/ui/BackToTop"
@@ -62,7 +61,6 @@ export default function RootLayout({
         <UmamiAnalytics />
         <Analytics />
         <ThemeProvider>
-          <SectionIndicator />
           <div className="flex min-h-screen flex-col bg-background">
             <Navbar />
             <main className="mx-auto w-full max-w-225 flex-1 pt-18">

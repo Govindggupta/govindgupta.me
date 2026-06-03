@@ -15,6 +15,7 @@ import { LatestPosts } from "@/components/sections/LatestPosts"
 import { TechStack } from "@/components/sections/TechStack"
 import { SectionReveal } from "@/components/ui/SectionReveal"
 import { HomePageWrapper } from "@/components/HomePageWrapper"
+import { SectionIndicator } from "@/components/SectionIndicator"
 import { experiences } from "@/data/experience"
 import { getAllPosts } from "@/lib/mdx"
 import { buildMetadata } from "@/lib/metadata"
@@ -90,6 +91,7 @@ export default async function HomePage() {
 
   return (
     <HomePageWrapper>
+      <SectionIndicator />
       <main className="pb-24">
       <div id={HOME_SECTIONS.HERO} className="pt-20 scroll-mt-22 [&>section]:pt-0 [&>section]:pb-0 [&>section]:md:pt-0">
         <Hero />

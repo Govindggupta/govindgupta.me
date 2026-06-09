@@ -1,0 +1,142 @@
+%----------------------------------------------------------------------------------------
+%	DOCUMENT DEFINITION
+%----------------------------------------------------------------------------------------
+\documentclass[a4paper,12pt]{article}
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES & FORMATTING
+%----------------------------------------------------------------------------------------
+\usepackage{url}
+\usepackage{parskip} 	
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+% page padding
+\usepackage[scale=0.93]{geometry}
+% \usepackage[top=1cm, bottom=1cm, left=1.5cm, right=1.5cm]{geometry}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{supertabular}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{titlesec}				
+\usepackage{fontawesome5}
+\usepackage[unicode, draft=false]{hyperref}
+
+% centered version of 'X' col. type
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+
+% custom section with rule
+\titleformat{\section}{\color{linkcolour}\Large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{10pt}{10pt}
+
+% hyperlink colours
+\definecolor{linkcolour}{rgb}{0,0.2,0.6}
+\hypersetup{colorlinks,breaklinks,urlcolor=linkcolour,linkcolor=linkcolour}
+
+%page paddinng 
+
+%----------------------------------------------------------------------------------------
+%	BEGIN DOCUMENT
+%----------------------------------------------------------------------------------------
+\begin{document}
+\pagestyle{empty} 
+
+%----------------------------------------------------------------------------------------
+%	HEADER (Name + Icons)
+%----------------------------------------------------------------------------------------
+\begin{tabularx}{\linewidth}{@{} C @{}}
+\Huge{Govind Gupta} \\[7.5pt]
+\href{https://github.com/govindggupta}{\raisebox{-0.05\height}\faGithub\ govindggupta} \ $|$ \ 
+\href{https://linkedin.com/in/govindggupta}{\raisebox{-0.05\height}\faLinkedin\ govindggupta} \ $|$ \ 
+\href{https://govindgupta.me}{\raisebox{-0.05\height}\faGlobe \ govindgupta.me} \ $|$ \ 
+\href{mailto:govind12771277@gmail.com }{\raisebox{-0.05\height}\faEnvelope \ govind12771277@gmail.com} \\
+\end{tabularx}
+
+%----------------------------------------------------------------------------------------
+%	SUMMARY
+%----------------------------------------------------------------------------------------
+\section{Summary}
+Third-year undergraduate with a strong interest in full-stack development, AI agents, RAG systems, and LLM-based applications. Enjoy building software that solves real-world problems, with a focus on turning ideas into scalable and impactful products. Quick to adapt to new technologies and driven by continuous learning.
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+\section{Education}
+\begin{tabularx}{\linewidth}{@{}X r@{}}	
+\textbf{Bachelor of Technology in Computer Science} & Aug 2023 -- Present \\
+Uka Tarsadia University, Surat, Gujarat & \\
+CGPA: 7.47 / 10, SGPA: 7.57 / 10 (6th Sem) & \\
+\end{tabularx}
+
+%----------------------------------------------------------------------------------------
+%	PROJECTS
+%----------------------------------------------------------------------------------------
+\section{Projects}
+
+
+
+% Pulse Board Project
+\begin{tabularx}{\linewidth}{@{}l r@{}}
+\textbf{Pulse Board} & \hfill \href{https://pulseboard.govindgupta.me}{Live} $|$ \href{https://github.com/govindggupta/pulseboard}{GitHub} \\[3.75pt]
+\multicolumn{2}{@{}X@{}}{\begin{itemize}[nosep, leftmargin=1em, label=--, topsep=5pt, before=\vspace{-\baselineskip}, after=\vspace{-4pt}]
+   \item Real-time polling platform that allows users to create, share, and participate in live polls with instant result visualization and secure voting.
+   \item Supports anonymous or authenticated voting with live chart updates via Socket.io; used for team retrospectives and classroom polls.
+   \item React.js, TypeScript, Node.js, Express.js, Socket.io, PostgreSQL, Redis, Docker.
+\end{itemize}} \\
+\end{tabularx}
+\vspace{8pt}
+
+% Draw App Project
+\begin{tabularx}{\linewidth}{@{}l r@{}}
+\textbf{Draw App} & \hfill \href{https://github.com/govindggupta/draw-app}{GitHub} \\[3.75pt]
+\multicolumn{2}{@{}X@{}}{
+\begin{itemize}[nosep, leftmargin=1em, label=--, topsep=5pt, before=\vspace{-\baselineskip}, after=\vspace{-4pt}]
+    \item Real-time collaborative drawing application where multiple users can join a room and draw simultaneously on a shared canvas with synchronized strokes and color picker.
+    \item Built as a monorepo using Turborepo for managing shared packages and separate frontend/backend deployments.
+   \item React.js, TypeScript, WebSocket, Node.js, Express.js, PostgreSQL, Turborepo, Docker.
+\end{itemize}
+} \\
+\end{tabularx}
+\vspace{8pt}
+
+% Draw App Project
+\begin{tabularx}{\linewidth}{@{}l r@{}}
+\textbf{Brainly} & \hfill \href{https://github.com/govindggupta/brainly}{GitHub} \\[3.75pt]
+\multicolumn{2}{@{}X@{}}{
+\begin{itemize}[nosep, leftmargin=1em, label=--, topsep=5pt, before=\vspace{-\baselineskip}, after=\vspace{-4pt}]
+     \item Full-stack "Second Brain" app for saving, organizing, and retrieving useful links, notes, and content with personal dashboard and tag-based categorization.
+    \item Share your entire collection via a unique public slug URL — anyone with the link can view your curated content without logging in.
+    \item MongoDB, Express.js, React, Node.js, Docker, JWT authentication, Tailwind CSS.
+\end{itemize}
+} \\
+\end{tabularx}
+\vspace{8pt}
+
+
+
+%----------------------------------------------------------------------------------------
+%	TECHNICAL SKILLS
+%----------------------------------------------------------------------------------------
+\section{Technical Skills}
+\begin{tabularx}{\linewidth}{@{}l X@{}}
+Languages: &  Python, C, C++, JavaScript, TypeScript, SQL, HTML/CSS \\
+Technologies: & React, Node.js, Express, MongoDB, Tailwind CSS, Socket.io \\
+Tools: & VS Code, GitHub, Postman, Cloudinary \\
+Relevant Coursework: & Web Development, Data Structures, Algorithms, System Design, Database Management \\
+\end{tabularx}
+
+%----------------------------------------------------------------------------------------
+%	ACHIEVEMENTS & AWARDS
+%----------------------------------------------------------------------------------------
+\section{Achievements \& Awards}
+\begin{itemize}[nosep, leftmargin=1em, label=--]
+  \item Secured funding under SSIP (Student Start-Up Induction Program) for the project "Air Purifier."
+  \item Robo War Winner at college Tech Fest.
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+%	FOOTER (LAST UPDATED)
+%----------------------------------------------------------------------------------------
+\center{\footnotesize Last updated: \today}
+\end{document}
